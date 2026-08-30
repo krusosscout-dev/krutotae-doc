@@ -1,7 +1,7 @@
 {
-  "name": "watbangpun-kru-sauce-hub",
+  "name": "watbangpun-doc-hub",
   "version": "1.0.0",
-  "description": "ระบบคลังเอกสารและสื่อการเรียนรู้ ครูซอส โรงเรียนวัดบางปูน (TT001)",
+  "description": "ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัล โรงเรียนวัดบางปูน (TT001)",
   "main": "index.html",
   "scripts": {
     "start": "npx serve ."
@@ -10,7 +10,6 @@
     "education",
     "school-document-hub",
     "watbangpun",
-    "kru-sauce",
     "thailand"
   ],
   "author": "โรงเรียนวัดบางปูน",
