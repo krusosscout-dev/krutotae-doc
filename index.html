@@ -103,7 +103,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 h-full flex flex-col md:flex-row overflow-hidden antialiased selection:bg-indigo-600 selection:text-white">
 
-  <!-- ================= SLEEK SIDEBAR (DESKTOP & OFF-CANVAS MOBILE) ================= -->
+  <!-- ================= SLEEK SIDEBAR ================= -->
   <aside id="main-sidebar" class="w-64 bg-slate-900 text-white flex flex-col shrink-0 z-40 transition-transform duration-300 -translate-x-full md:translate-x-0 fixed md:static inset-y-0 left-0 shadow-2xl md:shadow-none">
     
     <!-- Sidebar Brand -->
@@ -221,10 +221,10 @@
   <!-- Mobile Overlay Backdrop -->
   <div id="mobile-overlay" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-30 hidden md:hidden transition-opacity"></div>
 
-  <!-- ================= RIGHT WRAPPER (ALL DEVICE RESPONSIVE) ================= -->
+  <!-- ================= RIGHT WRAPPER ================= -->
   <div class="flex-1 flex flex-col h-full overflow-hidden bg-slate-50 relative">
     
-    <!-- Topbar (Ultra-Clean & Responsive) -->
+    <!-- Topbar -->
     <header class="h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4 shrink-0 z-20">
       
       <!-- Left: Mobile Toggle & Breadcrumb -->
@@ -273,10 +273,10 @@
     <main class="flex-1 overflow-y-auto p-3 sm:p-6 lg:p-8 custom-scrollbar pb-24 md:pb-12">
       <div class="max-w-7xl mx-auto space-y-8 sm:space-y-10">
 
-        <!-- ================= VIEW 1: CLEAN MODERN DASHBOARD (๕ ส่วนชัดเจน) ================= -->
+        <!-- ================= VIEW 1: CLEAN MODERN DASHBOARD ================= -->
         <section id="view-dashboard" class="space-y-8 sm:space-y-10 animate-fade-in">
           
-          <!-- SECTION 1: HEADER BANNER & SYSTEM OVERVIEW (ส่วนแนะนำระบบ) -->
+          <!-- SECTION 1: HEADER BANNER & SYSTEM OVERVIEW -->
           <div class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-card flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden">
             <div class="max-w-2xl z-10">
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-indigo-200 text-[11px] sm:text-xs font-semibold mb-2.5 backdrop-blur-xs border border-white/10">
@@ -307,7 +307,7 @@
             </button>
           </div>
 
-          <!-- SECTION 2: 4 DEPARTMENTS (หมวดหมู่ ๔ ฝ่ายบริหารสถานศึกษา) -->
+          <!-- SECTION 2: 4 DEPARTMENTS -->
           <div class="space-y-3 sm:space-y-4">
             <div class="flex items-center justify-between">
               <div>
@@ -396,7 +396,7 @@
             </div>
           </div>
 
-          <!-- SECTION 3: VISUAL DOCUMENT SHOWCASE (เอกสารแนะนำยอดนิยม) -->
+          <!-- SECTION 3: VISUAL DOCUMENT SHOWCASE -->
           <div class="space-y-3 sm:space-y-4">
             <div class="flex items-center justify-between">
               <div>
@@ -411,7 +411,7 @@
             <div id="dashboard-featured-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"></div>
           </div>
 
-          <!-- SECTION 4: QUICK FORMS ACCESS (แบบฟอร์มราชการที่ใช้บ่อย) -->
+          <!-- SECTION 4: QUICK FORMS ACCESS -->
           <div class="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-200 shadow-card space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
               <div class="flex items-center gap-3">
@@ -471,7 +471,7 @@
             </div>
           </div>
 
-          <!-- SECTION 5: HOW IT WORKS (แนะนำขั้นตอนการใช้งาน) -->
+          <!-- SECTION 5: HOW IT WORKS -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
             <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-card flex items-start gap-4">
               <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 text-indigo-600 font-extrabold text-sm flex items-center justify-center shrink-0">
@@ -536,7 +536,7 @@
               </div>
             </div>
 
-            <!-- 4 Categories Filter Tabs (Horizontal Scroll on Phone) -->
+            <!-- 4 Categories Filter Tabs -->
             <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar text-xs">
               <button onclick="setCategoryFilter('all')" class="cat-filter-btn active whitespace-nowrap px-4 py-2 rounded-xl font-bold transition bg-indigo-600 text-white shadow-sm shrink-0" data-cat="all">
                 <i class="fa-solid fa-layer-group mr-1"></i> ทั้งหมด (<span id="count-cat-all">0</span>)
@@ -555,7 +555,7 @@
               </button>
             </div>
 
-            <!-- Dropdown Filters (Responsive Grid) -->
+            <!-- Dropdown Filters -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100 text-xs">
               <div>
                 <label class="block text-slate-500 font-bold mb-1">หมวดหมู่ย่อยในฝ่าย:</label>
@@ -589,7 +589,7 @@
 
           </div>
 
-          <!-- Document List / Grid Container (Adaptive Columns) -->
+          <!-- Document List / Grid Container -->
           <div id="documents-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"></div>
 
           <!-- Empty State -->
@@ -615,12 +615,15 @@
                 <i class="fa-solid fa-screwdriver-wrench"></i> โหมดผู้ดูแลระบบ (Admin Console)
               </div>
               <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ศูนย์จัดการเอกสารและระบบ</h2>
-              <p class="text-xs text-slate-500 mt-0.5">อัปโหลดไฟล์ด้วย Drag & Drop, แก้ไขข้อมูล, ลบเอกสาร, และเปลี่ยนรหัสผ่านแอดมิน</p>
+              <p class="text-xs text-slate-500 mt-0.5">อัปโหลดไฟล์ด้วย Drag & Drop, จัดการฐานข้อมูล Cloud Google Sheets, และเปลี่ยนรหัสผ่าน</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
               <button onclick="openUploadModal()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-1.5 active:scale-95">
                 <i class="fa-solid fa-cloud-arrow-up"></i> อัปโหลดเอกสารใหม่
+              </button>
+              <button onclick="openCloudDbModal()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95" id="btn-cloud-db-action">
+                <i class="fa-solid fa-database text-indigo-600"></i> <span>เชื่อมต่อฐานข้อมูลกลาง</span>
               </button>
               <button onclick="openSetAcademicYearModal()" class="px-3.5 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-semibold border border-indigo-200 transition flex items-center gap-1.5 active:scale-95">
                 <i class="fa-regular fa-calendar-check"></i> ตั้งค่าปีการศึกษา
@@ -682,7 +685,7 @@
       </div>
     </main>
 
-    <!-- ================= MOBILE BOTTOM APP NAVIGATION BAR (FOR SMARTPHONES) ================= -->
+    <!-- ================= MOBILE BOTTOM APP NAVIGATION BAR ================= -->
     <nav class="md:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200/90 z-20 flex items-center justify-around py-2 px-1 shadow-lg pb-[max(0.5rem,env(safe-area-inset-bottom))]">
       
       <button onclick="switchView('dashboard')" id="mobile-tab-dashboard" class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-indigo-600 font-bold transition">
@@ -708,6 +711,67 @@
 
     </nav>
 
+  </div>
+
+  <!-- ================= MODAL: CLOUD DATABASE GOOGLE SHEETS SETTINGS ================= -->
+  <div id="cloud-db-modal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs hidden flex items-center justify-center p-3 sm:p-4 animate-fade-in">
+    <div class="bg-white w-full max-w-lg rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200 flex flex-col max-h-[92vh]">
+      
+      <div class="p-4 sm:p-5 bg-slate-900 text-white flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg border border-indigo-400/30">
+            <i class="fa-solid fa-database"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-white">ตั้งค่าการเชื่อมต่อฐานข้อมูลกลาง</h3>
+            <p class="text-[11px] text-slate-400">ระบบเชื่อมต่อฐานข้อมูลออนไลน์เพื่อซิงค์ข้อมูลเอกสาร</p>
+          </div>
+        </div>
+        <button onclick="closeCloudDbModal()" class="text-slate-400 hover:text-white p-1" aria-label="ปิด"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs">
+        
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">URL ของ Google Apps Script Web App <span class="text-red-500">*</span></label>
+          <input id="input-cloud-api-url" type="url" placeholder="https://script.google.com/macros/s/.../exec"
+                 class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-mono text-[11px] text-slate-800 focus:outline-none focus:border-emerald-600">
+          <p class="text-[10px] text-slate-500 mt-1">วาง Web App URL ที่ได้จากการ Deploy Google Apps Script (ดูขั้นตอนด้านล่าง)</p>
+        </div>
+
+        <div id="cloud-test-result" class="hidden p-3 rounded-xl text-xs font-semibold"></div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
+          <button type="button" onclick="disconnectCloudDb()" id="btn-disconnect-cloud" class="hidden px-3 py-2 text-red-600 hover:bg-red-50 rounded-xl font-bold transition">
+            <i class="fa-solid fa-link-slash mr-1"></i> ยกเลิกการเชื่อมต่อ
+          </button>
+          <div class="flex items-center gap-2 ml-auto">
+            <button type="button" onclick="testCloudConnection()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold transition active:scale-95">
+              <i class="fa-solid fa-plug mr-1"></i> ทดสอบการเชื่อมต่อ
+            </button>
+            <button type="button" onclick="saveCloudConnection()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow transition active:scale-95">
+              <i class="fa-solid fa-floppy-disk mr-1"></i> บันทึกและซิงค์
+            </button>
+          </div>
+        </div>
+
+        <!-- 3-Step Setup Quick Guide -->
+        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-2 mt-4 text-[11px]">
+          <div class="font-bold text-slate-800 text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-book-open text-indigo-600"></i> ขั้นตอนการสร้าง Web App ใน Google Sheets:
+          </div>
+          <ol class="list-decimal list-inside space-y-1.5 text-slate-600">
+            <li>สร้างไฟล์ Google Sheets ใหม่ ➔ ไปที่ <b>ส่วนขยาย (Extensions)</b> ➔ <b>Apps Script</b></li>
+            <li>คัดลอกโค้ดจากไฟล์ <code class="bg-slate-200 px-1 py-0.5 rounded text-slate-800">google_apps_script/Code.gs</code> มาวางแล้วกดบันทึก</li>
+            <li>กด <b>ทำให้ใช้งานได้ (Deploy)</b> ➔ เลือก <b>เว็บแอป (Web app)</b> ➔ ตั้งค่าผู้มีสิทธิ์เป็น <b>ทุกคน (Anyone)</b></li>
+            <li>คัดลอก <b>URL ของเว็บแอป</b> มาวางในช่องด้านบนแล้วกด "บันทึกและซิงค์"</li>
+          </ol>
+        </div>
+
+      </div>
+
+    </div>
   </div>
 
   <!-- ================= MODAL: SET ACADEMIC YEAR ================= -->
@@ -737,7 +801,7 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: ADMIN LOGIN (SECURE) ================= -->
+  <!-- ================= MODAL: ADMIN LOGIN ================= -->
   <div id="admin-login-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs hidden flex items-center justify-center p-4 animate-fade-in">
     <div class="bg-white w-full max-w-sm rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
       <div class="p-5 bg-slate-900 text-white text-center relative">
@@ -808,7 +872,7 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: DOCUMENT PREVIEW (HIGH FIDELITY THAI PAPER) ================= -->
+  <!-- ================= MODAL: DOCUMENT PREVIEW ================= -->
   <div id="preview-modal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-xs hidden flex items-center justify-center p-2 sm:p-4 animate-fade-in">
     <div class="bg-white w-full max-w-4xl h-[92vh] sm:h-[88vh] rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
       
@@ -952,9 +1016,23 @@
   <!-- ================= TOAST CONTAINER ================= -->
   <div id="toast-container" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <!-- ================= JAVASCRIPT LOGIC WITH CLOUD & LOCAL HYBRID SYNC ================= -->
   <script>
     const DEFAULT_MASTER_PASSWORDS = ["admin1234", "2569", "school2569"];
+    const DEFAULT_CLOUD_API_URL = "https://script.google.com/macros/s/AKfycby9SyXZGu-9kwMhNMBM-9Vhj4ThJ5yhZ5EtH6YJRHd0PJ-RxsZCO39uf5vTJ_EYnV2c/exec";
+
+    function getCloudApiUrl() {
+      try { 
+        return localStorage.getItem('school_cloud_api_url') || DEFAULT_CLOUD_API_URL; 
+      } catch (e) { 
+        return DEFAULT_CLOUD_API_URL; 
+      }
+    }
+
+    function isCloudConnected() {
+      const url = getCloudApiUrl();
+      return url && url.startsWith('http');
+    }
 
     function getActiveAdminPasswords() {
       try {
@@ -1004,7 +1082,7 @@
       document.getElementById('academic-year-modal').classList.add('hidden');
     }
 
-    function handleSaveAcademicYear(e) {
+    async function handleSaveAcademicYear(e) {
       e.preventDefault();
       const val = document.getElementById('input-academic-year').value.trim();
       if (val) {
@@ -1012,6 +1090,17 @@
         updateAcademicYearDisplay();
         closeSetAcademicYearModal();
         showToast(`อัปเดตปีการศึกษาเป็น "${val}" เรียบร้อยแล้ว`, 'success');
+
+        if (isCloudConnected()) {
+          try {
+            fetch(getCloudApiUrl(), {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'setAcademicYear', academicYear: val })
+            });
+          } catch (err) {}
+        }
       }
     }
 
@@ -1289,18 +1378,24 @@
             documents = parsed;
           } else {
             documents = [...DEFAULT_DOCUMENTS];
-            saveDocuments();
+            saveDocumentsLocally();
           }
         } else {
           documents = [...DEFAULT_DOCUMENTS];
-          saveDocuments();
+          saveDocumentsLocally();
         }
       } catch (e) {
         documents = [...DEFAULT_DOCUMENTS];
       }
+
+      // Check Cloud DB
+      updateCloudStatusUI();
+      if (isCloudConnected()) {
+        fetchFromCloudDatabase();
+      }
     }
 
-    function saveDocuments() {
+    function saveDocumentsLocally() {
       try { localStorage.setItem('school_docs_v6', JSON.stringify(documents)); } catch (e) {}
     }
 
@@ -1309,6 +1404,129 @@
       updateFavoritesBadge();
     }
 
+    /* =========================================================================
+       CLOUD DATABASE SYNC ENGINE (GOOGLE SHEETS)
+       ========================================================================= */
+    async function fetchFromCloudDatabase(isManual = false) {
+      const url = getCloudApiUrl();
+      if (!url) return;
+
+      try {
+        if (isManual) showToast('กำลังดึงข้อมูลล่าสุดจาก Google Sheets...', 'info');
+        const res = await fetch(`${url}?action=getDocuments&t=${Date.now()}`);
+        const result = await res.json();
+
+        if (result.status === 'success' && result.data && Array.isArray(result.data.documents)) {
+          if (result.data.documents.length > 0) {
+            documents = result.data.documents;
+            saveDocumentsLocally();
+          }
+          if (result.data.config) {
+            if (result.data.config.academicYear) {
+              try { localStorage.setItem('school_academic_year', result.data.config.academicYear); } catch (e) {}
+              updateAcademicYearDisplay();
+            }
+            if (result.data.config.adminPasscode) {
+              try { localStorage.setItem('school_admin_custom_passcode', result.data.config.adminPasscode); } catch (e) {}
+            }
+          }
+          updateCategoryCounts();
+          renderDashboardFeatured();
+          renderRepository();
+          renderAdminTable();
+          if (isManual) showToast('ซิงค์ข้อมูลจาก Google Sheets สำเร็จ!', 'success');
+        }
+      } catch (err) {
+        if (isManual) showToast('ไม่สามารถเชื่อมต่อ Google Sheets ได้ กำลังใช้ข้อมูลในเครื่อง', 'info');
+      }
+    }
+
+    function updateCloudStatusUI() {
+      const btnAction = document.getElementById('btn-cloud-db-action');
+      if (btnAction) {
+        if (isCloudConnected()) {
+          btnAction.className = 'px-3.5 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-semibold border border-indigo-200 transition flex items-center gap-1.5 active:scale-95';
+          btnAction.innerHTML = '<i class="fa-solid fa-database text-indigo-600"></i> <span>ตั้งค่าฐานข้อมูลกลาง</span>';
+        } else {
+          btnAction.className = 'px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95';
+          btnAction.innerHTML = '<i class="fa-solid fa-database text-slate-600"></i> <span>เชื่อมต่อฐานข้อมูลกลาง</span>';
+        }
+      }
+    }
+
+    function openCloudDbModal() {
+      if (!isAdminLoggedIn) return openAdminLoginModal();
+      document.getElementById('input-cloud-api-url').value = getCloudApiUrl();
+      const resBox = document.getElementById('cloud-test-result');
+      resBox.classList.add('hidden');
+      
+      const disBtn = document.getElementById('btn-disconnect-cloud');
+      if (isCloudConnected()) disBtn.classList.remove('hidden');
+      else disBtn.classList.add('hidden');
+
+      document.getElementById('cloud-db-modal').classList.remove('hidden');
+    }
+
+    function closeCloudDbModal() {
+      document.getElementById('cloud-db-modal').classList.add('hidden');
+    }
+
+    async function testCloudConnection() {
+      const url = document.getElementById('input-cloud-api-url').value.trim();
+      const resBox = document.getElementById('cloud-test-result');
+      resBox.classList.remove('hidden');
+
+      if (!url || !url.startsWith('http')) {
+        resBox.className = 'p-3 rounded-xl text-xs font-semibold bg-red-50 text-red-700 border border-red-200';
+        resBox.innerHTML = '<i class="fa-solid fa-circle-exclamation mr-1"></i> กรุณากรอก Web App URL ให้ถูกต้อง (ขึ้นต้นด้วย https://)';
+        return;
+      }
+
+      resBox.className = 'p-3 rounded-xl text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-200';
+      resBox.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลังทดสอบการเชื่อมต่อไปยัง Google Sheets...';
+
+      try {
+        const res = await fetch(`${url}?action=getDocuments&t=${Date.now()}`);
+        const data = await res.json();
+        if (data.status === 'success') {
+          resBox.className = 'p-3 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
+          resBox.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> เชื่อมต่อสำเร็จ! พบข้อมูล ${data.data.documents.length} รายการใน Google Sheets`;
+        } else {
+          resBox.className = 'p-3 rounded-xl text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200';
+          resBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> ตอบกลับแต่พบข้อผิดพลาด: ${data.message || 'ไม่ทราบสาเหตุ'}`;
+        }
+      } catch (err) {
+        resBox.className = 'p-3 rounded-xl text-xs font-semibold bg-red-50 text-red-700 border border-red-200';
+        resBox.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1"></i> เชื่อมต่อไม่สำเร็จ: กรุณาตรวจสอบว่าเลือกสิทธิ์เป็น 'ทุกคน (Anyone)' ในหน้า Deploy Apps Script หรือยัง`;
+      }
+    }
+
+    async function saveCloudConnection() {
+      const url = document.getElementById('input-cloud-api-url').value.trim();
+      if (!url || !url.startsWith('http')) {
+        showToast('กรุณากรอก Web App URL ให้ถูกต้อง', 'info');
+        return;
+      }
+
+      try { localStorage.setItem('school_cloud_api_url', url); } catch (e) {}
+      updateCloudStatusUI();
+      closeCloudDbModal();
+      showToast('บันทึกการตั้งค่า Google Sheets แล้ว กำลังซิงค์ข้อมูล...', 'success');
+      await fetchFromCloudDatabase(true);
+    }
+
+    function disconnectCloudDb() {
+      if (confirm('ต้องการยกเลิกการเชื่อมต่อกับ Google Sheets และกลับไปใช้ฐานข้อมูลในเครื่องใช่หรือไม่?')) {
+        try { localStorage.removeItem('school_cloud_api_url'); } catch (e) {}
+        updateCloudStatusUI();
+        closeCloudDbModal();
+        showToast('ยกเลิกการเชื่อมต่อ Google Sheets แล้ว', 'info');
+      }
+    }
+
+    /* =========================================================================
+       INITIALIZATION
+       ========================================================================= */
     document.addEventListener('DOMContentLoaded', () => {
       initData();
       updateAcademicYearDisplay();
@@ -1352,7 +1570,6 @@
       const sideRepo = document.getElementById('side-nav-repository');
       const topIndicator = document.getElementById('top-view-indicator');
 
-      // Mobile Bottom Bar Tabs
       const mobDash = document.getElementById('mobile-tab-dashboard');
       const mobRepo = document.getElementById('mobile-tab-repository');
       const mobAdmin = document.getElementById('mobile-tab-admin');
@@ -1481,7 +1698,7 @@
       document.getElementById('change-password-modal').classList.add('hidden');
     }
 
-    function handleChangeAdminPassword(e) {
+    async function handleChangeAdminPassword(e) {
       e.preventDefault();
       const curr = document.getElementById('pwd-current').value.trim();
       const next = document.getElementById('pwd-new').value.trim();
@@ -1507,6 +1724,17 @@
       try { localStorage.setItem('school_admin_custom_passcode', next); } catch (err) {}
       closeChangePasswordModal();
       showToast('เปลี่ยนรหัสผ่านผู้ดูแลสำเร็จเรียบร้อย', 'success');
+
+      if (isCloudConnected()) {
+        try {
+          fetch(getCloudApiUrl(), {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'changeAdminPassword', newPassword: next })
+          });
+        } catch (err) {}
+      }
     }
 
     function resetToDefaultPassword() {
@@ -1843,7 +2071,13 @@
 
       currentPreviewDoc = doc;
       doc.views = (doc.views || 0) + 1;
-      saveDocuments();
+      saveDocumentsLocally();
+
+      if (isCloudConnected()) {
+        try {
+          fetch(`${getCloudApiUrl()}?action=incrementView&id=${doc.id}&t=${Date.now()}`, { mode: 'no-cors' });
+        } catch (e) {}
+      }
 
       document.getElementById('preview-doc-title').innerText = doc.title;
       document.getElementById('preview-doc-meta').innerText = `${getCategoryName(doc.category)} • ${doc.subcategory} • ${doc.size}`;
@@ -1886,11 +2120,17 @@
       if (!doc) return;
 
       doc.downloads = (doc.downloads || 0) + 1;
-      saveDocuments();
+      saveDocumentsLocally();
       updateCategoryCounts();
       renderDashboardFeatured();
       renderRepository();
       renderAdminTable();
+
+      if (isCloudConnected()) {
+        try {
+          fetch(`${getCloudApiUrl()}?action=incrementDownload&id=${doc.id}&t=${Date.now()}`, { mode: 'no-cors' });
+        } catch (e) {}
+      }
 
       const element = document.createElement('a');
       const fileContent = `=== ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัลสถานศึกษา ===\n\nชื่อเอกสาร: ${doc.title}\nฝ่ายบริหารงาน: ${getCategoryName(doc.category)}\nหมวดหมู่ย่อย: ${doc.subcategory}\nประเภทไฟล์: ${doc.type}\nวันที่: ${doc.date}\nปีการศึกษา: ${getAcademicYear()}\n\n--- คำอธิบาย ---\n${doc.description}\n\n${doc.contentSample || ''}\n\n(ดาวน์โหลดจากระบบคลังเอกสารดิจิทัล TT001)`;
@@ -2096,7 +2336,7 @@
       });
     }
 
-    function handleSaveDocument(e) {
+    async function handleSaveDocument(e) {
       e.preventDefault();
       if (!isAdminLoggedIn) return openAdminLoginModal();
 
@@ -2109,7 +2349,11 @@
       const desc = document.getElementById('form-doc-desc').value.trim();
       const tags = document.getElementById('form-doc-tags').value.split(/[,#]/).map(t => t.trim()).filter(t => t.length > 0);
 
+      let savedDoc = null;
+      let actionType = 'addDocument';
+
       if (editId) {
+        actionType = 'editDocument';
         const doc = documents.find(d => d.id === editId);
         if (doc) {
           doc.title = title;
@@ -2119,9 +2363,11 @@
           doc.size = size;
           doc.description = desc;
           doc.tags = tags;
+          savedDoc = doc;
           showToast('บันทึกการแก้ไขแล้ว', 'success');
         }
       } else {
+        actionType = 'addDocument';
         const newDoc = {
           id: `DOC-${String(documents.length + 1).padStart(3, '0')}`,
           title, category, subcategory, type, size,
@@ -2132,18 +2378,31 @@
           contentSample: `เอกสาร ${title} จัดทำขึ้นเพื่อใช้ในการปฏิบัติงานสถานศึกษา`
         };
         documents.unshift(newDoc);
+        savedDoc = newDoc;
         showToast('เพิ่มเอกสารเข้าสู่ระบบสำเร็จ', 'success');
       }
 
-      saveDocuments();
+      saveDocumentsLocally();
       closeUploadModal();
       updateCategoryCounts();
       renderDashboardFeatured();
       renderRepository();
       renderAdminTable();
+
+      // Cloud Sync
+      if (isCloudConnected() && savedDoc) {
+        try {
+          fetch(getCloudApiUrl(), {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: actionType, document: savedDoc })
+          });
+        } catch (err) {}
+      }
     }
 
-    function confirmDeleteDoc(docId) {
+    async function confirmDeleteDoc(docId) {
       if (!isAdminLoggedIn) return openAdminLoginModal();
       const doc = documents.find(d => d.id === docId);
       if (!doc) return;
@@ -2151,13 +2410,24 @@
       if (confirm(`ต้องการลบ "${doc.title}"?`)) {
         documents = documents.filter(d => d.id !== docId);
         favorites = favorites.filter(id => id !== docId);
-        saveDocuments();
+        saveDocumentsLocally();
         saveFavorites();
         updateCategoryCounts();
         renderDashboardFeatured();
         renderRepository();
         renderAdminTable();
         showToast('ลบเอกสารออกจากระบบแล้ว', 'info');
+
+        if (isCloudConnected()) {
+          try {
+            fetch(getCloudApiUrl(), {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'deleteDocument', id: docId })
+            });
+          } catch (err) {}
+        }
       }
     }
 
