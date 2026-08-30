@@ -1051,7 +1051,7 @@
   <!-- ================= JAVASCRIPT LOGIC WITH CLOUD & LOCAL HYBRID SYNC ================= -->
   <script>
     const DEFAULT_MASTER_PASSWORDS = ["admin1234", "2569", "school2569"];
-    const DEFAULT_CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxpoT1Cb3glsu4_vYW_n-y93A0GVtV09OhSRVnQA8oHK8c8A2f6FptkTJi3fhHoIfiB/exec";
+    const DEFAULT_CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbyrZNJ5bvBhN2LIeA-r7s1EclO_5OjZQtjhyomyvslTD9Iq4zM7jE_qpM999e2pRDG1/exec";
 
     function getCloudApiUrl() {
       try { 
@@ -2762,12 +2762,14 @@
 
       // Cloud Sync (GET with encoded params for 100% CORS safety across all browsers)
       if (isCloudConnected() && savedDoc) {
-        sendCloudCommand(actionType, { document: savedDoc }).then((res) => {
-          if (res && res.status === 'success') {
-            showToast(actionType === 'editDocument' ? 'บันทึกการแก้ไขใน Google Sheets สำเร็จ' : 'บันทึกเอกสารลง Google Sheets สำเร็จ', 'success');
-          }
-          setTimeout(() => fetchFromCloudDatabase(false), 600);
-        });
+        showToast('กำลังบันทึกข้อมูลไปยัง Google Sheets...', 'info');
+        const res = await sendCloudCommand(actionType, { document: savedDoc });
+        if (res && res.status === 'success') {
+          showToast(actionType === 'editDocument' ? 'บันทึกการแก้ไขใน Google Sheets สำเร็จ' : 'บันทึกเอกสารลง Google Sheets สำเร็จ', 'success');
+        } else {
+          showToast(`บันทึกในเครื่องแล้ว (${res ? res.message : 'กรุณาอัปเดตเวอร์ชัน Google Apps Script'})`, 'info');
+        }
+        setTimeout(() => fetchFromCloudDatabase(false), 500);
       }
     }
 
@@ -2776,27 +2778,31 @@
       const doc = documents.find(d => d.id === docId);
       if (!doc) return;
 
-      if (confirm(`ต้องการลบ "${doc.title}"?`)) {
-        documents = documents.filter(d => d.id !== docId);
-        favorites = favorites.filter(id => id !== docId);
-        await deleteFileBlob(docId);
-        saveDocumentsLocally();
-        saveFavorites();
-        updateCategoryCounts();
-        renderDashboardFeatured();
-        renderRepository();
-        renderAdminTable();
-        showToast('ลบเอกสารออกจากระบบแล้ว กำลังอัปเดต Google Sheets...', 'info');
+      if (!confirm(`ต้องการลบ "${doc.title}"?`)) return;
 
-        // Cloud Sync (GET with encoded params for 100% CORS safety across all browsers)
-        if (isCloudConnected()) {
-          sendCloudCommand('deleteDocument', { id: docId }).then((res) => {
-            if (res && res.status === 'success') {
-              showToast('ลบข้อมูลออกจาก Google Sheets เรียบร้อย', 'success');
-            }
-            setTimeout(() => fetchFromCloudDatabase(false), 600);
-          });
+      showToast(`กำลังลบ "${doc.title}" จาก Google Sheets...`, 'info');
+
+      if (isCloudConnected()) {
+        const res = await sendCloudCommand('deleteDocument', { id: docId });
+        if (res && res.status === 'success') {
+          showToast(`ลบข้อมูลออกจาก Google Sheets เรียบร้อย`, 'success');
+        } else {
+          showToast(`ลบในเครื่องแล้ว (${res ? res.message : 'กรุณาอัปเดตเวอร์ชัน Google Apps Script'})`, 'info');
         }
+      }
+
+      documents = documents.filter(d => d.id !== docId);
+      favorites = favorites.filter(id => id !== docId);
+      await deleteFileBlob(docId);
+      saveDocumentsLocally();
+      saveFavorites();
+      updateCategoryCounts();
+      renderDashboardFeatured();
+      renderRepository();
+      renderAdminTable();
+
+      if (isCloudConnected()) {
+        setTimeout(() => fetchFromCloudDatabase(false), 500);
       }
     }
 
