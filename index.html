@@ -981,7 +981,15 @@
         </div>
       </div>
 
-      <div class="flex-1 bg-slate-100 overflow-y-auto p-3 sm:p-8 flex justify-center custom-scrollbar">
+      <div class="flex-1 bg-slate-100 overflow-y-auto p-2 sm:p-6 flex flex-col items-center custom-scrollbar">
+        
+        <!-- MODE 1: Dedicated Interactive Document Viewer (For Real Attached PDF / Google Drive / Canva) -->
+        <div id="preview-interactive-view" class="hidden w-full h-full flex-col flex-1 max-w-5xl">
+          <div id="preview-interactive-header" class="mb-3"></div>
+          <div id="preview-interactive-frame-container" class="w-full flex-1 min-h-[550px] sm:min-h-[620px] rounded-2xl overflow-hidden border border-slate-300 shadow-xl bg-slate-200"></div>
+        </div>
+
+        <!-- MODE 2: Simulated School Paper Layout (For Official Seed Templates / Unattached Drafts) -->
         <div id="printArea" class="bg-white shadow-xl rounded-xl p-5 sm:p-12 sarabun-text w-full max-w-4xl min-h-[600px] border border-slate-200 text-slate-900 relative">
           
           <div class="text-center mb-6">
@@ -2364,13 +2372,21 @@
       setAttachedFile(file);
     }
 
+    let lastPickedFileName = '';
+
     function setAttachedFile(file) {
       currentAttachedFile = file;
       const cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+      lastPickedFileName = cleanName;
+      
       const titleInput = document.getElementById('form-doc-title');
-      if (!titleInput.value) {
+      const editId = document.getElementById('edit-doc-id').value;
+
+      // Auto-set title if creating new document or title is currently empty
+      if (!editId || !titleInput.value.trim()) {
         titleInput.value = cleanName;
       }
+
       const ext = file.name.split('.').pop().toUpperCase();
       const typeSelect = document.getElementById('form-doc-type');
       if (['PDF', 'DOCX', 'XLSX', 'PPTX'].includes(ext)) typeSelect.value = ext;
@@ -2382,17 +2398,31 @@
       const sizeKB = (file.size / 1024).toFixed(0);
       document.getElementById('form-doc-size').value = file.size > 1024 * 1024 ? `${sizeMB} MB` : `${sizeKB} KB`;
 
-      // Show attached file banner
+      // Show attached file banner with optional Title Sync action
       const box = document.getElementById('form-attached-file-box');
       const nameEl = document.getElementById('form-attached-file-name');
       if (box && nameEl) {
-        nameEl.innerText = `${file.name} (${file.size > 1024 * 1024 ? sizeMB + ' MB' : sizeKB + ' KB'})`;
+        nameEl.innerHTML = `
+          <div>
+            <span class="font-bold text-emerald-950">${file.name} (${file.size > 1024 * 1024 ? sizeMB + ' MB' : sizeKB + ' KB'})</span>
+            ${titleInput.value !== cleanName ? `<br><button type="button" onclick="syncDocTitleWithAttachedFile()" class="text-[11px] text-indigo-700 hover:text-indigo-950 font-bold underline cursor-pointer mt-0.5"><i class="fa-solid fa-pen-nib mr-1"></i> เปลี่ยนชื่อเอกสารเป็น "${cleanName}"</button>` : ''}
+          </div>
+        `;
         box.classList.remove('hidden');
+      }
+    }
+
+    function syncDocTitleWithAttachedFile() {
+      if (lastPickedFileName) {
+        document.getElementById('form-doc-title').value = lastPickedFileName;
+        showToast(`เปลี่ยนชื่อเรื่องเป็น "${lastPickedFileName}" เรียบร้อยแล้ว`, 'success');
+        if (currentAttachedFile) setAttachedFile(currentAttachedFile);
       }
     }
 
     function clearAttachedFile() {
       currentAttachedFile = null;
+      lastPickedFileName = '';
       const fileInput = document.getElementById('form-file-picker-input');
       if (fileInput) fileInput.value = '';
       const box = document.getElementById('form-attached-file-box');
@@ -2469,49 +2499,73 @@
       }
 
       const fileEntry = await getFileBlob(doc.id);
+      const interactiveView = document.getElementById('preview-interactive-view');
+      const interactiveHeader = document.getElementById('preview-interactive-header');
+      const interactiveFrame = document.getElementById('preview-interactive-frame-container');
+      const printArea = document.getElementById('printArea');
       const body = document.getElementById('preview-paper-content');
 
-      // Check 1: Google Drive / Docs / Canva Live Interactive Preview
+      // MODE 1: Google Drive / Docs / Canva Live Interactive Preview
       const embedUrl = getEmbeddableUrl(doc.fileUrl);
       if (embedUrl) {
-        body.innerHTML = `
-          <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-900 mb-3 shadow-xs">
-            <span class="font-bold flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-down text-emerald-600 text-sm"></i> ไฟล์ต้นฉบับออนไลน์ (Google Drive / คลังไฟล์)</span>
-            <a href="${doc.fileUrl}" target="_blank" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-xs">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดดูเต็มจอ
+        printArea.classList.add('hidden');
+        interactiveView.classList.remove('hidden');
+        interactiveView.classList.add('flex');
+
+        interactiveHeader.innerHTML = `
+          <div class="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm shrink-0">
+                <i class="fa-solid fa-cloud"></i>
+              </div>
+              <div class="min-w-0">
+                <h4 class="font-bold text-slate-900 truncate">${doc.title}</h4>
+                <p class="text-[11px] text-slate-500 truncate">ลิงก์ต้นฉบับออนไลน์ • ${getCategoryName(doc.category)}</p>
+              </div>
+            </div>
+            <a href="${doc.fileUrl}" target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-md shadow-emerald-600/20 shrink-0">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>เปิดดูเต็มจอ</span>
             </a>
           </div>
-          <div class="relative w-full h-[520px] rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100 mb-3">
-            <iframe src="${embedUrl}" class="w-full h-full border-0" allow="autoplay" loading="lazy"></iframe>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
-            <p class="font-bold text-slate-800"><i class="fa-solid fa-circle-info text-indigo-600 mr-1"></i> คำอธิบาย:</p>
-            <p>${doc.description || 'เอกสารทางการศึกษา'}</p>
-          </div>
         `;
+        interactiveFrame.innerHTML = `<iframe src="${embedUrl}" class="w-full h-full border-0 min-h-[550px]" allow="autoplay" loading="lazy"></iframe>`;
         document.getElementById('preview-modal').classList.remove('hidden');
         return;
       }
 
-      // Check 2: Uploaded PDF Binary Live Viewer
+      // MODE 2: Real Attached PDF Document Viewer (Full Dedicated Reader)
       if (fileEntry && fileEntry.blob && (fileEntry.fileType === 'application/pdf' || (fileEntry.fileName && fileEntry.fileName.toLowerCase().endsWith('.pdf')))) {
         const blobUrl = URL.createObjectURL(fileEntry.blob);
-        body.innerHTML = `
-          <div class="p-3 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-center justify-between text-xs text-indigo-900 mb-3 shadow-xs">
-            <span class="font-bold flex items-center gap-2"><i class="fa-solid fa-file-pdf text-rose-600 text-sm"></i> ไฟล์ PDF ต้นฉบับจริง: ${fileEntry.fileName || doc.fileName || doc.title}</span>
-            <button onclick="handleDownloadDoc('${doc.id}')" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-xs">
-              <i class="fa-solid fa-download"></i> ดาวน์โหลดไฟล์จริง
+        printArea.classList.add('hidden');
+        interactiveView.classList.remove('hidden');
+        interactiveView.classList.add('flex');
+
+        interactiveHeader.innerHTML = `
+          <div class="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-8 h-8 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-sm shrink-0">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+              <div class="min-w-0">
+                <h4 class="font-bold text-slate-900 truncate">${doc.title}</h4>
+                <p class="text-[11px] text-slate-500 truncate">ไฟล์แนบจริง: <b>${fileEntry.fileName || doc.fileName || doc.title}</b></p>
+              </div>
+            </div>
+            <button onclick="handleDownloadDoc('${doc.id}')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-600/20 shrink-0 cursor-pointer">
+              <i class="fa-solid fa-download"></i> <span>ดาวน์โหลดไฟล์ PDF จริง</span>
             </button>
           </div>
-          <div class="relative w-full h-[520px] rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100 mb-3">
-            <iframe src="${blobUrl}" class="w-full h-full border-0" loading="lazy"></iframe>
-          </div>
         `;
+        interactiveFrame.innerHTML = `<iframe src="${blobUrl}" class="w-full h-full border-0 min-h-[550px]" loading="lazy"></iframe>`;
         document.getElementById('preview-modal').classList.remove('hidden');
         return;
       }
 
-      // Check 3: Real attached Word / Excel / PowerPoint file banner + Paper Layout
+      // MODE 3: Simulated Official Paper Layout (For Seed Templates or Unattached Drafts)
+      interactiveView.classList.add('hidden');
+      interactiveView.classList.remove('flex');
+      printArea.classList.remove('hidden');
+
       let fileBadgeHtml = '';
       if (doc.fileUrl && doc.fileUrl.startsWith('http')) {
         fileBadgeHtml = `
