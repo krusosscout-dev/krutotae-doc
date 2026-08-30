@@ -648,19 +648,22 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
-              <button onclick="openUploadModal()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-1.5 active:scale-95">
+              <button onclick="openUploadModal()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
                 <i class="fa-solid fa-cloud-arrow-up"></i> อัปโหลดเอกสารใหม่
               </button>
-              <button onclick="openCloudDbModal()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95" id="btn-cloud-db-action">
+              <button onclick="openCloudDbModal()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95 cursor-pointer" id="btn-cloud-db-action">
                 <i class="fa-solid fa-database text-indigo-600"></i> <span>เชื่อมต่อฐานข้อมูลกลาง</span>
               </button>
-              <button onclick="openSetAcademicYearModal()" class="px-3.5 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-semibold border border-indigo-200 transition flex items-center gap-1.5 active:scale-95">
+              <button onclick="purgeAllDummyDocs()" class="px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl text-xs font-semibold border border-rose-200 transition flex items-center gap-1.5 active:scale-95 cursor-pointer" title="ล้างเอกสารจำลองทั้งหมด">
+                <i class="fa-solid fa-broom text-rose-600"></i> ล้างข้อมูลตัวอย่าง
+              </button>
+              <button onclick="openSetAcademicYearModal()" class="px-3.5 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-semibold border border-indigo-200 transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
                 <i class="fa-regular fa-calendar-check"></i> ตั้งค่าปีการศึกษา
               </button>
-              <button onclick="openChangePasswordModal()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95">
+              <button onclick="openChangePasswordModal()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
                 <i class="fa-solid fa-key text-amber-500"></i> เปลี่ยนรหัสผ่าน
               </button>
-              <button onclick="exportDataJSON()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95">
+              <button onclick="exportDataJSON()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
                 <i class="fa-solid fa-download"></i> สำรองข้อมูล
               </button>
             </div>
@@ -1047,6 +1050,16 @@
       <form onsubmit="handleSaveDocument(event)" class="p-5 sm:p-6 overflow-y-auto custom-scrollbar flex-1 text-xs space-y-4">
         <input type="hidden" id="edit-doc-id" value="">
 
+        <!-- Mode Indicator Banner -->
+        <div id="upload-modal-banner" class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+          <div id="upload-modal-mode-text" class="flex items-center gap-1.5 font-bold text-emerald-700">
+            <i class="fa-solid fa-file-circle-plus text-emerald-600"></i> โหมด: เพิ่มเอกสารใหม่เข้าระบบ
+          </div>
+          <button type="button" id="upload-modal-reset-btn" onclick="openUploadModal()" class="hidden text-[11px] text-indigo-600 hover:text-indigo-800 underline font-semibold cursor-pointer">
+            <i class="fa-solid fa-arrow-rotate-left mr-1"></i> ล้างฟอร์มสร้างเป็นเอกสารใหม่
+          </button>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
           
           <!-- LEFT COLUMN: FILE ATTACHMENT & SOURCE (col-span-5) -->
@@ -1295,233 +1308,8 @@
         }
       }
     }
-
-    const DEFAULT_DOCUMENTS = [
-      {
-        id: "DOC-001",
-        title: "หลักสูตรสถานศึกษา พุทธศักราช 2569 (ฉบับปรับปรุง)",
-        category: "academic",
-        subcategory: "หลักสูตรสถานศึกษา / โครงสร้างเวลาเรียน",
-        type: "PDF",
-        size: "4.8 MB",
-        date: "2026-05-10",
-        downloads: 142,
-        views: 380,
-        tags: ["หลักสูตร 2569", "โครงสร้างเวลาเรียน", "วิชาการ", "ทุกระดับชั้น"],
-        description: "เอกสารหลักสูตรแกนกลางสถานศึกษา โครงสร้างเวลาเรียน 8 กลุ่มสาระ และกิจกรรมพัฒนาผู้เรียน ประจำปีการศึกษา 2569",
-        contentSample: "หลักสูตรสถานศึกษา มุ่งพัฒนาผู้เรียนทุกคนให้เป็นมนุษย์ที่มีความสมดุลทั้งด้านร่างกาย ความรู้ คุณธรรม มีจิตสำนึกในความเป็นพลเมืองไทยและเป็นพลโลก ยึดมั่นในการปกครองตามระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข มีทักษะการคิดวิเคราะห์ คิดสร้างสรรค์ และมีทักษะชีวิตตามบริบทของสถานศึกษา"
-      },
-      {
-        id: "DOC-002",
-        title: "แผนการจัดการเรียนรู้ Active Learning สังคมศึกษา ป.4 (รูปแบบ 4 คิด)",
-        category: "academic",
-        subcategory: "สื่อการสอน / แผนการจัดการเรียนรู้",
-        type: "DOCX",
-        size: "3.2 MB",
-        date: "2026-05-18",
-        downloads: 215,
-        views: 520,
-        tags: ["Active Learning", "รูปแบบ 4 คิด", "ป.4", "สังคมศึกษา", "แผนการสอน"],
-        description: "แผนการจัดการเรียนรู้เชิงรุกบูรณาการกระบวนการ 4 คิด (คิดคล่อง คิดยืดหยุ่น คิดริเริ่ม คิดละเอียดลออ) หน่วยการเรียนรู้ประวัติศาสตร์ท้องถิ่น",
-        contentSample: "แผนการจัดการเรียนรู้เชิงรุก (Active Learning) บูรณาการกระบวนการ '4 คิด' ประกอบด้วย: 1. ขั้นคิดคล่อง (Fluency Thinking) ระดมความคิดเห็นจากภาพจำลองชุมชน 2. ขั้นคิดยืดหยุ่น (Flexibility Thinking) เชื่อมโยงบทบาทหน้าที่ของบุคคลในอดีตกับปัจจุบัน 3. ขั้นคิดริเริ่ม (Originality Thinking) ออกแบบนวัตกรรมการอนุรักษ์ 4. ขั้นคิดละเอียดลออ (Elaboration Thinking) จัดทำผังมโนทัศน์สรุปบทเรียน"
-      },
-      {
-        id: "DOC-003",
-        title: "แบบฟอร์มนิเทศการจัดการเรียนการสอนออนไลน์และในชั้นเรียน ปีการศึกษา 2569",
-        category: "academic",
-        subcategory: "แบบฟอร์มนิเทศการสอนออนไลน์",
-        type: "PDF",
-        size: "1.2 MB",
-        date: "2026-05-20",
-        downloads: 98,
-        views: 240,
-        tags: ["แบบฟอร์ม", "นิเทศการสอน", "วิชาการ", "การประเมิน"],
-        description: "แบบบันทึกการนิเทศการจัดการเรียนรู้ภายในสถานศึกษา ทั้งรูปแบบ On-Site และ Online พร้อมเกณฑ์รูบริกส์การประเมิน 5 ระดับ",
-        contentSample: "แบบประเมินและนิเทศการจัดการเรียนรู้: ประเด็นการประเมินประกอบด้วย การจัดทำแผนการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ, การจัดกิจกรรมการเรียนรู้แบบ Active Learning, การใช้สื่อและเทคโนโลยีดิจิทัล, การวัดและประเมินผลตามสภาพจริง และการสร้างบรรยากาศที่ส่งเสริมการเรียนรู้เชิงบวก"
-      },
-      {
-        id: "DOC-004",
-        title: "แผนการจัดการเรียนรู้สะเต็มศึกษา (STEM Education) ป.6 เรื่อง พลังงานสะอาด",
-        category: "academic",
-        subcategory: "สื่อการสอน / แผนการจัดการเรียนรู้",
-        type: "PPTX",
-        size: "8.5 MB",
-        date: "2026-06-02",
-        downloads: 130,
-        views: 290,
-        tags: ["STEM", "วิทยาศาสตร์", "ป.6", "Active Learning", "สื่อนำเสนอ"],
-        description: "ชุดสไลด์และแผนกิจกรรมการทดลองพลังงานแสงอาทิตย์และกังหันลม สำหรับนักเรียนชั้นประถมศึกษาปีที่ 6",
-        contentSample: "กระบวนการจัดการเรียนรู้ STEM Education: S (Science) ศึกษาการเปลี่ยนรูปพลังงานแสงอาทิตย์เป็นพลังงานไฟฟ้า, T (Technology) สืบค้นข้อมูลเซลล์สุริยะ, E (Engineering) ออกแบบโครงสร้างแบบจำลองบ้านพลังงานสะอาด, M (Mathematics) คำนวณอัตราการผลิตกระแสไฟฟ้าและพื้นที่รับแสง"
-      },
-      {
-        id: "DOC-005",
-        title: "แบบฟอร์มขออนุญาตลาป่วย - ลากิจส่วนตัว ข้าราชการครูและบุคลากรทางการศึกษา",
-        category: "personnel",
-        subcategory: "แบบฟอร์มขออนุญาต (ลากิจ, ลาป่วย, ไปราชการ)",
-        type: "PDF",
-        size: "650 KB",
-        date: "2026-05-01",
-        downloads: 410,
-        views: 890,
-        tags: ["แบบฟอร์มลา", "ลากิจ", "ลาป่วย", "งานบุคลากร", "ระเบียบปฏิบัติ"],
-        description: "แบบฟอร์มใบลาตามระเบียบสำนักนายกรัฐมนตรีว่าด้วยการลาของข้าราชการ พ.ศ. 2555 พร้อมช่องลงนามมอบหมายงานสอนแทน",
-        contentSample: "บันทึกข้อความ ส่วนราชการ สถานศึกษา เรื่อง ขอลา (ป่วย / กิจส่วนตัว) เรียน ผู้อำนวยการสถานศึกษา ด้วยข้าพเจ้า มีความประสงค์ขอลาเนื่องจาก... ข้าพเจ้าได้มอบหมายงานในหน้าที่และมอบหมายให้คุณครู... ปฏิบัติการสอนแทนเป็นที่เรียบร้อยแล้ว"
-      },
-      {
-        id: "DOC-006",
-        title: "แบบฟอร์มขออนุมัติเดินทางไปราชการ / เข้ารับการฝึกอบรมพัฒนาวิชาชีพ",
-        category: "personnel",
-        subcategory: "แบบฟอร์มขออนุญาต (ลากิจ, ลาป่วย, ไปราชการ)",
-        type: "DOCX",
-        size: "720 KB",
-        date: "2026-05-05",
-        downloads: 185,
-        views: 430,
-        tags: ["ไปราชการ", "อบรมครู", "งานบุคลากร", "แบบฟอร์ม"],
-        description: "แบบขออนุมัติเดินทางไปปฏิบัติราชการ ขอใช้ยานพาหนะ และขอเบิกจ่ายค่าใช้จ่ายในการเดินทางไปราชการ",
-        contentSample: "แบบขออนุมัติเดินทางไปปฏิบัติราชการ: ข้าพเจ้ามีความประสงค์ขออนุมัติเดินทางไปราชการเพื่อเข้าร่วมการอบรมเชิงปฏิบัติการพัฒนาสื่อนวัตกรรม ณ สำนักงานเขตพื้นที่การศึกษา โดยขออนุมัติเดินทางโดยยานพาหนะส่วนบุคคล / รถยนต์ส่วนกลาง และขอเบิกจ่ายงบประมาณตามระเบียบทางราชการ"
-      },
-      {
-        id: "DOC-007",
-        title: "คำสั่งสถานศึกษา ที่ 012/2569 เรื่อง แต่งตั้งคณะกรรมการปฏิบัติหน้าที่เวรยาม",
-        category: "personnel",
-        subcategory: "คำสั่งโรงเรียน / ประกาศ / ระเบียบการ",
-        type: "PDF",
-        size: "1.4 MB",
-        date: "2026-05-12",
-        downloads: 160,
-        views: 350,
-        tags: ["คำสั่ง 2569", "เวรยาม", "งานบุคลากร", "ประกาศ"],
-        description: "คำสั่งแต่งตั้งครูเวรประจำวัน เวรกลางวันและเวรกลางคืน เพื่อรักษาความปลอดภัยสถานที่ราชการ ประจำภาคเรียนที่ 1/2569",
-        contentSample: "คำสั่งสถานศึกษา ที่ 012/2569 เพื่อให้การดูแลรักษาความสงบเรียบร้อยและความปลอดภัยของทรัพย์สินทางราชการดำเนินไปด้วยความเรียบร้อย จึงแต่งตั้งคณะกรรมการปฏิบัติหน้าที่เวรยามประจำวันและผู้ตรวจเวร โดยให้ปฏิบัติหน้าที่อย่างเคร่งครัดตามระเบียบสำนักนายกรัฐมนตรี"
-      },
-      {
-        id: "DOC-008",
-        title: "แบบเสนอขอรับรางวัล 'คุรุชนคนคุณธรรม' ประจำปีการศึกษา 2569",
-        category: "personnel",
-        subcategory: "แบบฟอร์มเสนอขอรับรางวัล",
-        type: "DOCX",
-        size: "2.8 MB",
-        date: "2026-06-10",
-        downloads: 230,
-        views: 510,
-        tags: ["คุรุชนคนคุณธรรม", "รางวัลครู", "งานบุคลากร", "นวัตกรรมสร้างสรรค์"],
-        description: "แบบรายงานประวัติและผลงานเพื่อขอรับการประเมินรางวัลคุรุชนคนคุณธรรม โครงการโรงเรียนคุณธรรม สพฐ. 5 ด้านคุณธรรมเป้าหมาย",
-        contentSample: "แบบประเมินรางวัลคุรุชนคนคุณธรรม (ประเภทครูผู้สอน): ประกอบด้วยการประเมินคุณธรรม 5 ด้าน ได้แก่ 1. ความพอเพียง 2. ความกตัญญู 3. ความซื่อสัตย์สุจริต 4. ความรับผิดชอบ 5. อุดมการณ์คุณธรรม พร้อมเอกสารหลักฐานเชิงประจักษ์และการรับรองจากผู้บริหาร"
-      },
-      {
-        id: "DOC-009",
-        title: "แบบเสนอผลงานนวัตกรรมสร้างสรรค์คนดี (ด้านการบริหารจัดการและการจัดการเรียนรู้)",
-        category: "personnel",
-        subcategory: "แบบฟอร์มเสนอขอรับรางวัล",
-        type: "DOCX",
-        size: "3.5 MB",
-        date: "2026-06-15",
-        downloads: 175,
-        views: 390,
-        tags: ["นวัตกรรมสร้างสรรค์", "คนดี", "งานบุคลากร", "วิชาการ"],
-        description: "เล่มรายงานนวัตกรรมการจัดการเรียนรู้เพื่อส่งเสริมคุณธรรมจริยธรรมของนักเรียนตามกรอบโรงเรียนคุณธรรม",
-        contentSample: "โครงร่างรายงานนวัตกรรมสร้างสรรค์คนดี: ความสำคัญของผลงานนวัตกรรม, วัตถุประสงค์และเป้าหมายของการดำเนินงาน, กระบวนการพัฒนานวัตกรรม (PDCA), ผลการดำเนินงานและประโยชน์ที่ได้รับ, ปัจจัยความสำเร็จ, บทเรียนที่ได้รับ (Lesson Learned) และการเผยแพร่ผลงาน"
-      },
-      {
-        id: "DOC-010",
-        title: "คู่มือการดำเนินงานสภานักเรียนและส่งเสริมประชาธิปไตยในสถานศึกษา",
-        category: "student",
-        subcategory: "คู่มือการดำเนินงาน (สภานักเรียน, ความปลอดภัย)",
-        type: "PDF",
-        size: "3.1 MB",
-        date: "2026-05-14",
-        downloads: 110,
-        views: 260,
-        tags: ["สภานักเรียน", "ประชาธิปไตย", "กิจการนักเรียน", "คู่มือ"],
-        description: "คู่มือขั้นตอนการเลือกตั้งคณะกรรมการสภานักเรียน บทบาทหน้าที่ ธรรมนูญสภานักเรียน และการจัดกิจกรรมจิตอาสาพัฒนาโรงเรียน",
-        contentSample: "คู่มือสภานักเรียนสถานศึกษา: ส่งเสริมให้นักเรียนได้เรียนรู้การมีส่วนร่วมตามวิถีประชาธิปไตย การเลือกตั้งประธานนักเรียน การประชุมสภานักเรียน การจัดทำโครงการส่งเสริมวินัย และการร่วมมือกับคณะครูในการจัดกิจกรรมหน้าเสาธง"
-      },
-      {
-        id: "DOC-011",
-        title: "คู่มือมาตรการความปลอดภัยในสถานศึกษา 3 ด้าน (ภัยธรรมชาติ, อุบัติเหตุ, ความรุนแรง)",
-        category: "student",
-        subcategory: "คู่มือการดำเนินงาน (สภานักเรียน, ความปลอดภัย)",
-        type: "PDF",
-        size: "2.6 MB",
-        date: "2026-05-15",
-        downloads: 145,
-        views: 310,
-        tags: ["ความปลอดภัย", "แผนเผชิญเหตุ", "กิจการนักเรียน", "คู่มือ"],
-        description: "แนวทางปฏิบัติการป้องกันภัยในโรงเรียน แผนเผชิญเหตุฉุกเฉิน และเบอร์โทรศัพท์ประสานงานหน่วยงานภายนอก",
-        contentSample: "มาตรการความปลอดภัยสถานศึกษา: 1. มาตรการป้องกันภัยธรรมชาติ (น้ำท่วม, วาตภัย) 2. มาตรการป้องกันอุบัติเหตุในโรงเรียนและการเดินทาง 3. มาตรการป้องกันภัยจากสารเสพติดและการกลั่นแกล้ง (Anti-Bullying) พร้อมแผนผังเส้นทางหนีไฟและจุดรวมพล"
-      },
-      {
-        id: "DOC-012",
-        title: "เอกสารและแบบรายงานการดำเนินโครงการโรงเรียนคุณธรรม สพฐ. ประจำปีการศึกษา 2569",
-        category: "student",
-        subcategory: "เอกสารและแบบรายงานโครงการโรงเรียนคุณธรรม",
-        type: "PDF",
-        size: "4.1 MB",
-        date: "2026-06-01",
-        downloads: 190,
-        views: 410,
-        tags: ["โรงเรียนคุณธรรม", "คุณธรรมอัตลักษณ์", "กิจการนักเรียน", "รายงานโครงการ"],
-        description: "ตารางคุณธรรมอัตลักษณ์ 'ซื่อสัตย์ รับผิดชอบ มีจิตอาสา' และแบบติดตามพฤติกรรมบ่งชี้เชิงบวกของนักเรียนทุกระดับชั้น",
-        contentSample: "รายงานผลการดำเนินโครงการโรงเรียนคุณธรรม สพฐ.: โครงสร้างคุณธรรมอัตลักษณ์ของสถานศึกษา ประกอบด้วย 3 คุณธรรมเป้าหมาย ได้แก่ ซื่อสัตย์ รับผิดชอบ และมีจิตอาสา โดยมีพฤติกรรมบ่งชี้เชิงบวกสำหรับนักเรียน ครู และบุคลากรทางการศึกษา พร้อมตารางประเมินผลรายภาคเรียน"
-      },
-      {
-        id: "DOC-013",
-        title: "แบบฟอร์มขออนุมัติจัดซื้อจัดจ้างพัสดุ / สื่อการเรียนการสอน (วงเงินไม่เกิน 5,000 บาท)",
-        category: "budget",
-        subcategory: "แบบฟอร์มขออนุมัติจัดซื้อจัดจ้าง",
-        type: "DOCX",
-        size: "820 KB",
-        date: "2026-05-08",
-        downloads: 320,
-        views: 680,
-        tags: ["จัดซื้อจัดจ้าง", "พัสดุ", "งบประมาณ", "แบบฟอร์ม"],
-        description: "บันทึกข้อความขออนุมัติจัดซื้อวัสดุการศึกษา ใบเสนอราคา และใบตรวจรับพัสดุสำหรับครูประจำชั้นและหัวหน้ากลุ่มสาระฯ",
-        contentSample: "บันทึกข้อความ ส่วนราชการ สถานศึกษา เรื่อง ขออนุมัติจัดซื้อวัสดุการศึกษา/สื่อการเรียนรู้ เรียน ผู้อำนวยการสถานศึกษา ด้วยกลุ่มสาระการเรียนรู้... มีความจำเป็นต้องจัดซื้อวัสดุการศึกษาเพื่อใช้ในการจัดกิจกรรมการเรียนการสอน จำนวน... รายการ รวมเป็นเงินทั้งสิ้น... บาท"
-      },
-      {
-        id: "DOC-014",
-        title: "รายงานสรุปผลการใช้จ่ายงบประมาณรายไตรมาส ปีงบประมาณ 2569",
-        category: "budget",
-        subcategory: "รายงานการใช้งบประมาณ",
-        type: "XLSX",
-        size: "1.5 MB",
-        date: "2026-06-30",
-        downloads: 95,
-        views: 220,
-        tags: ["รายงานงบประมาณ", "บัญชีการเงิน", "งบประมาณ", "พัสดุ"],
-        description: "สมุดบัญชีตาราง Excel สรุปยอดเงินอุดหนุนรายหัว ค่ากิจกรรมพัฒนาคุณภาพผู้เรียน และงบโครงการพัฒนาสถานศึกษา",
-        contentSample: "ตารางสรุปการใช้งบประมาณรายไตรมาส: บัญชีเงินอุดหนุนค่าใช้จ่ายรายหัวนักเรียน, บัญชีเงินกิจกรรมพัฒนาคุณภาพผู้เรียน (วิชาการ, ทัศนศึกษา, ICT), บัญชีเงินค่าเครื่องแบบและอุปกรณ์การเรียน, ยอดเงินคงเหลือยกไป และสถานะการเบิกจ่ายเปรียบเทียบกับแผนปฏิบัติการประจำปี"
-      },
-      {
-        id: "DOC-015",
-        title: "แบบฟอร์มขอเบิกจ่ายค่าใช้จ่ายในการเดินทางไปราชการ (ใบเบิกเงินสวัสดิการ)",
-        category: "budget",
-        subcategory: "แบบฟอร์มขออนุมัติจัดซื้อจัดจ้าง",
-        type: "PDF",
-        size: "910 KB",
-        date: "2026-05-09",
-        downloads: 210,
-        views: 460,
-        tags: ["เบิกเงิน", "ค่าเบี้ยเลี้ยง", "งบประมาณ", "ไปราชการ"],
-        description: "แบบใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ แบบ บก.111 พร้อมตารางคำนวณเบี้ยเลี้ยง ค่าที่พัก และค่ายานพาหนะ",
-        contentSample: "ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ (แบบ บก.111): ข้าพเจ้าขอเบิกค่าใช้จ่ายในการเดินทางไปราชการ ประกอบด้วย ค่าเบี้ยเลี้ยงเดินทาง... วัน, ค่าเช่าที่พัก... คืน, ค่ายานพาหนะ... บาท รวมเงินทั้งสิ้นที่ขอเบิก... บาท พร้อมแนบหลักฐานการจ่ายเงินและคำสั่งไปราชการ"
-      },
-      {
-        id: "DOC-016",
-        title: "สื่อการสอนสไลด์ Canva / PPT เรื่อง ประวัติศาสตร์และความเป็นมาของท้องถิ่น ป.5",
-        category: "academic",
-        subcategory: "สื่อการสอน / แผนการจัดการเรียนรู้",
-        type: "CANVA",
-        size: "Interactive",
-        date: "2026-06-18",
-        downloads: 165,
-        views: 410,
-        tags: ["Canva", "ประวัติศาสตร์", "ป.5", "สื่อการสอน", "ท้องถิ่น"],
-        description: "สื่อการสอนมัลติมีเดียมีภาพเคลื่อนไหวและควิซเกม Kahoot เชื่อมโยงประวัติศาสตร์ท้องถิ่นกับวิถีชีวิตชุมชนและศิลปวัฒนธรรม",
-        contentSample: "สื่อการเรียนรู้เชิงโต้ตอบ Canva: บทเรียนประวัติศาสตร์ท้องถิ่น สัมพันธ์กับยุคสมัย การตั้งถิ่นฐาน การค้าขายทางสายน้ำ ศิลปวัฒนธรรมท้องถิ่น และเกมตอบคำถามทดสอบความเข้าใจผ่าน QR Code ท้ายบทเรียน"
-      }
-    ];
+    // Clean Repository: No seed dummy documents
+    const DEFAULT_DOCUMENTS = [];
 
     const SUBCATEGORIES = {
       academic: [
@@ -1566,24 +1354,38 @@
         const stored = localStorage.getItem('school_docs_v6');
         if (stored) {
           const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            documents = parsed;
+          if (Array.isArray(parsed)) {
+            // Keep ONLY real files uploaded by users
+            const realDocs = parsed.filter(d => d.hasRealFile || (d.fileUrl && d.fileUrl.startsWith('http')) || (d.fileName && d.fileName.endsWith('.pdf')) || !d.id.startsWith('DOC-0'));
+            documents = realDocs;
           } else {
-            documents = [...DEFAULT_DOCUMENTS];
-            saveDocumentsLocally();
+            documents = [];
           }
         } else {
-          documents = [...DEFAULT_DOCUMENTS];
-          saveDocumentsLocally();
+          documents = [];
         }
       } catch (e) {
-        documents = [...DEFAULT_DOCUMENTS];
+        documents = [];
       }
+
+      saveDocumentsLocally();
 
       // Check Cloud DB
       updateCloudStatusUI();
       if (isCloudConnected()) {
         fetchFromCloudDatabase();
+      }
+    }
+
+    async function purgeAllDummyDocs() {
+      if (confirm('คุณต้องการล้างข้อมูลตัวอย่างจำลองทั้งหมด เพื่อเริ่มต้นลงเอกสารจริงใช่หรือไม่?')) {
+        documents = documents.filter(d => d.hasRealFile || (d.fileUrl && d.fileUrl.startsWith('http')) || (d.fileName && d.fileName.endsWith('.pdf')));
+        saveDocumentsLocally();
+        updateCategoryCounts();
+        renderDashboardFeatured();
+        renderRepository();
+        renderAdminTable();
+        showToast('ล้างข้อมูลตัวอย่างจำลองเรียบร้อยแล้ว', 'success');
       }
     }
 
@@ -2024,6 +1826,21 @@
     function renderDashboardFeatured() {
       const featured = [...documents].sort((a, b) => b.downloads - a.downloads).slice(0, 4);
       const container = document.getElementById('dashboard-featured-grid');
+      if (featured.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full bg-white rounded-2xl sm:rounded-3xl p-8 border border-slate-200 text-center space-y-3 shadow-card">
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
+              <i class="fa-solid fa-folder-plus"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-800">ยินดีต้อนรับสู่คลังเอกสารโรงเรียนบ้านห้วยติ่ง</h3>
+            <p class="text-xs text-slate-500 max-w-md mx-auto">ยังไม่มีเอกสารในคลัง คุณครูสามารถเริ่มต้นอัปโหลดเอกสารจริงฉบับแรกได้ทันที</p>
+            <button onclick="openUploadModal()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow transition active:scale-95 cursor-pointer">
+              <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> อัปโหลดเอกสารใหม่
+            </button>
+          </div>
+        `;
+        return;
+      }
       container.innerHTML = featured.map(doc => renderVisualDocCardHTML(doc)).join('');
     }
 
@@ -2897,6 +2714,13 @@
       document.getElementById('form-doc-content').value = '';
       document.getElementById('form-doc-tags').value = '';
       document.getElementById('form-doc-desc').value = '';
+      document.getElementById('form-doc-size').value = '1.5 MB';
+      
+      const bannerText = document.getElementById('upload-modal-mode-text');
+      const resetBtn = document.getElementById('upload-modal-reset-btn');
+      if (bannerText) bannerText.innerHTML = '<i class="fa-solid fa-file-circle-plus text-emerald-600"></i> <span class="text-emerald-700 font-bold">โหมด: เพิ่มเอกสารใหม่เข้าระบบ (สร้างรายการใหม่)</span>';
+      if (resetBtn) resetBtn.classList.add('hidden');
+
       clearAttachedFile();
       updateFormSubcategories();
       document.getElementById('upload-modal').classList.remove('hidden');
@@ -2920,13 +2744,18 @@
       document.getElementById('form-doc-tags').value = (doc.tags || []).join(', ');
       document.getElementById('form-doc-desc').value = doc.description || '';
 
+      const bannerText = document.getElementById('upload-modal-mode-text');
+      const resetBtn = document.getElementById('upload-modal-reset-btn');
+      if (bannerText) bannerText.innerHTML = `<i class="fa-solid fa-pen-to-square text-amber-600"></i> <span class="text-amber-800 font-bold">โหมด: กำลังแก้ไขเอกสารเดิม (รหัส ${doc.id}: ${doc.title})</span>`;
+      if (resetBtn) resetBtn.classList.remove('hidden');
+
       clearAttachedFile();
       const fileEntry = await getFileBlob(doc.id);
       if (fileEntry && fileEntry.blob) {
         const box = document.getElementById('form-attached-file-box');
         const nameEl = document.getElementById('form-attached-file-name');
         if (box && nameEl) {
-          nameEl.innerText = `${fileEntry.fileName || doc.fileName || doc.title} (ไฟล์เดิมที่แนบไว้)`;
+          nameEl.innerHTML = `<span class="font-bold text-emerald-950">${fileEntry.fileName || doc.fileName || doc.title} (ไฟล์เดิมที่แนบไว้)</span>`;
           box.classList.remove('hidden');
         }
       }
