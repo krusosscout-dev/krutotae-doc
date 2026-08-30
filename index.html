@@ -882,6 +882,9 @@
           <p id="preview-doc-meta" class="text-[10px] sm:text-xs text-slate-400 truncate">หมวดงานวิชาการ • 2.4 MB</p>
         </div>
         <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <a id="preview-open-link-btn" href="#" target="_blank" class="hidden items-center px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition gap-1 shadow-xs">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> <span class="hidden sm:inline">เปิดไฟล์ต้นฉบับ</span>
+          </a>
           <button onclick="printPreviewDocument()" class="hidden sm:inline-flex items-center px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs transition">
             <i class="fa-solid fa-print mr-1"></i> พิมพ์
           </button>
@@ -944,13 +947,37 @@
         <div>
           <label class="block font-bold text-slate-700 mb-1">ชื่อเอกสาร <span class="text-red-500">*</span></label>
           <input id="form-doc-title" required type="text" placeholder="เช่น แผนการจัดการเรียนรู้ Active Learning สังคมศึกษา ป.๔"
-                 class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium">
+                 class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
+        </div>
+
+        <!-- Attached File Info Banner -->
+        <div id="form-attached-file-box" class="hidden p-2.5 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-between gap-2 text-xs">
+          <div class="flex items-center gap-2 min-w-0">
+            <i class="fa-solid fa-paperclip text-indigo-600 text-sm shrink-0"></i>
+            <span id="form-attached-file-name" class="font-bold text-indigo-950 truncate">ไฟล์ที่แนบ</span>
+          </div>
+          <button type="button" onclick="clearAttachedFile()" class="text-red-500 hover:text-red-700 text-xs px-2 py-1 rounded hover:bg-red-50 font-bold shrink-0">
+            <i class="fa-solid fa-trash mr-1"></i> ลบไฟล์
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">เลือกไฟล์จากเครื่อง (ถ้ามี):</label>
+            <input type="file" id="form-file-picker-input" onchange="handleModalFilePicker(event)"
+                   class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">หรือ ลิงก์ออนไลน์ (Google Drive / Canva / คลังไฟล์):</label>
+            <input id="form-doc-fileurl" type="url" placeholder="https://drive.google.com/..."
+                   class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
+          </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">ฝ่ายบริหารงาน ๔ ฝ่าย <span class="text-red-500">*</span></label>
-            <select id="form-doc-category" onchange="updateFormSubcategories()" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium">
+            <select id="form-doc-category" onchange="updateFormSubcategories()" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
               <option value="academic">๑. หมวดงานวิชาการ</option>
               <option value="personnel">๒. หมวดงานบุคลากรและทั่วไป</option>
               <option value="student">๓. หมวดงานกิจการนักเรียน</option>
@@ -959,14 +986,14 @@
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">หมวดหมู่ย่อย <span class="text-red-500">*</span></label>
-            <select id="form-doc-subcategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium"></select>
+            <select id="form-doc-subcategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs"></select>
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">ประเภทไฟล์ <span class="text-red-500">*</span></label>
-            <select id="form-doc-type" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium">
+            <select id="form-doc-type" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
               <option value="PDF">PDF (.pdf)</option>
               <option value="DOCX">Word (.docx)</option>
               <option value="XLSX">Excel (.xlsx)</option>
@@ -976,23 +1003,28 @@
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">ขนาดไฟล์</label>
-            <input id="form-doc-size" type="text" value="1.8 MB" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium">
+            <input id="form-doc-size" type="text" value="1.8 MB" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
           </div>
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">แท็กป้ายกำกับ (คั่นด้วยจุลภาค)</label>
-          <input id="form-doc-tags" type="text" placeholder="รูปแบบ 4 คิด, Active Learning, ป.4" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium">
+          <input id="form-doc-tags" type="text" placeholder="รูปแบบ 4 คิด, Active Learning, ป.4" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">คำอธิบายเอกสาร</label>
-          <textarea id="form-doc-desc" rows="3" placeholder="ระบุรายละเอียดสำคัญ..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium"></textarea>
+          <label class="block font-bold text-slate-700 mb-1">คำอธิบายเอกสาร / วัตถุประสงค์</label>
+          <textarea id="form-doc-desc" rows="2" placeholder="ระบุรายละเอียดสำคัญ..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs"></textarea>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">เนื้อหาตัวอย่าง / รายละเอียดเอกสาร (แสดงในหน้าดูตัวอย่าง)</label>
+          <textarea id="form-doc-content" rows="3" placeholder="ระบุเนื้อหาสำคัญหรือรายละเอียดของเอกสาร..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs"></textarea>
         </div>
 
         <div class="pt-3 border-t border-slate-200 flex justify-end gap-2">
           <button type="button" onclick="closeUploadModal()" class="px-4 py-2 border border-slate-300 rounded-xl font-medium">ยกเลิก</button>
-          <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-xl font-bold shadow active:scale-95">บันทึกเอกสาร</button>
+          <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow active:scale-95">บันทึกเอกสาร</button>
         </div>
       </form>
     </div>
@@ -1019,7 +1051,7 @@
   <!-- ================= JAVASCRIPT LOGIC WITH CLOUD & LOCAL HYBRID SYNC ================= -->
   <script>
     const DEFAULT_MASTER_PASSWORDS = ["admin1234", "2569", "school2569"];
-    const DEFAULT_CLOUD_API_URL = "https://script.google.com/macros/s/AKfycby9SyXZGu-9kwMhNMBM-9Vhj4ThJ5yhZ5EtH6YJRHd0PJ-RxsZCO39uf5vTJ_EYnV2c/exec";
+    const DEFAULT_CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxpoT1Cb3glsu4_vYW_n-y93A0GVtV09OhSRVnQA8oHK8c8A2f6FptkTJi3fhHoIfiB/exec";
 
     function getCloudApiUrl() {
       try { 
@@ -1095,10 +1127,11 @@
           try {
             fetch(getCloudApiUrl(), {
               method: 'POST',
-              mode: 'no-cors',
-              headers: { 'Content-Type': 'application/json' },
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
               body: JSON.stringify({ action: 'setAcademicYear', academicYear: val })
-            });
+            }).then(() => {
+              setTimeout(() => fetchFromCloudDatabase(false), 500);
+            }).catch(() => {});
           } catch (err) {}
         }
       }
@@ -1409,7 +1442,7 @@
        ========================================================================= */
     async function fetchFromCloudDatabase(isManual = false) {
       const url = getCloudApiUrl();
-      if (!url) return;
+      if (!url || !url.startsWith('http')) return;
 
       try {
         if (isManual) showToast('กำลังดึงข้อมูลล่าสุดจาก Google Sheets...', 'info');
@@ -1417,9 +1450,15 @@
         const result = await res.json();
 
         if (result.status === 'success' && result.data && Array.isArray(result.data.documents)) {
-          if (result.data.documents.length > 0) {
+          const newJson = JSON.stringify(result.data.documents);
+          const oldJson = JSON.stringify(documents);
+          if (newJson !== oldJson && result.data.documents.length > 0) {
             documents = result.data.documents;
             saveDocumentsLocally();
+            updateCategoryCounts();
+            renderDashboardFeatured();
+            renderRepository();
+            renderAdminTable();
           }
           if (result.data.config) {
             if (result.data.config.academicYear) {
@@ -1430,10 +1469,6 @@
               try { localStorage.setItem('school_admin_custom_passcode', result.data.config.adminPasscode); } catch (e) {}
             }
           }
-          updateCategoryCounts();
-          renderDashboardFeatured();
-          renderRepository();
-          renderAdminTable();
           if (isManual) showToast('ซิงค์ข้อมูลจาก Google Sheets สำเร็จ!', 'success');
         }
       } catch (err) {
@@ -1525,7 +1560,7 @@
     }
 
     /* =========================================================================
-       INITIALIZATION
+       INITIALIZATION & REAL-TIME BACKGROUND SYNC
        ========================================================================= */
     document.addEventListener('DOMContentLoaded', () => {
       initData();
@@ -1537,6 +1572,23 @@
       renderRepository();
       renderAdminTable();
       populateSubcategoryDropdown('all');
+
+      // Auto Real-time Sync when tab is active / visible
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          fetchFromCloudDatabase(false);
+        }
+      });
+      window.addEventListener('focus', () => {
+        fetchFromCloudDatabase(false);
+      });
+
+      // Background silent polling every 15 seconds
+      setInterval(() => {
+        if (document.visibilityState === 'visible') {
+          fetchFromCloudDatabase(false);
+        }
+      }, 15000);
     });
 
     function toggleMobileSidebar() {
@@ -1729,10 +1781,11 @@
         try {
           fetch(getCloudApiUrl(), {
             method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify({ action: 'changeAdminPassword', newPassword: next })
-          });
+          }).then(() => {
+            setTimeout(() => fetchFromCloudDatabase(false), 500);
+          }).catch(() => {});
         } catch (err) {}
       }
     }
@@ -2063,9 +2116,148 @@
     }
 
     /* =========================================================================
-       DOCUMENT PREVIEW MODAL
+       INDEXEDDB BINARY FILE STORAGE ENGINE
        ========================================================================= */
-    function openPreviewModal(docId) {
+    const DB_NAME = 'SchoolDocsStorageDB';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'files';
+
+    let currentAttachedFile = null;
+
+    function openFileDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          }
+        };
+        req.onsuccess = (e) => resolve(e.target.result);
+        req.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    async function saveFileBlob(docId, fileBlob, fileName, fileType) {
+      try {
+        const db = await openFileDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          tx.objectStore(STORE_NAME).put({ id: docId, blob: fileBlob, fileName, fileType, date: new Date().toISOString() });
+          tx.oncomplete = () => resolve(true);
+          tx.onerror = (e) => reject(e);
+        });
+      } catch (e) {
+        console.error('saveFileBlob error:', e);
+      }
+    }
+
+    async function getFileBlob(docId) {
+      try {
+        const db = await openFileDB();
+        return new Promise((resolve) => {
+          const tx = db.transaction(STORE_NAME, 'readonly');
+          const req = tx.objectStore(STORE_NAME).get(docId);
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => resolve(null);
+        });
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function deleteFileBlob(docId) {
+      try {
+        const db = await openFileDB();
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).delete(docId);
+      } catch (e) {}
+    }
+
+    function handleModalFilePicker(e) {
+      if (e.target.files && e.target.files.length > 0) {
+        setAttachedFile(e.target.files[0]);
+      }
+    }
+
+    function processUploadedFile(file) {
+      openUploadModal();
+      setAttachedFile(file);
+    }
+
+    function setAttachedFile(file) {
+      currentAttachedFile = file;
+      const cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+      const titleInput = document.getElementById('form-doc-title');
+      if (!titleInput.value) {
+        titleInput.value = cleanName;
+      }
+      const ext = file.name.split('.').pop().toUpperCase();
+      const typeSelect = document.getElementById('form-doc-type');
+      if (['PDF', 'DOCX', 'XLSX', 'PPTX'].includes(ext)) typeSelect.value = ext;
+      else if (ext === 'DOC') typeSelect.value = 'DOCX';
+      else if (ext === 'XLS') typeSelect.value = 'XLSX';
+      else if (ext === 'PPT') typeSelect.value = 'PPTX';
+      
+      const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+      const sizeKB = (file.size / 1024).toFixed(0);
+      document.getElementById('form-doc-size').value = file.size > 1024 * 1024 ? `${sizeMB} MB` : `${sizeKB} KB`;
+
+      // Show attached file banner
+      const box = document.getElementById('form-attached-file-box');
+      const nameEl = document.getElementById('form-attached-file-name');
+      if (box && nameEl) {
+        nameEl.innerText = `${file.name} (${file.size > 1024 * 1024 ? sizeMB + ' MB' : sizeKB + ' KB'})`;
+        box.classList.remove('hidden');
+      }
+    }
+
+    function clearAttachedFile() {
+      currentAttachedFile = null;
+      const fileInput = document.getElementById('form-file-picker-input');
+      if (fileInput) fileInput.value = '';
+      const box = document.getElementById('form-attached-file-box');
+      if (box) box.classList.add('hidden');
+    }
+
+    /* =========================================================================
+       DOCUMENT PREVIEW & LIVE EMBED ENGINE
+       ========================================================================= */
+    function getEmbeddableUrl(url) {
+      if (!url || typeof url !== 'string' || !url.startsWith('http')) return null;
+      
+      // Google Drive File (View or ID)
+      const driveFileMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if (driveFileMatch) {
+        return `https://drive.google.com/file/d/${driveFileMatch[1]}/preview`;
+      }
+      const driveIdMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (driveIdMatch && url.includes('drive.google.com')) {
+        return `https://drive.google.com/file/d/${driveIdMatch[1]}/preview`;
+      }
+      // Google Docs
+      if (url.includes('docs.google.com/document/d/')) {
+        const m = url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/);
+        if (m) return `https://docs.google.com/document/d/${m[1]}/preview`;
+      }
+      // Google Sheets
+      if (url.includes('docs.google.com/spreadsheets/d/')) {
+        const m = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+        if (m) return `https://docs.google.com/spreadsheets/d/${m[1]}/preview`;
+      }
+      // Google Slides
+      if (url.includes('docs.google.com/presentation/d/')) {
+        const m = url.match(/\/presentation\/d\/([a-zA-Z0-9_-]+)/);
+        if (m) return `https://docs.google.com/presentation/d/${m[1]}/preview`;
+      }
+      // Canva embed
+      if (url.includes('canva.com/design/')) {
+        return url.replace(/\/view.*$/, '/view?embed');
+      }
+      return null;
+    }
+
+    async function openPreviewModal(docId) {
       const doc = documents.find(d => d.id === docId);
       if (!doc) return;
 
@@ -2075,7 +2267,7 @@
 
       if (isCloudConnected()) {
         try {
-          fetch(`${getCloudApiUrl()}?action=incrementView&id=${doc.id}&t=${Date.now()}`, { mode: 'no-cors' });
+          fetch(`${getCloudApiUrl()}?action=incrementView&id=${doc.id}&t=${Date.now()}`);
         } catch (e) {}
       }
 
@@ -2084,18 +2276,92 @@
       document.getElementById('preview-paper-title').innerText = doc.title;
       document.getElementById('preview-paper-desc').innerText = doc.description || 'เอกสารทางการศึกษา';
 
+      // Open Online Link Button (Google Drive / Canva)
+      const linkBtn = document.getElementById('preview-open-link-btn');
+      if (linkBtn) {
+        if (doc.fileUrl && doc.fileUrl.startsWith('http')) {
+          linkBtn.href = doc.fileUrl;
+          linkBtn.classList.remove('hidden');
+          linkBtn.classList.add('inline-flex');
+        } else {
+          linkBtn.classList.add('hidden');
+          linkBtn.classList.remove('inline-flex');
+        }
+      }
+
+      const fileEntry = await getFileBlob(doc.id);
       const body = document.getElementById('preview-paper-content');
+
+      // Check 1: Google Drive / Docs / Canva Live Interactive Preview
+      const embedUrl = getEmbeddableUrl(doc.fileUrl);
+      if (embedUrl) {
+        body.innerHTML = `
+          <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-900 mb-3 shadow-xs">
+            <span class="font-bold flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-down text-emerald-600 text-sm"></i> ไฟล์ต้นฉบับออนไลน์ (Google Drive / คลังไฟล์)</span>
+            <a href="${doc.fileUrl}" target="_blank" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-xs">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดดูเต็มจอ
+            </a>
+          </div>
+          <div class="relative w-full h-[520px] rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100 mb-3">
+            <iframe src="${embedUrl}" class="w-full h-full border-0" allow="autoplay" loading="lazy"></iframe>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
+            <p class="font-bold text-slate-800"><i class="fa-solid fa-circle-info text-indigo-600 mr-1"></i> คำอธิบาย:</p>
+            <p>${doc.description || 'เอกสารทางการศึกษา'}</p>
+          </div>
+        `;
+        document.getElementById('preview-modal').classList.remove('hidden');
+        return;
+      }
+
+      // Check 2: Uploaded PDF Binary Live Viewer
+      if (fileEntry && fileEntry.blob && (fileEntry.fileType === 'application/pdf' || (fileEntry.fileName && fileEntry.fileName.toLowerCase().endsWith('.pdf')))) {
+        const blobUrl = URL.createObjectURL(fileEntry.blob);
+        body.innerHTML = `
+          <div class="p-3 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-center justify-between text-xs text-indigo-900 mb-3 shadow-xs">
+            <span class="font-bold flex items-center gap-2"><i class="fa-solid fa-file-pdf text-rose-600 text-sm"></i> ไฟล์ PDF ต้นฉบับจริง: ${fileEntry.fileName || doc.fileName || doc.title}</span>
+            <button onclick="handleDownloadDoc('${doc.id}')" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-xs">
+              <i class="fa-solid fa-download"></i> ดาวน์โหลดไฟล์จริง
+            </button>
+          </div>
+          <div class="relative w-full h-[520px] rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100 mb-3">
+            <iframe src="${blobUrl}" class="w-full h-full border-0" loading="lazy"></iframe>
+          </div>
+        `;
+        document.getElementById('preview-modal').classList.remove('hidden');
+        return;
+      }
+
+      // Check 3: Real attached Word / Excel / PowerPoint file banner + Paper Layout
+      let fileBadgeHtml = '';
+      if (doc.fileUrl && doc.fileUrl.startsWith('http')) {
+        fileBadgeHtml = `
+          <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-900 mb-3 shadow-xs">
+            <span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-link text-emerald-600"></i> เอกสารมีลิงก์ต้นฉบับออนไลน์</span>
+            <a href="${doc.fileUrl}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition">เปิดดูไฟล์จริง</a>
+          </div>
+        `;
+      } else if (fileEntry && fileEntry.blob) {
+        fileBadgeHtml = `
+          <div class="p-3 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-between text-xs text-indigo-900 mb-3 shadow-xs">
+            <span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-file-circle-check text-indigo-600"></i> แนบไฟล์ต้นฉบับจริง: ${fileEntry.fileName || doc.fileName || doc.title}</span>
+            <button onclick="handleDownloadDoc('${doc.id}')" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition">ดาวน์โหลดไฟล์จริง</button>
+          </div>
+        `;
+      }
+
       body.innerHTML = `
+        ${fileBadgeHtml}
         <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-mono text-slate-500 flex justify-between flex-wrap gap-1">
           <span>รหัสเอกสาร: ${doc.id}</span>
           <span>วันที่ประกาศใช้: ${formatThaiDate(doc.date)}</span>
         </div>
-        <p class="text-indent-6 sm:text-indent-8 font-normal leading-relaxed text-slate-800">
-          ${doc.contentSample || doc.description || 'รายละเอียดเนื้อหาของเอกสารฉบับสมบูรณ์ พร้อมสำหรับการนำไปปรับใช้ในการจัดการเรียนรู้หรือการปฏิบัติงานในสถานศึกษา'}
-        </p>
+        <div class="text-indent-6 sm:text-indent-8 font-normal leading-relaxed text-slate-800 space-y-3">
+          ${doc.contentSample ? doc.contentSample.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('') : `<p>${doc.description || 'รายละเอียดเนื้อหาของเอกสารฉบับสมบูรณ์ พร้อมสำหรับการนำไปปรับใช้ในการจัดการเรียนรู้หรือการปฏิบัติงานในสถานศึกษา'}</p>`}
+        </div>
         <div class="my-3 p-3 sm:p-3.5 rounded-xl bg-indigo-50/60 border border-indigo-200 text-xs space-y-1">
           <p class="font-bold text-slate-800"><i class="fa-solid fa-circle-info text-indigo-600 mr-1"></i> คำแนะนำการใช้งาน:</p>
-          <p class="text-slate-600">สามารถดาวน์โหลดไฟล์ต้นฉบับ (${doc.type}) เพื่อนำไปแก้ไขและพิมพ์ใช้งานได้ทันที</p>
+          <p class="text-slate-600">กดปุ่ม <b>ดาวน์โหลด</b> ด้านบน เพื่อบันทึกไฟล์นำไปปรับใช้ พิมพ์ หรือแก้ไขได้ทันที</p>
         </div>
       `;
 
@@ -2115,7 +2381,7 @@
       if (currentPreviewDoc) handleDownloadDoc(currentPreviewDoc.id);
     }
 
-    function handleDownloadDoc(docId) {
+    async function handleDownloadDoc(docId) {
       const doc = documents.find(d => d.id === docId);
       if (!doc) return;
 
@@ -2128,21 +2394,90 @@
 
       if (isCloudConnected()) {
         try {
-          fetch(`${getCloudApiUrl()}?action=incrementDownload&id=${doc.id}&t=${Date.now()}`, { mode: 'no-cors' });
+          fetch(`${getCloudApiUrl()}?action=incrementDownload&id=${doc.id}&t=${Date.now()}`);
         } catch (e) {}
       }
 
-      const element = document.createElement('a');
-      const fileContent = `=== ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัลสถานศึกษา ===\n\nชื่อเอกสาร: ${doc.title}\nฝ่ายบริหารงาน: ${getCategoryName(doc.category)}\nหมวดหมู่ย่อย: ${doc.subcategory}\nประเภทไฟล์: ${doc.type}\nวันที่: ${doc.date}\nปีการศึกษา: ${getAcademicYear()}\n\n--- คำอธิบาย ---\n${doc.description}\n\n${doc.contentSample || ''}\n\n(ดาวน์โหลดจากระบบคลังเอกสารดิจิทัล TT001)`;
-      
-      const file = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
-      element.href = URL.createObjectURL(file);
-      element.download = `${doc.title.replace(/[\/\\?%*:|"<>]/g, '_')}.${doc.type.toLowerCase() === 'canva' ? 'txt' : doc.type.toLowerCase()}`;
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
+      // Case 1: If document has online file URL (Google Drive / Canva / Cloud), open it directly
+      if (doc.fileUrl && doc.fileUrl.startsWith('http')) {
+        window.open(doc.fileUrl, '_blank');
+        showToast(`กำลังเปิดลิงก์ "${doc.title}"...`, 'success');
+        return;
+      }
 
-      showToast(`ดาวน์โหลด "${doc.title}" เรียบร้อย`, 'success');
+      // Case 2: If document has real binary file in IndexedDB, download the real binary file!
+      const fileEntry = await getFileBlob(doc.id);
+      if (fileEntry && fileEntry.blob) {
+        const url = URL.createObjectURL(fileEntry.blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const ext = fileEntry.fileName ? '' : `.${doc.type.toLowerCase()}`;
+        a.download = fileEntry.fileName || `${doc.title.replace(/[\/\\?%*:|"<>]/g, '_')}${ext}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showToast(`ดาวน์โหลดไฟล์จริง "${doc.title}" สำเร็จ`, 'success');
+        return;
+      }
+
+      // Case 3: For template/seed documents, generate a clean, well-formatted printable HTML/Document that opens perfectly in any browser
+      generateCleanPrintableDocument(doc);
+    }
+
+    function generateCleanPrintableDocument(doc) {
+      const content = `<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>${doc.title}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Sarabun', sans-serif; padding: 40px; color: #1e293b; max-width: 800px; margin: 0 auto; line-height: 1.8; }
+    .header { text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 20px; margin-bottom: 30px; }
+    .title { font-size: 20px; font-weight: bold; margin-bottom: 6px; }
+    .meta { font-size: 13px; color: #64748b; }
+    .box { background: #f8fafc; border-left: 4px solid #4f46e5; padding: 15px; border-radius: 8px; margin-bottom: 25px; }
+    .content { text-indent: 40px; font-size: 15px; margin-bottom: 20px; }
+    .signatures { margin-top: 60px; display: flex; justify-content: space-between; text-align: center; font-size: 14px; }
+    @media print { body { padding: 0; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div style="font-size: 32px; margin-bottom: 10px;">🏛️</div>
+    <div class="title">${doc.title}</div>
+    <div class="meta">ฝ่ายบริหารงาน: ${getCategoryName(doc.category)} • ${doc.subcategory} • ปีการศึกษา ${getAcademicYear()}</div>
+  </div>
+  <div class="box">
+    <strong>คำอธิบาย/วัตถุประสงค์:</strong> ${doc.description || '-'}
+  </div>
+  <div class="content">
+    ${doc.contentSample || doc.description || 'เอกสารทางการศึกษาสำหรับการปฏิบัติงานสถานศึกษา'}
+  </div>
+  <div class="signatures">
+    <div>
+      <p style="margin-bottom: 50px;">(ลงชื่อ)......................................................</p>
+      <p><strong>ผู้จัดทำ / ผู้รับผิดชอบ</strong></p>
+    </div>
+    <div>
+      <p style="margin-bottom: 50px;">(ลงชื่อ)......................................................</p>
+      <p><strong>ผู้อำนวยการสถานศึกษา</strong></p>
+    </div>
+  </div>
+</body>
+</html>`;
+
+      const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${doc.title.replace(/[\/\\?%*:|"<>]/g, '_')}.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast(`ดาวน์โหลดเอกสาร "${doc.title}" เรียบร้อยแล้ว`, 'success');
     }
 
     /* =========================================================================
@@ -2234,6 +2569,7 @@
           </td>
           <td class="p-3.5 max-w-xs font-bold text-slate-800 truncate cursor-pointer hover:text-indigo-600" onclick="openPreviewModal('${doc.id}')">
             ${doc.title}
+            ${doc.fileUrl ? '<span class="ml-1 text-[10px] text-emerald-600 font-normal"><i class="fa-solid fa-link"></i> ลิงก์</span>' : ''}
           </td>
           <td class="p-3.5 whitespace-nowrap">
             ${getCategoryName(doc.category)}
@@ -2275,33 +2611,21 @@
       if (e.target.files.length > 0) processUploadedFile(e.target.files[0]);
     }
 
-    function processUploadedFile(file) {
-      openUploadModal();
-      const cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
-      document.getElementById('form-doc-title').value = cleanName;
-      const ext = file.name.split('.').pop().toUpperCase();
-      const typeSelect = document.getElementById('form-doc-type');
-      if (['PDF', 'DOCX', 'XLSX', 'PPTX'].includes(ext)) typeSelect.value = ext;
-      else if (ext === 'DOC') typeSelect.value = 'DOCX';
-      else if (ext === 'XLS') typeSelect.value = 'XLSX';
-      else if (ext === 'PPT') typeSelect.value = 'PPTX';
-      
-      const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
-      document.getElementById('form-doc-size').value = `${sizeMB} MB`;
-    }
-
     function openUploadModal() {
       if (!isAdminLoggedIn) return openAdminLoginModal();
       document.getElementById('upload-modal-title').innerText = 'อัปโหลดและจัดหมวดหมู่เอกสารใหม่';
       document.getElementById('edit-doc-id').value = '';
       document.getElementById('form-doc-title').value = '';
+      document.getElementById('form-doc-fileurl').value = '';
+      document.getElementById('form-doc-content').value = '';
       document.getElementById('form-doc-tags').value = '';
       document.getElementById('form-doc-desc').value = '';
+      clearAttachedFile();
       updateFormSubcategories();
       document.getElementById('upload-modal').classList.remove('hidden');
     }
 
-    function openEditModal(docId) {
+    async function openEditModal(docId) {
       if (!isAdminLoggedIn) return openAdminLoginModal();
       const doc = documents.find(d => d.id === docId);
       if (!doc) return;
@@ -2309,6 +2633,8 @@
       document.getElementById('upload-modal-title').innerText = 'แก้ไขข้อมูลเอกสาร';
       document.getElementById('edit-doc-id').value = doc.id;
       document.getElementById('form-doc-title').value = doc.title;
+      document.getElementById('form-doc-fileurl').value = doc.fileUrl || '';
+      document.getElementById('form-doc-content').value = doc.contentSample || '';
       document.getElementById('form-doc-category').value = doc.category;
       updateFormSubcategories();
       document.getElementById('form-doc-subcategory').value = doc.subcategory;
@@ -2317,11 +2643,23 @@
       document.getElementById('form-doc-tags').value = (doc.tags || []).join(', ');
       document.getElementById('form-doc-desc').value = doc.description || '';
 
+      clearAttachedFile();
+      const fileEntry = await getFileBlob(doc.id);
+      if (fileEntry && fileEntry.blob) {
+        const box = document.getElementById('form-attached-file-box');
+        const nameEl = document.getElementById('form-attached-file-name');
+        if (box && nameEl) {
+          nameEl.innerText = `${fileEntry.fileName || doc.fileName || doc.title} (ไฟล์เดิมที่แนบไว้)`;
+          box.classList.remove('hidden');
+        }
+      }
+
       document.getElementById('upload-modal').classList.remove('hidden');
     }
 
     function closeUploadModal() {
       document.getElementById('upload-modal').classList.add('hidden');
+      clearAttachedFile();
     }
 
     function updateFormSubcategories() {
@@ -2347,6 +2685,8 @@
       const type = document.getElementById('form-doc-type').value;
       const size = document.getElementById('form-doc-size').value.trim() || '1.5 MB';
       const desc = document.getElementById('form-doc-desc').value.trim();
+      const fileUrl = document.getElementById('form-doc-fileurl').value.trim();
+      const content = document.getElementById('form-doc-content').value.trim();
       const tags = document.getElementById('form-doc-tags').value.split(/[,#]/).map(t => t.trim()).filter(t => t.length > 0);
 
       let savedDoc = null;
@@ -2362,6 +2702,8 @@
           doc.type = type;
           doc.size = size;
           doc.description = desc;
+          doc.fileUrl = fileUrl;
+          if (content) doc.contentSample = content;
           doc.tags = tags;
           savedDoc = doc;
           showToast('บันทึกการแก้ไขแล้ว', 'success');
@@ -2371,17 +2713,26 @@
         const newDoc = {
           id: `DOC-${String(documents.length + 1).padStart(3, '0')}`,
           title, category, subcategory, type, size,
+          fileUrl: fileUrl,
           date: new Date().toISOString().split('T')[0],
           downloads: 0, views: 1,
           tags: tags.length > 0 ? tags : ['ทั่วไป'],
           description: desc,
-          contentSample: `เอกสาร ${title} จัดทำขึ้นเพื่อใช้ในการปฏิบัติงานสถานศึกษา`
+          contentSample: content || `เอกสาร ${title} จัดทำขึ้นเพื่อใช้ในการปฏิบัติงานสถานศึกษา`
         };
         documents.unshift(newDoc);
         savedDoc = newDoc;
         showToast('เพิ่มเอกสารเข้าสู่ระบบสำเร็จ', 'success');
       }
 
+      // If a real binary file was attached, save it into IndexedDB
+      if (currentAttachedFile && savedDoc) {
+        await saveFileBlob(savedDoc.id, currentAttachedFile, currentAttachedFile.name, currentAttachedFile.type);
+        savedDoc.fileName = currentAttachedFile.name;
+        savedDoc.hasRealFile = true;
+      }
+
+      currentAttachedFile = null;
       saveDocumentsLocally();
       closeUploadModal();
       updateCategoryCounts();
@@ -2389,15 +2740,16 @@
       renderRepository();
       renderAdminTable();
 
-      // Cloud Sync
+      // Cloud Sync (Sent as text/plain to avoid CORS preflight blockage in Google Apps Script)
       if (isCloudConnected() && savedDoc) {
         try {
           fetch(getCloudApiUrl(), {
             method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify({ action: actionType, document: savedDoc })
-          });
+          }).then(() => {
+            setTimeout(() => fetchFromCloudDatabase(false), 500);
+          }).catch(() => {});
         } catch (err) {}
       }
     }
@@ -2410,6 +2762,7 @@
       if (confirm(`ต้องการลบ "${doc.title}"?`)) {
         documents = documents.filter(d => d.id !== docId);
         favorites = favorites.filter(id => id !== docId);
+        await deleteFileBlob(docId);
         saveDocumentsLocally();
         saveFavorites();
         updateCategoryCounts();
@@ -2418,14 +2771,16 @@
         renderAdminTable();
         showToast('ลบเอกสารออกจากระบบแล้ว', 'info');
 
+        // Cloud Sync (Sent as text/plain to avoid CORS preflight blockage in Google Apps Script)
         if (isCloudConnected()) {
           try {
             fetch(getCloudApiUrl(), {
               method: 'POST',
-              mode: 'no-cors',
-              headers: { 'Content-Type': 'application/json' },
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
               body: JSON.stringify({ action: 'deleteDocument', id: docId })
-            });
+            }).then(() => {
+              setTimeout(() => fetchFromCloudDatabase(false), 500);
+            }).catch(() => {});
           } catch (err) {}
         }
       }
