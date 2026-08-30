@@ -94,7 +94,7 @@
         </div>
         <div>
           <div class="font-bold text-sm text-white tracking-tight leading-none">คลังเอกสารดิจิทัล</div>
-          <div class="text-[10px] text-slate-400 font-normal mt-0.5">สถานศึกษา ๒๕๖๙</div>
+          <div class="text-[10px] text-slate-400 font-normal mt-0.5" id="side-sub-year">สถานศึกษา ๒๕๖๙</div>
         </div>
       </div>
       <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-400 hover:text-white p-1">
@@ -204,7 +204,7 @@
   <!-- ================= RIGHT WRAPPER ================= -->
   <div class="flex-1 flex flex-col h-full overflow-hidden bg-slate-50">
     
-    <!-- Ultra-Clean, Modern Topbar -->
+    <!-- Ultra-Clean Topbar -->
     <header class="h-16 bg-white border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between gap-4 shrink-0 z-10">
       
       <!-- Left: Mobile Toggle & Breadcrumb -->
@@ -232,10 +232,11 @@
           </button>
         </div>
 
-        <!-- Year Badge -->
-        <span class="hidden lg:inline-flex text-[11px] px-3 py-1 rounded-lg bg-slate-100 text-slate-600 font-bold border border-slate-200/80">
-          ปีการศึกษา ๒๕๖๙
-        </span>
+        <!-- Dynamic Academic Year Badge (Admin can customize) -->
+        <button onclick="handleAcademicYearBadgeClick()" id="top-academic-year-badge" title="คลิกเพื่อแก้ไขปีการศึกษา (เฉพาะแอดมิน)" class="hidden sm:inline-flex items-center gap-1.5 text-[11px] px-3 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold border border-indigo-200/80 transition cursor-pointer">
+          <i class="fa-regular fa-calendar-check text-indigo-600"></i>
+          <span id="display-academic-year">ปีการศึกษา ๒๕๖๙</span>
+        </button>
 
         <!-- Bookmarks Top Trigger -->
         <button onclick="toggleFavoritesModal()" class="relative w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition border border-slate-200/80" title="เอกสารที่บันทึกไว้">
@@ -249,52 +250,51 @@
 
     <!-- Scrollable Canvas -->
     <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 custom-scrollbar">
-      <div class="max-w-7xl mx-auto space-y-8 pb-12">
+      <div class="max-w-7xl mx-auto space-y-10 pb-16">
 
-        <!-- ================= VIEW 1: CLEAN MODERN DASHBOARD (สว่าง สบายตา น่าใช้) ================= -->
-        <section id="view-dashboard" class="space-y-8 animate-fade-in">
+        <!-- ================= VIEW 1: CLEAN MODERN DASHBOARD (แบ่งส่วนแนะนำชัดเจน) ================= -->
+        <section id="view-dashboard" class="space-y-10 animate-fade-in">
           
-          <!-- Clean & Welcoming Dashboard Hero (สว่าง โปร่ง สบายตา) -->
-          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-card flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
-            <div class="max-w-2xl">
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold mb-3 border border-indigo-100">
-                <i class="fa-solid fa-graduation-cap text-indigo-600"></i> ศูนย์รวมเอกสารและสื่อนวัตกรรมดิจิทัลสถานศึกษา
+          <!-- SECTION 1: HEADER BANNER & SYSTEM OVERVIEW (ส่วนแนะนำระบบ) -->
+          <div class="bg-gradient-to-r from-indigo-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-card flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+            <div class="max-w-2xl z-10">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-indigo-200 text-xs font-semibold mb-3 backdrop-blur-xs border border-white/10">
+                <i class="fa-solid fa-circle-check text-emerald-400"></i> <span id="hero-badge-year">ศูนย์รวมเอกสารและสื่อนวัตกรรม ประจำปีการศึกษา ๒๕๖๙</span>
               </div>
-              <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
+              <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-snug">
                 สืบค้นและดาวน์โหลดเอกสารทางการศึกษา ๔ ฝ่าย
               </h2>
-              <p class="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
+              <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed font-normal">
                 เข้าถึงหลักสูตรสถานศึกษา แผนการจัดการเรียนรู้ Active Learning (รูปแบบ ๔ คิด, STEM) คำสั่ง ประกาศ และแบบฟอร์มราชการ เพื่อความสะดวกรวดเร็วในการจัดการศึกษา
               </p>
 
-              <!-- Quick Tag Filters -->
+              <!-- Search Chips -->
               <div class="mt-4 flex flex-wrap items-center gap-1.5 text-xs">
-                <span class="text-slate-400 font-medium mr-1"><i class="fa-solid fa-bolt text-amber-500"></i> แท็กยอดนิยม:</span>
-                <button onclick="filterByTag('รูปแบบ 4 คิด')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-700 font-medium text-[11px] transition">#รูปแบบ 4 คิด</button>
-                <button onclick="filterByTag('Active Learning')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-700 font-medium text-[11px] transition">#Active Learning</button>
-                <button onclick="filterByTag('แบบฟอร์มลา')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-700 font-medium text-[11px] transition">#แบบฟอร์มลา</button>
-                <button onclick="filterByTag('จัดซื้อจัดจ้าง')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-700 font-medium text-[11px] transition">#จัดซื้อจัดจ้าง</button>
-                <button onclick="filterByTag('คุรุชนคนคุณธรรม')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-700 font-medium text-[11px] transition">#คุรุชนคนคุณธรรม</button>
+                <span class="text-slate-400 font-medium mr-1"><i class="fa-solid fa-fire text-amber-400"></i> ยอดนิยม:</span>
+                <button onclick="filterByTag('รูปแบบ 4 คิด')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-200 font-medium text-[11px] transition border border-white/10">#รูปแบบ 4 คิด</button>
+                <button onclick="filterByTag('Active Learning')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-200 font-medium text-[11px] transition border border-white/10">#Active Learning</button>
+                <button onclick="filterByTag('แบบฟอร์มลา')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-200 font-medium text-[11px] transition border border-white/10">#แบบฟอร์มลา</button>
+                <button onclick="filterByTag('จัดซื้อจัดจ้าง')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-200 font-medium text-[11px] transition border border-white/10">#จัดซื้อจัดจ้าง</button>
               </div>
             </div>
 
-            <!-- Quick Action Button to Full Repository -->
-            <button onclick="switchView('repository'); setCategoryFilter('all');" class="px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-indigo-600/20 transition flex items-center gap-2 shrink-0">
+            <!-- Quick Action Button -->
+            <button onclick="switchView('repository'); setCategoryFilter('all');" class="px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-indigo-600/30 transition flex items-center gap-2 shrink-0 z-10">
               <i class="fa-solid fa-folder-open"></i>
-              <span>เข้าสู่คลังเอกสารทั้งหมด</span>
+              <span>เข้าสู่คลังเอกสาร</span>
               <i class="fa-solid fa-arrow-right text-xs"></i>
             </button>
           </div>
 
-          <!-- 4 Administrative Departments: Clean Bento Grid Cards -->
-          <div>
-            <div class="flex items-center justify-between mb-4">
+          <!-- SECTION 2: 4 DEPARTMENTS (หมวดหมู่ ๔ ฝ่ายบริหารสถานศึกษา) -->
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
               <div>
-                <h3 class="text-lg font-extrabold text-slate-900">หมวดหมู่ ๔ ฝ่ายบริหารสถานศึกษา</h3>
-                <p class="text-xs text-slate-500">เลือกฝ่ายบริหารเพื่อเข้าดูเอกสารและหมวดหมู่ย่อย</p>
+                <div class="text-[11px] font-bold text-indigo-600 uppercase tracking-wider">โครงสร้าง ๔ ฝ่ายงาน</div>
+                <h3 class="text-xl font-extrabold text-slate-900">หมวดหมู่เอกสารตามฝ่ายบริหาร</h3>
               </div>
-              <button onclick="switchView('repository'); setCategoryFilter('all');" class="text-xs font-bold text-indigo-600 hover:text-indigo-700">
-                ดูทั้งหมด <i class="fa-solid fa-arrow-right text-[10px] ml-0.5"></i>
+              <button onclick="switchView('repository'); setCategoryFilter('all');" class="text-xs font-bold text-indigo-600 hover:text-indigo-700 flex items-center gap-1">
+                <span>ดูทั้งหมด</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
               </button>
             </div>
 
@@ -375,19 +375,112 @@
             </div>
           </div>
 
-          <!-- Featured Document Visual Showcase (โชว์หน้าตาเอกสารจริง) -->
-          <div>
-            <div class="flex items-center justify-between mb-4">
+          <!-- SECTION 3: VISUAL DOCUMENT SHOWCASE (เอกสารแนะนำยอดนิยม) -->
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
               <div>
-                <h3 class="text-lg font-extrabold text-slate-900">เอกสารแนะนำ & ยอดนิยม</h3>
-                <p class="text-xs text-slate-500">จำลองหน้าตาเอกสารจริง สามารถเปิดดูตัวอย่างและดาวน์โหลดได้ทันที</p>
+                <div class="text-[11px] font-bold text-indigo-600 uppercase tracking-wider">เอกสารยอดนิยม</div>
+                <h3 class="text-xl font-extrabold text-slate-900">เอกสารและสื่อการสอนแนะนำ</h3>
               </div>
               <button onclick="switchView('repository'); showAllWithSort('downloads');" class="text-xs font-bold text-indigo-600 hover:text-indigo-700">
-                ดูทั้งหมดในคลัง <i class="fa-solid fa-arrow-right text-[10px] ml-0.5"></i>
+                ดูทั้งหมด <i class="fa-solid fa-arrow-right text-[10px] ml-0.5"></i>
               </button>
             </div>
 
             <div id="dashboard-featured-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+          </div>
+
+          <!-- SECTION 4: QUICK FORMS ACCESS (แบบฟอร์มราชการที่ใช้บ่อย) -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-card space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-base">แบบฟอร์มราชการที่ใช้บ่อย (Quick Forms)</h4>
+                  <p class="text-xs text-slate-500">คลิกเพื่อเปิดดูตัวอย่างและดาวน์โหลดแบบฟอร์มได้ทันที</p>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-xl self-start sm:self-auto">
+                พร้อมใช้งานทันที
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <button onclick="quickOpenDoc('DOC-005')" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-indigo-50/60 border border-slate-200/80 text-left transition flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-sm shrink-0 shadow-xs">
+                  <i class="fa-solid fa-file-signature"></i>
+                </div>
+                <div class="overflow-hidden">
+                  <div class="font-bold text-xs text-slate-800 group-hover:text-indigo-600 truncate">ใบลาป่วย-ลากิจ</div>
+                  <div class="text-[10px] text-slate-400">งานบุคลากร • PDF</div>
+                </div>
+              </button>
+
+              <button onclick="quickOpenDoc('DOC-006')" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-indigo-50/60 border border-slate-200/80 text-left transition flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-xl bg-sky-500 text-white flex items-center justify-center text-sm shrink-0 shadow-xs">
+                  <i class="fa-solid fa-car-side"></i>
+                </div>
+                <div class="overflow-hidden">
+                  <div class="font-bold text-xs text-slate-800 group-hover:text-indigo-600 truncate">ขออนุมัติไปราชการ</div>
+                  <div class="text-[10px] text-slate-400">งานบุคลากร • Word</div>
+                </div>
+              </button>
+
+              <button onclick="quickOpenDoc('DOC-002')" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-indigo-50/60 border border-slate-200/80 text-left transition flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-xl bg-indigo-500 text-white flex items-center justify-center text-sm shrink-0 shadow-xs">
+                  <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <div class="overflow-hidden">
+                  <div class="font-bold text-xs text-slate-800 group-hover:text-indigo-600 truncate">แผนการสอน ๔ คิด (ป.๔)</div>
+                  <div class="text-[10px] text-slate-400">งานวิชาการ • สังคมศึกษา</div>
+                </div>
+              </button>
+
+              <button onclick="quickOpenDoc('DOC-013')" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-indigo-50/60 border border-slate-200/80 text-left transition flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center text-sm shrink-0 shadow-xs">
+                  <i class="fa-solid fa-file-invoice-dollar"></i>
+                </div>
+                <div class="overflow-hidden">
+                  <div class="font-bold text-xs text-slate-800 group-hover:text-indigo-600 truncate">ขออนุมัติจัดซื้อจัดจ้าง</div>
+                  <div class="text-[10px] text-slate-400">งานงบประมาณ • แบบฟอร์ม</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- SECTION 5: HOW IT WORKS (แนะนำขั้นตอนการใช้งาน) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-card flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 font-extrabold text-sm flex items-center justify-center shrink-0">
+                ๑
+              </div>
+              <div>
+                <h5 class="font-bold text-slate-900 text-sm">ค้นหาเอกสารที่ต้องการ</h5>
+                <p class="text-xs text-slate-500 mt-1">พิมพ์คำค้นหรือเลือกจากหมวดหมู่ ๔ ฝ่ายบริหาร</p>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-card flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 font-extrabold text-sm flex items-center justify-center shrink-0">
+                ๒
+              </div>
+              <div>
+                <h5 class="font-bold text-slate-900 text-sm">เปิดดูตัวอย่างออนไลน์</h5>
+                <p class="text-xs text-slate-500 mt-1">ตรวจทานเนื้อหาก่อนดาวน์โหลด ซูมเข้า-ออกได้สะดวก</p>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-card flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 font-extrabold text-sm flex items-center justify-center shrink-0">
+                ๓
+              </div>
+              <div>
+                <h5 class="font-bold text-slate-900 text-sm">ดาวน์โหลดนำไปใช้</h5>
+                <p class="text-xs text-slate-500 mt-1">ดาวน์โหลดไฟล์ต้นฉบับเพื่อนำไปปรับใช้ในโรงเรียน</p>
+              </div>
+            </div>
           </div>
 
         </section>
@@ -508,6 +601,9 @@
               <button onclick="openUploadModal()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-1.5">
                 <i class="fa-solid fa-cloud-arrow-up"></i> อัปโหลดเอกสารใหม่
               </button>
+              <button onclick="openSetAcademicYearModal()" class="px-3.5 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-semibold border border-indigo-200 transition flex items-center gap-1.5">
+                <i class="fa-regular fa-calendar-check"></i> ตั้งค่าปีการศึกษา
+              </button>
               <button onclick="openChangePasswordModal()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5">
                 <i class="fa-solid fa-key text-amber-500"></i> เปลี่ยนรหัสผ่าน
               </button>
@@ -567,7 +663,34 @@
 
   </div>
 
-  <!-- ================= MODAL: ADMIN LOGIN ================= -->
+  <!-- ================= MODAL: SET ACADEMIC YEAR (ตั้งค่าปีการศึกษา) ================= -->
+  <div id="academic-year-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs hidden flex items-center justify-center p-4 animate-fade-in">
+    <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+      <div class="p-5 bg-gradient-to-r from-indigo-900 to-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-regular fa-calendar-check text-indigo-300 text-base"></i>
+          <h3 class="font-bold text-sm text-white">ตั้งค่าปีการศึกษาปัจจุบัน</h3>
+        </div>
+        <button onclick="closeSetAcademicYearModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleSaveAcademicYear(event)" class="p-5 space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">ระบุปีการศึกษา (เช่น ๒๕๖๙ หรือ 2569)</label>
+          <input id="input-academic-year" type="text" required placeholder="เช่น ๒๕๖๙ หรือ 2569"
+                 class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 font-bold focus:outline-none focus:border-indigo-600">
+          <p class="text-[11px] text-slate-500 mt-1">ปีการศึกษานี้จะแสดงบนแถบหัวเว็บ แบนเนอร์ และเอกสารทุกฉบับ</p>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+          <button type="button" onclick="closeSetAcademicYearModal()" class="px-3 py-1.5 border border-slate-300 rounded-lg text-slate-700">ยกเลิก</button>
+          <button type="submit" class="px-4 py-1.5 bg-indigo-600 text-white rounded-lg font-bold shadow">บันทึกปีการศึกษา</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADMIN LOGIN (SECURE - NO DEFAULT PASSWORD DISPLAY) ================= -->
   <div id="admin-login-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs hidden flex items-center justify-center p-4 animate-fade-in">
     <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
       <div class="p-5 bg-slate-900 text-white text-center relative">
@@ -577,30 +700,28 @@
         <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-lg mx-auto mb-2 border border-amber-400/30">
           <i class="fa-solid fa-shield-halved"></i>
         </div>
-        <h3 class="font-bold text-sm text-white">เข้าสู่ระบบผู้ดูแล (Admin)</h3>
-        <p class="text-[11px] text-slate-400 mt-0.5">เฉพาะผู้มีสิทธิ์ดูแลระบบสถานศึกษา</p>
+        <h3 class="font-bold text-sm text-white">เข้าสู่ระบบผู้ดูแล (Admin Security)</h3>
+        <p class="text-[11px] text-slate-400 mt-0.5">เฉพาะผู้มีสิทธิ์ดูแลระบบสถานศึกษาเท่านั้น</p>
       </div>
 
       <form onsubmit="handleAdminLogin(event)" class="p-5 space-y-4 text-xs">
         <div>
-          <label class="block font-bold text-slate-700 mb-1">รหัสผ่านผู้ดูแลระบบ</label>
+          <label class="block font-bold text-slate-700 mb-1.5">รหัสผ่านผู้ดูแลระบบ</label>
           <div class="relative">
-            <input id="admin-password-input" type="password" required placeholder="กรอกรหัสผ่าน..." autofocus
-                   class="w-full pl-3 pr-8 py-2 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 font-medium focus:outline-none focus:border-indigo-600">
+            <input id="admin-password-input" type="password" required placeholder="กรอกรหัสผ่านผู้ดูแล..." autofocus
+                   class="w-full pl-3.5 pr-8 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
             <button type="button" onclick="togglePasswordVisibility('admin-password-input', 'eye-login')" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400">
               <i id="eye-login" class="fa-solid fa-eye text-xs"></i>
             </button>
           </div>
-          <p id="admin-login-error" class="hidden text-xs text-red-600 font-semibold mt-1">รหัสผ่านไม่ถูกต้อง</p>
+          <p id="admin-login-error" class="hidden text-xs text-red-600 font-semibold mt-1 flex items-center gap-1">
+            <i class="fa-solid fa-circle-exclamation"></i> รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง
+          </p>
         </div>
 
-        <div class="p-2.5 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-900 text-[11px]">
-          รหัสผ่านเริ่มต้น: <span class="font-mono font-bold text-indigo-700 bg-white px-1 py-0.5 rounded">admin1234</span>
-        </div>
-
-        <div class="flex items-center justify-end gap-2 pt-1">
-          <button type="button" onclick="closeAdminLoginModal()" class="px-3 py-1.5 border border-slate-300 rounded-lg text-slate-700">ยกเลิก</button>
-          <button type="submit" class="px-4 py-1.5 bg-indigo-600 text-white rounded-lg font-bold shadow">เข้าสู่ระบบ</button>
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+          <button type="button" onclick="closeAdminLoginModal()" class="px-3.5 py-2 border border-slate-300 rounded-xl text-slate-700 font-medium">ยกเลิก</button>
+          <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow">เข้าสู่ระบบ</button>
         </div>
       </form>
     </div>
@@ -784,7 +905,7 @@
   <!-- ================= TOAST CONTAINER ================= -->
   <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <!-- ================= COMPLETE JAVASCRIPT LOGIC ================= -->
   <script>
     const DEFAULT_MASTER_PASSWORDS = ["admin1234", "2569", "school2569"];
 
@@ -792,6 +913,53 @@
       const customPwd = localStorage.getItem('school_admin_custom_passcode');
       if (customPwd) return [customPwd, ...DEFAULT_MASTER_PASSWORDS];
       return DEFAULT_MASTER_PASSWORDS;
+    }
+
+    function getAcademicYear() {
+      return localStorage.getItem('school_academic_year') || '๒๕๖๙';
+    }
+
+    function updateAcademicYearDisplay() {
+      const year = getAcademicYear();
+      const dispEl = document.getElementById('display-academic-year');
+      const sideSub = document.getElementById('side-sub-year');
+      const heroBadge = document.getElementById('hero-badge-year');
+      
+      if (dispEl) dispEl.innerText = `ปีการศึกษา ${year}`;
+      if (sideSub) sideSub.innerText = `สถานศึกษา ${year}`;
+      if (heroBadge) heroBadge.innerText = `ศูนย์รวมเอกสารและสื่อนวัตกรรม ประจำปีการศึกษา ${year}`;
+    }
+
+    function handleAcademicYearBadgeClick() {
+      if (isAdminLoggedIn) {
+        openSetAcademicYearModal();
+      } else {
+        showToast(`ปีการศึกษาปัจจุบัน: ${getAcademicYear()}`, 'info');
+      }
+    }
+
+    function openSetAcademicYearModal() {
+      if (!isAdminLoggedIn) {
+        openAdminLoginModal();
+        return;
+      }
+      document.getElementById('input-academic-year').value = getAcademicYear();
+      document.getElementById('academic-year-modal').classList.remove('hidden');
+    }
+
+    function closeSetAcademicYearModal() {
+      document.getElementById('academic-year-modal').classList.add('hidden');
+    }
+
+    function handleSaveAcademicYear(e) {
+      e.preventDefault();
+      const val = document.getElementById('input-academic-year').value.trim();
+      if (val) {
+        localStorage.setItem('school_academic_year', val);
+        updateAcademicYearDisplay();
+        closeSetAcademicYearModal();
+        showToast(`อัปเดตปีการศึกษาเป็น "${val}" เรียบร้อยแล้ว`, 'success');
+      }
     }
 
     const DEFAULT_DOCUMENTS = [
@@ -1045,14 +1213,14 @@
     let isAdminLoggedIn = sessionStorage.getItem('school_admin_session') === 'true';
     let currentView = 'dashboard';
     let documents = [...DEFAULT_DOCUMENTS];
-    let favorites = JSON.parse(localStorage.getItem('school_favs_v5') || '[]');
+    let favorites = JSON.parse(localStorage.getItem('school_favs_v6') || '[]');
     let currentCategoryFilter = 'all';
     let currentSelectedTag = null;
     let currentLayout = 'grid';
     let currentPreviewDoc = null;
 
     function initData() {
-      const stored = localStorage.getItem('school_docs_v5');
+      const stored = localStorage.getItem('school_docs_v6');
       if (stored) {
         try {
           const parsed = JSON.parse(stored);
@@ -1073,16 +1241,17 @@
     }
 
     function saveDocuments() {
-      localStorage.setItem('school_docs_v5', JSON.stringify(documents));
+      localStorage.setItem('school_docs_v6', JSON.stringify(documents));
     }
 
     function saveFavorites() {
-      localStorage.setItem('school_favs_v5', JSON.stringify(favorites));
+      localStorage.setItem('school_favs_v6', JSON.stringify(favorites));
       updateFavoritesBadge();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       initData();
+      updateAcademicYearDisplay();
       updateAdminBoxUI();
       updateFavoritesBadge();
       updateCategoryCounts();
@@ -1638,7 +1807,7 @@
       renderAdminTable();
 
       const element = document.createElement('a');
-      const fileContent = `=== ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัลสถานศึกษา ===\n\nชื่อเอกสาร: ${doc.title}\nฝ่ายบริหารงาน: ${getCategoryName(doc.category)}\nหมวดหมู่ย่อย: ${doc.subcategory}\nประเภทไฟล์: ${doc.type}\nวันที่: ${doc.date}\n\n--- คำอธิบาย ---\n${doc.description}\n\n${doc.contentSample || ''}\n\n(ดาวน์โหลดจากระบบคลังเอกสารดิจิทัล TT001)`;
+      const fileContent = `=== ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัลสถานศึกษา ===\n\nชื่อเอกสาร: ${doc.title}\nฝ่ายบริหารงาน: ${getCategoryName(doc.category)}\nหมวดหมู่ย่อย: ${doc.subcategory}\nประเภทไฟล์: ${doc.type}\nวันที่: ${doc.date}\nปีการศึกษา: ${getAcademicYear()}\n\n--- คำอธิบาย ---\n${doc.description}\n\n${doc.contentSample || ''}\n\n(ดาวน์โหลดจากระบบคลังเอกสารดิจิทัล TT001)`;
       
       const file = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
       element.href = URL.createObjectURL(file);
