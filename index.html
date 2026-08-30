@@ -7,7 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
-  <title>ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัลสถานศึกษา</title>
+  <title>คลังเอกสารและสื่อการเรียนรู้ดิจิทัล | โรงเรียนบ้านห้วยติ่ง สพป.สุโขทัย เขต 2</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -108,16 +110,16 @@
     
     <!-- Sidebar Brand -->
     <div class="h-16 flex items-center justify-between px-5 border-b border-slate-800/80">
-      <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('dashboard')">
-        <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-lg shadow-md shadow-indigo-600/30">
-          <i class="fa-solid fa-graduation-cap"></i>
+      <div class="flex items-center gap-3 cursor-pointer overflow-hidden" onclick="switchView('dashboard')">
+        <div class="w-10 h-10 rounded-xl bg-white/10 p-0.5 flex items-center justify-center shrink-0 shadow-md">
+          <img src="logo.png" alt="โลโก้โรงเรียนบ้านห้วยติ่ง" class="w-full h-full object-contain drop-shadow-sm">
         </div>
-        <div>
-          <div class="font-bold text-sm text-white tracking-tight leading-none">คลังเอกสารดิจิทัล</div>
-          <div class="text-[10px] text-slate-400 font-normal mt-0.5" id="side-sub-year">สถานศึกษา ๒๕๖๙</div>
+        <div class="min-w-0">
+          <div class="font-bold text-sm text-white tracking-tight leading-tight truncate">โรงเรียนบ้านห้วยติ่ง</div>
+          <div class="text-[10px] text-slate-400 font-normal truncate" id="side-sub-year">สพป.สุโขทัย เขต 2</div>
         </div>
       </div>
-      <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition" aria-label="ปิดเมนู">
+      <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition shrink-0" aria-label="ปิดเมนู">
         <i class="fa-solid fa-xmark text-base"></i>
       </button>
     </div>
@@ -235,8 +237,8 @@
         <div class="flex items-center gap-1.5 sm:gap-2 text-xs font-semibold text-slate-500 truncate">
           <span class="text-indigo-600 font-bold shrink-0" id="top-view-indicator">หน้าแรก</span>
           <span class="text-slate-300">/</span>
-          <span class="text-slate-700 font-normal truncate hidden sm:inline">ระบบคลังเอกสารดิจิทัล</span>
-          <span class="text-slate-700 font-normal truncate sm:hidden">คลังเอกสาร</span>
+          <span class="text-slate-700 font-normal truncate hidden sm:inline">โรงเรียนบ้านห้วยติ่ง สำนักงานเขตพื้นที่การศึกษาประถมศึกษาสุโขทัย เขต 2</span>
+          <span class="text-slate-700 font-normal truncate sm:hidden">รร.บ้านห้วยติ่ง</span>
         </div>
       </div>
 
@@ -277,17 +279,20 @@
         <section id="view-dashboard" class="space-y-8 sm:space-y-10 animate-fade-in">
           
           <!-- SECTION 1: HEADER BANNER & SYSTEM OVERVIEW -->
-          <div class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-card flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden">
-            <div class="max-w-2xl z-10">
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-indigo-200 text-[11px] sm:text-xs font-semibold mb-2.5 backdrop-blur-xs border border-white/10">
-                <i class="fa-solid fa-circle-check text-emerald-400"></i> <span id="hero-badge-year">ศูนย์รวมเอกสารและสื่อนวัตกรรม ประจำปีการศึกษา ๒๕๖๙</span>
-              </div>
-              <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-snug">
-                สืบค้นและดาวน์โหลดเอกสารทางการศึกษา ๔ ฝ่าย
-              </h2>
-              <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed font-normal">
-                เข้าถึงหลักสูตรสถานศึกษา แผนการจัดการเรียนรู้ Active Learning (รูปแบบ ๔ คิด, STEM) คำสั่ง ประกาศ และแบบฟอร์มราชการ เพื่อความสะดวกรวดเร็วในการจัดการศึกษา
-              </p>
+          <div class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-card flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+            <div class="flex items-start sm:items-center gap-4 sm:gap-6 z-10">
+              <img src="logo.png" alt="โลโก้โรงเรียนบ้านห้วยติ่ง" class="w-16 h-16 sm:w-24 sm:h-24 object-contain drop-shadow-2xl shrink-0 hidden sm:block">
+              <div class="max-w-2xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-indigo-200 text-[11px] sm:text-xs font-semibold mb-2.5 backdrop-blur-xs border border-white/10">
+                  <img src="logo.png" alt="โลโก้" class="w-4 h-4 object-contain sm:hidden inline">
+                  <span>โรงเรียนบ้านห้วยติ่ง</span> • <span id="hero-badge-year">ประจำปีการศึกษา ๒๕๖๙</span>
+                </div>
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-snug">
+                  ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัล ๔ ฝ่าย
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed font-normal">
+                  โรงเรียนบ้านห้วยติ่ง สำนักงานเขตพื้นที่การศึกษาประถมศึกษาสุโขทัย เขต 2 • ศูนย์รวมหลักสูตรสถานศึกษา แผนการจัดการเรียนรู้ Active Learning คำสั่ง ประกาศ และแบบฟอร์มทางการศึกษา
+                </p>
 
               <!-- Search Chips -->
               <div class="mt-4 flex flex-wrap items-center gap-1.5 text-xs">
@@ -610,12 +615,15 @@
         <section id="view-admin" class="space-y-6 hidden animate-fade-in">
           
           <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-card flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold mb-2 border border-amber-200">
-                <i class="fa-solid fa-screwdriver-wrench"></i> โหมดผู้ดูแลระบบ (Admin Console)
+            <div class="flex items-center gap-3.5">
+              <img src="logo.png" alt="โลโก้โรงเรียน" class="w-12 h-12 sm:w-14 sm:h-14 object-contain shrink-0 drop-shadow-sm">
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold mb-1 border border-amber-200">
+                  <i class="fa-solid fa-screwdriver-wrench"></i> โหมดผู้ดูแลระบบ (Admin Console)
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ศูนย์จัดการเอกสารและระบบ</h2>
+                <p class="text-xs text-slate-500 mt-0.5">โรงเรียนบ้านห้วยติ่ง สำนักงานเขตพื้นที่การศึกษาประถมศึกษาสุโขทัย เขต 2</p>
               </div>
-              <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ศูนย์จัดการเอกสารและระบบ</h2>
-              <p class="text-xs text-slate-500 mt-0.5">อัปโหลดไฟล์ด้วย Drag & Drop, จัดการฐานข้อมูล Cloud Google Sheets, และเปลี่ยนรหัสผ่าน</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
@@ -872,6 +880,61 @@
     </div>
   </div>
 
+  <!-- ================= MODAL: CUSTOM CONFIRM DELETE ================= -->
+  <div id="confirm-delete-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs hidden flex items-center justify-center p-4 animate-fade-in">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-slate-200 p-6 text-center space-y-4">
+      
+      <!-- Animated Warning Badge -->
+      <div class="mx-auto w-16 h-16 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 text-2xl shadow-inner relative">
+        <i class="fa-solid fa-trash-can animate-bounce"></i>
+        <div class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 rounded-full animate-ping"></div>
+        <div class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 rounded-full border-2 border-white"></div>
+      </div>
+
+      <!-- Title & Subtitle -->
+      <div class="space-y-1">
+        <h3 class="text-base font-bold text-slate-900">ยืนยันการลบเอกสาร</h3>
+        <p class="text-xs text-slate-500">ข้อมูลจะถูกลบออกจากฐานข้อมูล Google Sheets แบบเรียลไทม์</p>
+      </div>
+
+      <!-- Target Document Card -->
+      <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 text-left flex items-start gap-3">
+        <div id="delete-modal-icon-badge" class="w-9 h-9 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0 text-xs font-bold font-mono shadow-xs">
+          PDF
+        </div>
+        <div class="min-w-0 flex-1">
+          <p id="delete-modal-doc-title" class="font-bold text-xs text-slate-800 line-clamp-2 leading-relaxed">
+            ชื่อเอกสาร
+          </p>
+          <p id="delete-modal-doc-meta" class="text-[10px] text-slate-500 mt-0.5">
+            หมวดงานวิชาการ • DOC-001
+          </p>
+        </div>
+      </div>
+
+      <!-- Warning Note -->
+      <div class="flex items-center gap-2 p-2.5 bg-amber-50 rounded-xl border border-amber-200/70 text-[11px] text-amber-800 text-left">
+        <i class="fa-solid fa-triangle-exclamation text-amber-600 shrink-0 text-xs"></i>
+        <span>การดำเนินการนี้ไม่สามารถยกเลิกหรือกู้คืนข้อมูลได้</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="grid grid-cols-2 gap-3 pt-2">
+        <button type="button" onclick="closeDeleteConfirmModal()" 
+                class="w-full py-2.5 px-4 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 active:scale-95 transition font-semibold text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+          <span>ยกเลิก</span>
+        </button>
+        <button type="button" onclick="executeDeleteDocument()" 
+                class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-700 hover:to-red-700 text-white font-bold text-xs shadow-lg shadow-rose-600/30 active:scale-95 transition flex items-center justify-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-trash-can"></i>
+          <span>ยืนยันลบเอกสาร</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ================= MODAL: DOCUMENT PREVIEW ================= -->
   <div id="preview-modal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-xs hidden flex items-center justify-center p-2 sm:p-4 animate-fade-in">
     <div class="bg-white w-full max-w-4xl h-[92vh] sm:h-[88vh] rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
@@ -901,11 +964,9 @@
         <div id="printArea" class="bg-white shadow-xl rounded-xl p-5 sm:p-12 sarabun-text w-full max-w-2xl min-h-[600px] border border-slate-200 text-slate-900 relative">
           
           <div class="text-center mb-6">
-            <div class="w-10 sm:w-12 h-10 sm:h-12 mx-auto mb-2 flex items-center justify-center text-2xl sm:text-3xl text-amber-800">
-              <i class="fa-solid fa-landmark"></i>
-            </div>
-            <h2 class="text-sm sm:text-lg font-bold tracking-wide text-slate-900">เอกสารทางการศึกษา</h2>
-            <p class="text-[11px] sm:text-xs text-slate-500">สำนักงานเขตพื้นที่การศึกษา • กระทรวงศึกษาธิการ</p>
+            <img src="logo.png" alt="ตราสัญลักษณ์โรงเรียนบ้านห้วยติ่ง" class="w-20 h-20 mx-auto mb-2 object-contain drop-shadow-sm">
+            <h2 class="text-sm sm:text-lg font-bold tracking-wide text-slate-900">โรงเรียนบ้านห้วยติ่ง</h2>
+            <p class="text-[11px] sm:text-xs text-slate-500">สำนักงานเขตพื้นที่การศึกษาประถมศึกษาสุโขทัย เขต 2</p>
             <div class="w-16 h-0.5 bg-slate-800 mx-auto mt-2"></div>
           </div>
 
@@ -2779,14 +2840,47 @@
       }
     }
 
-    async function confirmDeleteDoc(docId) {
+    let pendingDeleteDocId = null;
+
+    function openDeleteConfirmModal(docId) {
       if (!isAdminLoggedIn) return openAdminLoginModal();
       const doc = documents.find(d => d.id === docId);
       if (!doc) return;
 
-      if (!confirm(`ต้องการลบ "${doc.title}"?`)) return;
+      pendingDeleteDocId = docId;
 
-      showToast(`กำลังลบ "${doc.title}" จาก Google Sheets...`, 'info');
+      const titleEl = document.getElementById('delete-modal-doc-title');
+      const metaEl = document.getElementById('delete-modal-doc-meta');
+      const badgeEl = document.getElementById('delete-modal-icon-badge');
+
+      if (titleEl) titleEl.innerText = doc.title;
+      if (metaEl) metaEl.innerText = `${getCategoryName(doc.category)} • รหัส ${doc.id}`;
+      if (badgeEl) {
+        badgeEl.innerText = doc.type || 'DOC';
+        badgeEl.className = `w-9 h-9 rounded-xl ${getFileTypeBadgeColor(doc.type)} text-white flex items-center justify-center shrink-0 text-xs font-bold font-mono shadow-xs`;
+      }
+
+      document.getElementById('confirm-delete-modal').classList.remove('hidden');
+    }
+
+    function closeDeleteConfirmModal() {
+      document.getElementById('confirm-delete-modal').classList.add('hidden');
+      pendingDeleteDocId = null;
+    }
+
+    function confirmDeleteDoc(docId) {
+      openDeleteConfirmModal(docId);
+    }
+
+    async function executeDeleteDocument() {
+      if (!pendingDeleteDocId) return;
+      const docId = pendingDeleteDocId;
+      closeDeleteConfirmModal();
+
+      const doc = documents.find(d => d.id === docId);
+      const title = doc ? doc.title : docId;
+
+      showToast(`กำลังลบ "${title}" จาก Google Sheets...`, 'info');
 
       if (isCloudConnected()) {
         const res = await sendCloudCommand('deleteDocument', { id: docId });
