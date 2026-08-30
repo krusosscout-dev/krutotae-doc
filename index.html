@@ -279,25 +279,43 @@
         <section id="view-dashboard" class="space-y-8 sm:space-y-10 animate-fade-in">
           
           <!-- SECTION 1: HEADER BANNER & SYSTEM OVERVIEW -->
-          <div class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-card flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
-            <div class="flex items-start sm:items-center gap-4 sm:gap-6 z-10">
-              <img src="logo.png" alt="โลโก้โรงเรียนบ้านห้วยติ่ง" class="w-16 h-16 sm:w-24 sm:h-24 object-contain drop-shadow-2xl shrink-0 hidden sm:block">
-              <div class="max-w-2xl">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-indigo-200 text-[11px] sm:text-xs font-semibold mb-2.5 backdrop-blur-xs border border-white/10">
-                  <img src="logo.png" alt="โลโก้" class="w-4 h-4 object-contain sm:hidden inline">
-                  <span>โรงเรียนบ้านห้วยติ่ง</span> • <span id="hero-badge-year">ประจำปีการศึกษา ๒๕๖๙</span>
+          <div class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 text-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-card flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative overflow-hidden">
+            
+            <!-- Decorative Glow Elements -->
+            <div class="absolute -right-12 -top-12 w-64 h-64 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-12 -bottom-12 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6 z-10 flex-1">
+              <!-- Premium School Logo Container -->
+              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl bg-white/10 backdrop-blur-md p-2.5 flex items-center justify-center shrink-0 border border-white/20 shadow-2xl">
+                <img src="logo.png" alt="โลโก้โรงเรียนบ้านห้วยติ่ง" class="w-full h-full object-contain drop-shadow-md">
+              </div>
+
+              <!-- Typography & Information -->
+              <div class="space-y-2 max-w-2xl">
+                <!-- Top Badge Pill -->
+                <div class="inline-flex items-center flex-wrap gap-2 px-3.5 py-1 rounded-full bg-white/10 text-indigo-200 text-[11px] sm:text-xs font-medium backdrop-blur-md border border-white/15">
+                  <span class="flex items-center gap-1.5"><i class="fa-solid fa-school text-emerald-400"></i> <strong class="text-white font-semibold">โรงเรียนบ้านห้วยติ่ง</strong></span>
+                  <span class="text-white/40 hidden sm:inline">•</span>
+                  <span class="hidden sm:inline text-indigo-200">สพป.สุโขทัย เขต 2</span>
+                  <span class="text-white/40">•</span>
+                  <span id="hero-badge-year" class="text-amber-300 font-bold">ปีการศึกษา ๒๕๖๙</span>
                 </div>
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-snug">
+
+                <!-- Main Title -->
+                <h2 class="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white leading-tight">
                   ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัล ๔ ฝ่าย
                 </h2>
-                <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed font-normal">
-                  โรงเรียนบ้านห้วยติ่ง สำนักงานเขตพื้นที่การศึกษาประถมศึกษาสุโขทัย เขต 2 • ศูนย์รวมหลักสูตรสถานศึกษา แผนการจัดการเรียนรู้ Active Learning คำสั่ง ประกาศ และแบบฟอร์มทางการศึกษา
+
+                <!-- Subtitle Description -->
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                  ศูนย์รวมหลักสูตรสถานศึกษา แผนการจัดการเรียนรู้ Active Learning (รูปแบบ ๔ คิด, STEM) คำสั่ง ประกาศ และแบบฟอร์มทางการศึกษา
                 </p>
 
                 <!-- Search Chips -->
-                <div class="mt-4 flex flex-wrap items-center gap-1.5 text-xs">
-                  <span class="text-slate-400 font-medium mr-1"><i class="fa-solid fa-fire text-amber-400"></i> ยอดนิยม:</span>
-                  <button onclick="filterByTag('รูปแบบ 4 คิด')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-200 font-medium text-[11px] transition border border-white/10 active:scale-95">#รูปแบบ 4 คิด</button>
+                <div class="pt-1.5 flex flex-wrap items-center gap-1.5 text-xs">
+                  <span class="text-slate-400 font-medium mr-1 text-[11px]"><i class="fa-solid fa-fire text-amber-400"></i> ยอดนิยม:</span>
+                  <button onclick="filterByTag('รูปแบบ 4 คิด')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-200 font-medium text-[11px] transition border border-white/10 active:scale-95">#รูปแบบ ๔ คิด</button>
                   <button onclick="filterByTag('Active Learning')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-200 font-medium text-[11px] transition border border-white/10 active:scale-95">#Active Learning</button>
                   <button onclick="filterByTag('แบบฟอร์มลา')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-200 font-medium text-[11px] transition border border-white/10 active:scale-95">#แบบฟอร์มลา</button>
                   <button onclick="filterByTag('จัดซื้อจัดจ้าง')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-200 font-medium text-[11px] transition border border-white/10 active:scale-95">#จัดซื้อจัดจ้าง</button>
@@ -306,11 +324,13 @@
             </div>
 
             <!-- Quick Action Button -->
-            <button onclick="switchView('repository'); setCategoryFilter('all');" class="w-full sm:w-auto px-5 py-3 rounded-xl sm:rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2 shrink-0 z-10 active:scale-95">
-              <i class="fa-solid fa-folder-open"></i>
+            <button onclick="switchView('repository'); setCategoryFilter('all');" 
+                    class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white text-xs sm:text-sm font-bold shadow-xl shadow-indigo-600/40 transition flex items-center justify-center gap-2.5 shrink-0 z-10 active:scale-95 border border-indigo-400/30 cursor-pointer self-stretch sm:self-auto">
+              <i class="fa-solid fa-folder-open text-base"></i>
               <span>เข้าสู่คลังเอกสาร</span>
               <i class="fa-solid fa-arrow-right text-xs"></i>
             </button>
+
           </div>
 
           <!-- SECTION 2: 4 DEPARTMENTS -->
@@ -2434,6 +2454,13 @@
           <div class="p-3 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-between text-xs text-indigo-900 mb-3 shadow-xs">
             <span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-file-circle-check text-indigo-600"></i> แนบไฟล์ต้นฉบับจริง: ${fileEntry.fileName || doc.fileName || doc.title}</span>
             <button onclick="handleDownloadDoc('${doc.id}')" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition">ดาวน์โหลดไฟล์จริง</button>
+          </div>
+        `;
+      } else {
+        fileBadgeHtml = `
+          <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs text-amber-800 mb-3 shadow-xs">
+            <span class="font-medium flex items-center gap-1.5"><i class="fa-solid fa-file-circle-question text-amber-600"></i> โครงร่างตัวอย่างจำลอง (ยังไม่ได้แนบไฟล์จริงหรือลิงก์ Google Drive)</span>
+            ${isAdminLoggedIn ? `<button onclick="closePreviewModal(); openEditModal('${doc.id}');" class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-[11px] shrink-0 active:scale-95"><i class="fa-solid fa-paperclip mr-1"></i> แนบไฟล์จริง</button>` : ''}
           </div>
         `;
       }
