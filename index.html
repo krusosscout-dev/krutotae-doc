@@ -958,7 +958,7 @@
 
   <!-- ================= MODAL: DOCUMENT PREVIEW ================= -->
   <div id="preview-modal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-xs hidden flex items-center justify-center p-2 sm:p-4 animate-fade-in">
-    <div class="bg-white w-full max-w-4xl h-[92vh] sm:h-[88vh] rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
+    <div class="bg-white w-full max-w-5xl lg:max-w-6xl h-[92vh] sm:h-[90vh] rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
       
       <div class="p-3 sm:p-4 bg-slate-900 text-white flex items-center justify-between gap-2 shrink-0">
         <div class="overflow-hidden min-w-0">
@@ -982,7 +982,7 @@
       </div>
 
       <div class="flex-1 bg-slate-100 overflow-y-auto p-3 sm:p-8 flex justify-center custom-scrollbar">
-        <div id="printArea" class="bg-white shadow-xl rounded-xl p-5 sm:p-12 sarabun-text w-full max-w-2xl min-h-[600px] border border-slate-200 text-slate-900 relative">
+        <div id="printArea" class="bg-white shadow-xl rounded-xl p-5 sm:p-12 sarabun-text w-full max-w-4xl min-h-[600px] border border-slate-200 text-slate-900 relative">
           
           <div class="text-center mb-6">
             <img src="logo.png" alt="ตราสัญลักษณ์โรงเรียนบ้านห้วยติ่ง" class="w-20 h-20 mx-auto mb-2 object-contain drop-shadow-sm">
@@ -1015,99 +1015,167 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: UPLOAD / EDIT ================= -->
-  <div id="upload-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-xs hidden flex items-center justify-center p-3 animate-fade-in">
-    <div class="bg-white w-full max-w-lg rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200 max-h-[90vh] flex flex-col">
-      <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
-        <h3 id="upload-modal-title" class="font-bold text-sm">อัปโหลดและจัดหมวดหมู่เอกสาร</h3>
-        <button onclick="closeUploadModal()" class="text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark"></i></button>
+  <!-- ================= MODAL: UPLOAD / EDIT (WIDE HORIZONTAL LANDSCAPE) ================= -->
+  <div id="upload-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-xs hidden flex items-center justify-center p-3 sm:p-6 animate-fade-in">
+    <div class="bg-white w-full max-w-4xl lg:max-w-5xl rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200 max-h-[92vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between shrink-0 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+          </div>
+          <div>
+            <h3 id="upload-modal-title" class="font-bold text-sm text-white">อัปโหลดและจัดหมวดหมู่เอกสาร</h3>
+            <p class="text-[10px] text-slate-400">ระบบคลังเอกสารและสื่อนวัตกรรม โรงเรียนบ้านห้วยติ่ง</p>
+          </div>
+        </div>
+        <button onclick="closeUploadModal()" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-red-500 text-slate-400 hover:text-white flex items-center justify-center transition" aria-label="ปิด">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
       </div>
 
-      <form onsubmit="handleSaveDocument(event)" class="p-4 sm:p-5 space-y-3 overflow-y-auto custom-scrollbar flex-1 text-xs">
+      <!-- Modal Body (2-Column Horizontal Layout) -->
+      <form onsubmit="handleSaveDocument(event)" class="p-5 sm:p-6 overflow-y-auto custom-scrollbar flex-1 text-xs space-y-4">
         <input type="hidden" id="edit-doc-id" value="">
 
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">ชื่อเอกสาร <span class="text-red-500">*</span></label>
-          <input id="form-doc-title" required type="text" placeholder="เช่น แผนการจัดการเรียนรู้ Active Learning สังคมศึกษา ป.๔"
-                 class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
-        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+          
+          <!-- LEFT COLUMN: FILE ATTACHMENT & SOURCE (col-span-5) -->
+          <div class="lg:col-span-5 space-y-3.5 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80 flex flex-col">
+            
+            <div class="font-bold text-slate-800 text-xs flex items-center gap-2 pb-2 border-b border-slate-200">
+              <i class="fa-solid fa-paperclip text-indigo-600"></i>
+              <span>1. แหล่งไฟล์เอกสารต้นฉบับ</span>
+            </div>
 
-        <!-- Attached File Info Banner -->
-        <div id="form-attached-file-box" class="hidden p-2.5 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-between gap-2 text-xs">
-          <div class="flex items-center gap-2 min-w-0">
-            <i class="fa-solid fa-paperclip text-indigo-600 text-sm shrink-0"></i>
-            <span id="form-attached-file-name" class="font-bold text-indigo-950 truncate">ไฟล์ที่แนบ</span>
+            <!-- Attached File Status Badge -->
+            <div id="form-attached-file-box" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between gap-2 text-xs">
+              <div class="flex items-center gap-2 min-w-0">
+                <i class="fa-solid fa-file-circle-check text-emerald-600 text-base shrink-0"></i>
+                <span id="form-attached-file-name" class="font-bold text-emerald-950 truncate">ไฟล์ที่แนบ</span>
+              </div>
+              <button type="button" onclick="clearAttachedFile()" class="text-red-500 hover:text-red-700 text-xs px-2 py-1 rounded hover:bg-red-50 font-bold shrink-0">
+                <i class="fa-solid fa-trash mr-1"></i> ลบ
+              </button>
+            </div>
+
+            <!-- File Picker Input Box -->
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">
+                เลือกไฟล์จากเครื่อง:
+              </label>
+              <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-indigo-400 transition">
+                <input type="file" id="form-file-picker-input" onchange="handleModalFilePicker(event)"
+                       class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
+                <p class="text-[10px] text-slate-400 mt-1.5 flex items-center gap-1">
+                  <i class="fa-solid fa-circle-check text-emerald-500"></i> รองรับ PDF, Word (.docx), Excel, PPTX
+                </p>
+              </div>
+            </div>
+
+            <!-- Online URL Input (Optional) -->
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">
+                หรือ ลิงก์ออนไลน์ (ไม่บังคับ - ปล่อยว่างได้):
+              </label>
+              <input id="form-doc-fileurl" type="url" placeholder="https://drive.google.com/... หรือ Canva"
+                     class="w-full bg-white border border-slate-200 rounded-xl p-2.5 font-medium text-xs focus:border-indigo-500 focus:outline-none">
+              <p class="text-[10px] text-slate-400 mt-1">* ใส่เฉพาะกรณีมีลิงก์ Google Drive หรือ Canva</p>
+            </div>
+
+            <!-- File Type & File Size -->
+            <div class="grid grid-cols-2 gap-2.5 pt-2">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">ประเภทไฟล์ <span class="text-red-500">*</span></label>
+                <select id="form-doc-type" required class="w-full bg-white border border-slate-200 rounded-xl p-2 font-medium text-xs">
+                  <option value="PDF">PDF (.pdf)</option>
+                  <option value="DOCX">Word (.docx)</option>
+                  <option value="XLSX">Excel (.xlsx)</option>
+                  <option value="PPTX">PowerPoint (.pptx)</option>
+                  <option value="CANVA">Canva Link</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">ขนาดไฟล์</label>
+                <input id="form-doc-size" type="text" value="1.5 MB" class="w-full bg-white border border-slate-200 rounded-xl p-2 font-medium text-xs">
+              </div>
+            </div>
+
           </div>
-          <button type="button" onclick="clearAttachedFile()" class="text-red-500 hover:text-red-700 text-xs px-2 py-1 rounded hover:bg-red-50 font-bold shrink-0">
-            <i class="fa-solid fa-trash mr-1"></i> ลบไฟล์
-          </button>
-        </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">เลือกไฟล์จากเครื่อง (ถ้ามี):</label>
-            <input type="file" id="form-file-picker-input" onchange="handleModalFilePicker(event)"
-                   class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
+          <!-- RIGHT COLUMN: DOCUMENT DETAILS & CATEGORY (col-span-7) -->
+          <div class="lg:col-span-7 space-y-3.5">
+            
+            <div class="font-bold text-slate-800 text-xs flex items-center gap-2 pb-2 border-b border-slate-100">
+              <i class="fa-solid fa-file-lines text-indigo-600"></i>
+              <span>2. รายละเอียดและข้อมูลเอกสาร</span>
+            </div>
+
+            <!-- Document Title -->
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">ชื่อเอกสาร / นวัตกรรม <span class="text-red-500">*</span></label>
+              <input id="form-doc-title" required type="text" placeholder="เช่น แผนการจัดการเรียนรู้ Active Learning สังคมศึกษา ป.4"
+                     class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs focus:bg-white focus:border-indigo-500 focus:outline-none">
+            </div>
+
+            <!-- 4 Departments & Subcategory -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">ฝ่ายบริหารงาน 4 ฝ่าย <span class="text-red-500">*</span></label>
+                <select id="form-doc-category" onchange="updateFormSubcategories()" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs focus:bg-white focus:border-indigo-500 focus:outline-none">
+                  <option value="academic">1. หมวดงานวิชาการ</option>
+                  <option value="personnel">2. หมวดงานบุคลากรและทั่วไป</option>
+                  <option value="student">3. หมวดงานกิจการนักเรียน</option>
+                  <option value="budget">4. หมวดงานงบประมาณและพัสดุ</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">หมวดหมู่ย่อย <span class="text-red-500">*</span></label>
+                <select id="form-doc-subcategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs focus:bg-white focus:border-indigo-500 focus:outline-none"></select>
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">แท็กป้ายกำกับ (คั่นด้วยเครื่องหมายจุลภาค)</label>
+              <input id="form-doc-tags" type="text" placeholder="รูปแบบ 4 คิด, Active Learning, ป.4, แผนการสอน" 
+                     class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs focus:bg-white focus:border-indigo-500 focus:outline-none">
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">คำอธิบายเอกสาร / วัตถุประสงค์</label>
+              <textarea id="form-doc-desc" rows="2" placeholder="ระบุรายละเอียดสำคัญหรือคำแนะนำ..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs focus:bg-white focus:border-indigo-500 focus:outline-none"></textarea>
+            </div>
+
+            <!-- Content Sample -->
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">เนื้อหาตัวอย่าง / โครงร่างสำคัญ</label>
+              <textarea id="form-doc-content" rows="2" placeholder="ระบุเนื้อหาสำคัญ..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs focus:bg-white focus:border-indigo-500 focus:outline-none"></textarea>
+            </div>
+
           </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">หรือ ลิงก์ออนไลน์ (Google Drive / Canva / คลังไฟล์):</label>
-            <input id="form-doc-fileurl" type="url" placeholder="https://drive.google.com/..."
-                   class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
+
+        </div>
+
+        <!-- Form Footer Actions -->
+        <div class="pt-3 border-t border-slate-200 flex items-center justify-between flex-wrap gap-2">
+          <div class="text-[11px] text-slate-500 hidden sm:flex items-center gap-1.5">
+            <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+            <span>ข้อมูลจะถูกบันทึกและซิงค์ข้อมูลอย่างปลอดภัย</span>
+          </div>
+          <div class="flex items-center gap-2 ml-auto">
+            <button type="button" onclick="closeUploadModal()" class="px-4 py-2 border border-slate-300 rounded-xl font-medium hover:bg-slate-50 transition">
+              ยกเลิก
+            </button>
+            <button type="submit" class="px-6 py-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white rounded-xl font-bold shadow-lg shadow-indigo-600/30 active:scale-95 transition flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>บันทึกเอกสาร</span>
+            </button>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">ฝ่ายบริหารงาน 4 ฝ่าย <span class="text-red-500">*</span></label>
-            <select id="form-doc-category" onchange="updateFormSubcategories()" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
-              <option value="academic">1. หมวดงานวิชาการ</option>
-              <option value="personnel">2. หมวดงานบุคลากรและทั่วไป</option>
-              <option value="student">3. หมวดงานกิจการนักเรียน</option>
-              <option value="budget">4. หมวดงานงบประมาณและพัสดุ</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">หมวดหมู่ย่อย <span class="text-red-500">*</span></label>
-            <select id="form-doc-subcategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs"></select>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">ประเภทไฟล์ <span class="text-red-500">*</span></label>
-            <select id="form-doc-type" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
-              <option value="PDF">PDF (.pdf)</option>
-              <option value="DOCX">Word (.docx)</option>
-              <option value="XLSX">Excel (.xlsx)</option>
-              <option value="PPTX">PowerPoint (.pptx)</option>
-              <option value="CANVA">Canva Presentation Link</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">ขนาดไฟล์</label>
-            <input id="form-doc-size" type="text" value="1.8 MB" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
-          </div>
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">แท็กป้ายกำกับ (คั่นด้วยจุลภาค)</label>
-          <input id="form-doc-tags" type="text" placeholder="รูปแบบ 4 คิด, Active Learning, ป.4" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs">
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">คำอธิบายเอกสาร / วัตถุประสงค์</label>
-          <textarea id="form-doc-desc" rows="2" placeholder="ระบุรายละเอียดสำคัญ..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs"></textarea>
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">เนื้อหาตัวอย่าง / รายละเอียดเอกสาร (แสดงในหน้าดูตัวอย่าง)</label>
-          <textarea id="form-doc-content" rows="3" placeholder="ระบุเนื้อหาสำคัญหรือรายละเอียดของเอกสาร..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-xs"></textarea>
-        </div>
-
-        <div class="pt-3 border-t border-slate-200 flex justify-end gap-2">
-          <button type="button" onclick="closeUploadModal()" class="px-4 py-2 border border-slate-300 rounded-xl font-medium">ยกเลิก</button>
-          <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow active:scale-95">บันทึกเอกสาร</button>
-        </div>
       </form>
     </div>
   </div>
