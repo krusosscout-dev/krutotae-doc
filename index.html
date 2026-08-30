@@ -1055,7 +1055,13 @@
 
     function getCloudApiUrl() {
       try { 
-        return localStorage.getItem('school_cloud_api_url') || DEFAULT_CLOUD_API_URL; 
+        const stored = localStorage.getItem('school_cloud_api_url');
+        // Auto-upgrade to latest working endpoint if empty or pointing to an obsolete deployment
+        if (!stored || stored.includes('AKfycby9SyXZGu') || stored.includes('AKfycbxpoT1Cb3g')) {
+          localStorage.setItem('school_cloud_api_url', DEFAULT_CLOUD_API_URL);
+          return DEFAULT_CLOUD_API_URL;
+        }
+        return stored; 
       } catch (e) { 
         return DEFAULT_CLOUD_API_URL; 
       }
