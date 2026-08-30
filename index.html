@@ -1124,15 +1124,7 @@
         showToast(`อัปเดตปีการศึกษาเป็น "${val}" เรียบร้อยแล้ว`, 'success');
 
         if (isCloudConnected()) {
-          try {
-            fetch(getCloudApiUrl(), {
-              method: 'POST',
-              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-              body: JSON.stringify({ action: 'setAcademicYear', academicYear: val })
-            }).then(() => {
-              setTimeout(() => fetchFromCloudDatabase(false), 500);
-            }).catch(() => {});
-          } catch (err) {}
+          sendCloudCommand('setAcademicYear', { academicYear: val });
         }
       }
     }
@@ -1438,8 +1430,44 @@
     }
 
     /* =========================================================================
-       CLOUD DATABASE SYNC ENGINE (GOOGLE SHEETS)
+       CLOUD DATABASE SYNC ENGINE (GOOGLE SHEETS - UNIVERSAL REAL-TIME)
        ========================================================================= */
+    async function sendCloudCommand(action, payload = {}) {
+      if (!isCloudConnected()) return null;
+      const baseUrl = getCloudApiUrl();
+      if (!baseUrl || !baseUrl.startsWith('http')) return null;
+
+      try {
+        const params = new URLSearchParams();
+        params.append('action', action);
+        params.append('t', Date.now());
+
+        if (action === 'deleteDocument') {
+          params.append('id', payload.id || '');
+        } else if (action === 'addDocument' || action === 'editDocument') {
+          params.append('data', JSON.stringify(payload.document || {}));
+        } else if (action === 'setAcademicYear') {
+          params.append('academicYear', payload.academicYear || '');
+        } else if (action === 'changeAdminPassword') {
+          params.append('newPassword', payload.newPassword || '');
+        }
+
+        const res = await fetch(`${baseUrl}?${params.toString()}`);
+        const data = await res.json();
+        return data;
+      } catch (err) {
+        try {
+          fetch(baseUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action, ...payload })
+          });
+        } catch (e) {}
+        return null;
+      }
+    }
+
     async function fetchFromCloudDatabase(isManual = false) {
       const url = getCloudApiUrl();
       if (!url || !url.startsWith('http')) return;
@@ -1452,7 +1480,7 @@
         if (result.status === 'success' && result.data && Array.isArray(result.data.documents)) {
           const newJson = JSON.stringify(result.data.documents);
           const oldJson = JSON.stringify(documents);
-          if (newJson !== oldJson && result.data.documents.length > 0) {
+          if (newJson !== oldJson) {
             documents = result.data.documents;
             saveDocumentsLocally();
             updateCategoryCounts();
@@ -1778,15 +1806,7 @@
       showToast('เปลี่ยนรหัสผ่านผู้ดูแลสำเร็จเรียบร้อย', 'success');
 
       if (isCloudConnected()) {
-        try {
-          fetch(getCloudApiUrl(), {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: 'changeAdminPassword', newPassword: next })
-          }).then(() => {
-            setTimeout(() => fetchFromCloudDatabase(false), 500);
-          }).catch(() => {});
-        } catch (err) {}
+        sendCloudCommand('changeAdminPassword', { newPassword: next });
       }
     }
 
@@ -2740,17 +2760,14 @@
       renderRepository();
       renderAdminTable();
 
-      // Cloud Sync (Sent as text/plain to avoid CORS preflight blockage in Google Apps Script)
+      // Cloud Sync (GET with encoded params for 100% CORS safety across all browsers)
       if (isCloudConnected() && savedDoc) {
-        try {
-          fetch(getCloudApiUrl(), {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: actionType, document: savedDoc })
-          }).then(() => {
-            setTimeout(() => fetchFromCloudDatabase(false), 500);
-          }).catch(() => {});
-        } catch (err) {}
+        sendCloudCommand(actionType, { document: savedDoc }).then((res) => {
+          if (res && res.status === 'success') {
+            showToast(actionType === 'editDocument' ? 'บันทึกการแก้ไขใน Google Sheets สำเร็จ' : 'บันทึกเอกสารลง Google Sheets สำเร็จ', 'success');
+          }
+          setTimeout(() => fetchFromCloudDatabase(false), 600);
+        });
       }
     }
 
@@ -2769,19 +2786,16 @@
         renderDashboardFeatured();
         renderRepository();
         renderAdminTable();
-        showToast('ลบเอกสารออกจากระบบแล้ว', 'info');
+        showToast('ลบเอกสารออกจากระบบแล้ว กำลังอัปเดต Google Sheets...', 'info');
 
-        // Cloud Sync (Sent as text/plain to avoid CORS preflight blockage in Google Apps Script)
+        // Cloud Sync (GET with encoded params for 100% CORS safety across all browsers)
         if (isCloudConnected()) {
-          try {
-            fetch(getCloudApiUrl(), {
-              method: 'POST',
-              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-              body: JSON.stringify({ action: 'deleteDocument', id: docId })
-            }).then(() => {
-              setTimeout(() => fetchFromCloudDatabase(false), 500);
-            }).catch(() => {});
-          } catch (err) {}
+          sendCloudCommand('deleteDocument', { id: docId }).then((res) => {
+            if (res && res.status === 'success') {
+              showToast('ลบข้อมูลออกจาก Google Sheets เรียบร้อย', 'success');
+            }
+            setTimeout(() => fetchFromCloudDatabase(false), 600);
+          });
         }
       }
     }
