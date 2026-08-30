@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบคลังเอกสารและสื่อการเรียนรู้ ครูซอส - โรงเรียนวัดบางปูน</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              200: '#bae0fd',
+              300: '#7cc5fb',
+              400: '#36a6f6',
+              500: '#0c87eb',
+              600: '#0268c7',
+              700: '#0353a1',
+              800: '#074684',
+              900: '#0b3c6f',
+              950: '#082649',
+            },
+            academic: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              700: '#1d4ed8',
+            },
+            personnel: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              700: '#15803d',
+            },
+            student: {
+              50: '#fdf4ff',
+              100: '#fae8ff',
+              500: '#d946ef',
+              700: '#a21caf',
+            },
+            budget: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              500: '#f59e0b',
+              700: '#b45309',
+            }
+          },
+          fontFamily: {
+            sans: ['Prompt', 'Sarabun', 'sans-serif'],
+            sarabun: ['Sarabun', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Prompt & Sarabun -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    body { font-family: 'Prompt', sans-serif; }
+    .sarabun-text { font-family: 'Sarabun', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeIn 0.25s ease-out forwards; }
+    @media print {
+      body * { visibility: hidden; }
+      #printArea, #printArea * { visibility: visible; }
+      #printArea { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 20px; background: white; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-full flex flex-col antialiased">
+
+  <!-- ================= TOP NAVIGATION BAR ================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-4">
+        
+        <!-- School Brand & Logo -->
+        <div class="flex items-center gap-3.5 cursor-pointer" onclick="switchView('dashboard')">
+          <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-brand-600 to-indigo-700 text-white flex items-center justify-center shadow-md shadow-brand-500/20">
+            <i class="fa-solid fa-school text-xl sm:text-2xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-lg sm:text-xl font-bold bg-gradient-to-r from-brand-700 via-indigo-700 to-brand-900 bg-clip-text text-transparent">
+                ระบบของครูซอส
+              </span>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-brand-100 text-brand-800 font-semibold border border-brand-200">
+                TT001 • ๒๕๖๙
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 font-normal">คลังเอกสารและสื่อการเรียนรู้ • โรงเรียนวัดบางปูน</p>
+          </div>
+        </div>
+
+        <!-- Center Nav Items (Desktop) -->
+        <nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl border border-slate-200/80">
+          <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-brand-700 bg-white shadow-sm">
+            <i class="fa-solid fa-gauge-high mr-1.5"></i> หน้ากระดานข่าว
+          </button>
+          <button onclick="switchView('repository')" id="nav-repository" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60">
+            <i class="fa-solid fa-folder-tree mr-1.5"></i> คลังเอกสาร ๔ ฝ่าย
+          </button>
+          <button onclick="switchView('admin')" id="nav-admin" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60">
+            <i class="fa-solid fa-sliders mr-1.5"></i> จัดการระบบ (Admin)
+          </button>
+        </nav>
+
+        <!-- Right User & Role Switcher -->
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          
+          <!-- Role Switcher Pill -->
+          <div class="flex items-center bg-slate-100 border border-slate-200 rounded-xl p-1">
+            <button onclick="setRole('user')" id="role-btn-user" class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-white bg-slate-700 shadow-sm flex items-center gap-1.5">
+              <i class="fa-solid fa-chalkboard-user"></i> <span class="hidden sm:inline">โหมดครู</span> (User)
+            </button>
+            <button onclick="setRole('admin')" id="role-btn-admin" class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-shield-halved"></i> <span class="hidden sm:inline">ผู้ดูแล</span> (Admin)
+            </button>
+          </div>
+
+          <!-- Quick Search Button -->
+          <button onclick="focusSearch()" title="ค้นหาด่วน" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition border border-slate-200">
+            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+          </button>
+
+          <!-- Bookmarked Drawer Toggle -->
+          <button onclick="toggleFavoritesModal()" title="เอกสารที่บันทึกไว้" class="relative w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition border border-slate-200">
+            <i class="fa-solid fa-bookmark text-sm text-amber-500"></i>
+            <span id="fav-count-badge" class="absolute -top-1 -right-1 bg-amber-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">0</span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Sub-bar -->
+    <div class="md:hidden flex border-t border-slate-200 bg-slate-50 px-2 py-1.5 justify-around text-xs font-medium">
+      <button onclick="switchView('dashboard')" id="m-nav-dashboard" class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-brand-700 bg-white font-semibold shadow-xs">
+        <i class="fa-solid fa-gauge-high"></i> กระดานข่าว
+      </button>
+      <button onclick="switchView('repository')" id="m-nav-repository" class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-slate-600">
+        <i class="fa-solid fa-folder-open"></i> คลังเอกสาร
+      </button>
+      <button onclick="switchView('admin')" id="m-nav-admin" class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-slate-600">
+        <i class="fa-solid fa-sliders"></i> จัดการระบบ
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= NOTIFICATION TOAST CONTAINER ================= -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ================= MAIN CONTENT AREA ================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+    <!-- ROLE BANNER INDICATOR -->
+    <div id="role-banner" class="mb-6 p-3 sm:p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-sm">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+          <i id="role-banner-icon" class="fa-solid fa-chalkboard-user"></i>
+        </div>
+        <div>
+          <span class="font-bold text-slate-800" id="role-banner-title">กำลังใช้งานในสิทธิ์: คุณครูและบุคลากร (User Mode)</span>
+          <p class="text-xs text-slate-500" id="role-banner-desc">ค้นหา ดูตัวอย่างเอกสาร (Preview) และดาวน์โหลดเอกสารไปปรับใช้แบบอ่านอย่างเดียว</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 self-end sm:self-auto">
+        <span class="text-xs text-slate-400">สลับสิทธิ์ได้ที่มุมขวาบน</span>
+        <button onclick="toggleQuickRole()" class="text-xs px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg font-medium text-slate-700 shadow-xs transition">
+          <i class="fa-solid fa-arrows-rotate mr-1"></i> สลับเป็น <span id="quick-role-target">Admin</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= VIEW 1: DASHBOARD (กระดานข่าว) ================= -->
+    <section id="view-dashboard" class="space-y-8 animate-fade-in">
+      
+      <!-- Hero Welcome Banner -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-900 via-indigo-900 to-slate-900 text-white p-6 sm:p-10 shadow-xl">
+        <div class="absolute -right-10 -bottom-10 opacity-10 text-white text-[180px] pointer-events-none">
+          <i class="fa-solid fa-book-open-reader"></i>
+        </div>
+        
+        <div class="relative z-10 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-semibold text-brand-200 mb-4">
+            <i class="fa-solid fa-sparkles text-amber-300"></i> แพลตฟอร์มบริหารจัดการสื่อและเอกสารการศึกษา ปี ๒๕๖๙
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+            ยินดีต้อนรับสู่ระบบคลังเอกสาร ครูซอส
+          </h1>
+          <p class="text-slate-200 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+            ศูนย์รวมหลักสูตร สื่อการสอน แผนการจัดการเรียนรู้ Active Learning รูปแบบ ๔ คิด คำสั่งโรงเรียน และแบบฟอร์มราชการ ๔ ฝ่ายบริหาร โรงเรียนวัดบางปูน เพื่อการจัดเก็บง่ายและนำไปใช้สะดวก
+          </p>
+
+          <!-- Smart Search Bar In Hero -->
+          <div class="bg-white/95 backdrop-blur p-2 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-stretch gap-2 text-slate-800">
+            <div class="flex-1 flex items-center px-3.5 gap-3">
+              <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+              <input id="hero-search-input" type="text" placeholder="พิมพ์ชื่อเอกสาร, หมวดหมู่, หรือแท็ก เช่น แผน 4 คิด, แบบฟอร์มลา, ป.4..." 
+                     class="w-full bg-transparent border-none outline-none text-sm text-slate-800 placeholder-slate-400 py-2.5">
+            </div>
+            <button onclick="executeHeroSearch()" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-md">
+              <span>ค้นหาเอกสาร</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+
+          <!-- Popular Search Tags -->
+          <div class="mt-4 flex flex-wrap items-center gap-1.5 text-xs text-slate-300">
+            <span class="text-slate-400"><i class="fa-solid fa-tags mr-1"></i> ค้นหายอดนิยม:</span>
+            <button onclick="filterByTag('รูปแบบ 4 คิด')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-brand-200 border border-white/10">#รูปแบบ 4 คิด</button>
+            <button onclick="filterByTag('Active Learning')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-brand-200 border border-white/10">#Active Learning</button>
+            <button onclick="filterByTag('แบบฟอร์มลา')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-brand-200 border border-white/10">#แบบฟอร์มลา</button>
+            <button onclick="filterByTag('คุรุชนคนคุณธรรม')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-brand-200 border border-white/10">#คุรุชนคนคุณธรรม</button>
+            <button onclick="filterByTag('จัดซื้อจัดจ้าง')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-brand-200 border border-white/10">#จัดซื้อจัดจ้าง</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4 hover:shadow-md transition">
+          <div class="w-12 h-12 rounded-2xl bg-academic-50 text-academic-700 border border-academic-100 flex items-center justify-center text-xl shrink-0">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 font-medium">หมวดงานวิชาการ</span>
+            <h4 id="stat-academic-count" class="text-xl font-bold text-slate-800">0 รายการ</h4>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4 hover:shadow-md transition">
+          <div class="w-12 h-12 rounded-2xl bg-personnel-50 text-personnel-700 border border-personnel-100 flex items-center justify-center text-xl shrink-0">
+            <i class="fa-solid fa-users-gear"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 font-medium">หมวดงานบุคลากร</span>
+            <h4 id="stat-personnel-count" class="text-xl font-bold text-slate-800">0 รายการ</h4>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4 hover:shadow-md transition">
+          <div class="w-12 h-12 rounded-2xl bg-student-50 text-student-700 border border-student-100 flex items-center justify-center text-xl shrink-0">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 font-medium">หมวดกิจการนักเรียน</span>
+            <h4 id="stat-student-count" class="text-xl font-bold text-slate-800">0 รายการ</h4>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4 hover:shadow-md transition">
+          <div class="w-12 h-12 rounded-2xl bg-budget-50 text-budget-700 border border-budget-100 flex items-center justify-center text-xl shrink-0">
+            <i class="fa-solid fa-coins"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 font-medium">หมวดงบประมาณ/พัสดุ</span>
+            <h4 id="stat-budget-count" class="text-xl font-bold text-slate-800">0 รายการ</h4>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Shortcuts to Frequent Daily Forms -->
+      <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-7 shadow-lg">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <div>
+            <h3 class="text-lg font-bold flex items-center gap-2">
+              <i class="fa-solid fa-bolt-lightning text-amber-400"></i> ทางลัดเอกสารประจำวัน (Quick Access)
+            </h3>
+            <p class="text-xs text-slate-300">เข้าถึงแบบฟอร์มที่ครูและบุคลากรใช้บ่อยที่สุดได้ทันทีในคลิกเดียว</p>
+          </div>
+          <span class="text-xs px-3 py-1 bg-white/10 rounded-full text-slate-300 self-start sm:self-auto border border-white/10">
+            อัปเดตประจำปีการศึกษา ๒๕๖๙
+          </span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <button onclick="quickOpenDoc('DOC-005')" class="p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition flex flex-col justify-between group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-xl bg-personnel-500 text-white flex items-center justify-center text-sm shadow">
+                <i class="fa-solid fa-file-signature"></i>
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-100 line-clamp-1">แบบฟอร์มขอลาป่วย-ลากิจ</span>
+            <span class="text-[10px] text-slate-300">งานบุคลากร • PDF/DOCX</span>
+          </button>
+
+          <button onclick="quickOpenDoc('DOC-006')" class="p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition flex flex-col justify-between group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-xl bg-personnel-500 text-white flex items-center justify-center text-sm shadow">
+                <i class="fa-solid fa-car-side"></i>
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-100 line-clamp-1">ขออนุมัติไปราชการ</span>
+            <span class="text-[10px] text-slate-300">งานบุคลากร • PDF</span>
+          </button>
+
+          <button onclick="quickOpenDoc('DOC-002')" class="p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition flex flex-col justify-between group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-xl bg-academic-500 text-white flex items-center justify-center text-sm shadow">
+                <i class="fa-solid fa-book-sparkles"></i>
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-100 line-clamp-1">แผนการสอน ๔ คิด (ป.๔)</span>
+            <span class="text-[10px] text-slate-300">งานวิชาการ • สังคมศึกษา</span>
+          </button>
+
+          <button onclick="quickOpenDoc('DOC-013')" class="p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition flex flex-col justify-between group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-8 h-8 rounded-xl bg-budget-500 text-white flex items-center justify-center text-sm shadow">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-100 line-clamp-1">ขออนุมัติจัดซื้อจัดจ้าง</span>
+            <span class="text-[10px] text-slate-300">งานงบประมาณ • แบบฟอร์ม</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Section: Most Downloaded & Latest Uploads (2 Columns) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Popular Downloads -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs flex flex-col">
+          <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-fire text-base"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-800">เอกสารยอดนิยม / ดาวน์โหลดบ่อย</h3>
+                <p class="text-xs text-slate-500">เอกสารที่มีการนำไปใช้งานสูงสุดในระบบ</p>
+              </div>
+            </div>
+            <button onclick="showAllWithSort('downloads')" class="text-xs font-semibold text-brand-600 hover:text-brand-700">ดูทั้งหมด <i class="fa-solid fa-arrow-right ml-1"></i></button>
+          </div>
+
+          <div id="popular-docs-list" class="space-y-3 flex-1"></div>
+        </div>
+
+        <!-- Latest Uploads -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs flex flex-col">
+          <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-clock-rotate-left text-base"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-800">เอกสารอัปโหลดล่าสุด</h3>
+                <p class="text-xs text-slate-500">เอกสารและสื่อที่เพิ่มเข้ามาใหม่ล่าสุด</p>
+              </div>
+            </div>
+            <button onclick="showAllWithSort('latest')" class="text-xs font-semibold text-brand-600 hover:text-brand-700">ดูทั้งหมด <i class="fa-solid fa-arrow-right ml-1"></i></button>
+          </div>
+
+          <div id="latest-docs-list" class="space-y-3 flex-1"></div>
+        </div>
+
+      </div>
+
+      <!-- Categories Explorer Cards -->
+      <div>
+        <div class="flex items-center justify-between mb-5">
+          <div>
+            <h3 class="text-xl font-bold text-slate-800">โครงสร้างการจัดเก็บข้อมูล ๔ ฝ่ายบริหาร</h3>
+            <p class="text-xs sm:text-sm text-slate-500">เลือกฝ่ายบริหารเพื่อเข้าสู่แฟ้มเอกสารและหมวดหมู่ย่อย</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          
+          <!-- Category 1 -->
+          <div onclick="filterByCategory('academic')" class="bg-white rounded-3xl p-6 border-2 border-academic-100 hover:border-academic-500 transition-all cursor-pointer shadow-xs hover:shadow-lg group flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-academic-50 text-academic-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition duration-300">
+                <i class="fa-solid fa-book-open"></i>
+              </div>
+              <h4 class="font-bold text-slate-800 text-base mb-2 group-hover:text-academic-600 transition">หมวดงานวิชาการ</h4>
+              <ul class="text-xs text-slate-500 space-y-1.5 mb-4">
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-academic-500"></i> หลักสูตรสถานศึกษา / เวลาเรียน</li>
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-academic-500"></i> แผน Active Learning (๔ คิด)</li>
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-academic-500"></i> แบบฟอร์มนิเทศการสอนออนไลน์</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-academic-600">
+              <span>เข้าสู่แฟ้มวิชาการ</span>
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+            </div>
+          </div>
+
+          <!-- Category 2 -->
+          <div onclick="filterByCategory('personnel')" class="bg-white rounded-3xl p-6 border-2 border-personnel-100 hover:border-personnel-500 transition-all cursor-pointer shadow-xs hover:shadow-lg group flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-personnel-50 text-personnel-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition duration-300">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <h4 class="font-bold text-slate-800 text-base mb-2 group-hover:text-personnel-600 transition">หมวดงานบุคลากรและบริหารทั่วไป</h4>
+              <ul class="text-xs text-slate-500 space-y-1.5 mb-4">
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-personnel-500"></i> คำสั่งโรงเรียน / ประกาศ / ระเบียบ</li>
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-personnel-500"></i> แบบฟอร์มขออนุญาตลา / ราชการ</li>
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-personnel-500"></i> ขอรับรางวัล คุรุชนคนคุณธรรม</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-personnel-600">
+              <span>เข้าสู่แฟ้มบุคลากร</span>
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+            </div>
+          </div>
+
+          <!-- Category 3 -->
+          <div onclick="filterByCategory('student')" class="bg-white rounded-3xl p-6 border-2 border-student-100 hover:border-student-500 transition-all cursor-pointer shadow-xs hover:shadow-lg group flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-student-50 text-student-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition duration-300">
+                <i class="fa-solid fa-children"></i>
+              </div>
+              <h4 class="font-bold text-slate-800 text-base mb-2 group-hover:text-student-600 transition">หมวดงานกิจการนักเรียน</h4>
+              <ul class="text-xs text-slate-500 space-y-1.5 mb-4">
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-student-500"></i> คู่มือสภานักเรียน / ความปลอดภัย</li>
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-student-500"></i> เอกสารโครงการโรงเรียนคุณธรรม</li>
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-student-500"></i> กิจกรรมพัฒนาผู้เรียน / แนะแนว</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-student-600">
+              <span>เข้าสู่แฟ้มกิจการนักเรียน</span>
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+            </div>
+          </div>
+
+          <!-- Category 4 -->
+          <div onclick="filterByCategory('budget')" class="bg-white rounded-3xl p-6 border-2 border-budget-100 hover:border-budget-500 transition-all cursor-pointer shadow-xs hover:shadow-lg group flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-budget-50 text-budget-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition duration-300">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+              </div>
+              <h4 class="font-bold text-slate-800 text-base mb-2 group-hover:text-budget-600 transition">หมวดงานงบประมาณและพัสดุ</h4>
+              <ul class="text-xs text-slate-500 space-y-1.5 mb-4">
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-budget-500"></i> แบบขออนุมัติจัดซื้อจัดจ้างพัสดุ</li>
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-budget-500"></i> รายงานการใช้งบประมาณรายไตรมาส</li>
+                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-budget-500"></i> ทะเบียนคุมพัสดุและครุภัณฑ์</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-budget-600">
+              <span>เข้าสู่แฟ้มงบประมาณ</span>
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= VIEW 2: REPOSITORY & SMART SEARCH ================= -->
+    <section id="view-repository" class="space-y-6 hidden animate-fade-in">
+      
+      <!-- Repository Header & Search Bar -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+              <i class="fa-solid fa-folder-open text-brand-600"></i> คลังเอกสารและสื่อการเรียนรู้
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500">สืบค้นเอกสาร ๔ ฝ่าย พร้อมตัวกรองอัจฉริยะและระบบพรีวิวอ่านเอกสารทันที</p>
+          </div>
+
+          <!-- Total Results Counter & View Switcher -->
+          <div class="flex items-center gap-3 self-end md:self-auto">
+            <span id="repo-results-count" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 border border-slate-200">
+              พบ 0 รายการ
+            </span>
+            <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
+              <button onclick="setViewLayout('grid')" id="layout-btn-grid" class="p-1.5 rounded-lg bg-white shadow-xs text-brand-700 font-semibold" title="แสดงแบบการ์ด">
+                <i class="fa-solid fa-grip"></i>
+              </button>
+              <button onclick="setViewLayout('list')" id="layout-btn-list" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900" title="แสดงแบบตารางรายการ">
+                <i class="fa-solid fa-list"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Search Input -->
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input id="main-search-input" type="text" oninput="handleSearchChange()" placeholder="ค้นหาด้วยคีย์เวิร์ด ชื่อเอกสาร คำอธิบาย หรือ Tag (เช่น สังคมศึกษา, ๔ คิด, ลาป่วย, จัดซื้อ)..." 
+                 class="w-full pl-11 pr-24 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition">
+          <button onclick="clearSearch()" id="clear-search-btn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-xs px-2.5 py-1 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg transition font-medium">
+            <i class="fa-solid fa-xmark mr-1"></i> ล้างคำค้น
+          </button>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
+          <button onclick="setCategoryFilter('all')" class="cat-filter-btn active whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-brand-600 text-white shadow-sm" data-cat="all">
+            <i class="fa-solid fa-layer-group mr-1.5"></i> ทุกหมวดหมู่ (ทั้งหมด)
+          </button>
+          <button onclick="setCategoryFilter('academic')" class="cat-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-cat="academic">
+            <i class="fa-solid fa-graduation-cap mr-1.5 text-academic-600"></i> ๑. งานวิชาการ
+          </button>
+          <button onclick="setCategoryFilter('personnel')" class="cat-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-cat="personnel">
+            <i class="fa-solid fa-users-gear mr-1.5 text-personnel-600"></i> ๒. บุคลากร & ทั่วไป
+          </button>
+          <button onclick="setCategoryFilter('student')" class="cat-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-cat="student">
+            <i class="fa-solid fa-award mr-1.5 text-student-600"></i> ๓. กิจการนักเรียน
+          </button>
+          <button onclick="setCategoryFilter('budget')" class="cat-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-cat="budget">
+            <i class="fa-solid fa-coins mr-1.5 text-budget-600"></i> ๔. งบประมาณ & พัสดุ
+          </button>
+        </div>
+
+        <!-- Secondary Filters Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100 text-xs">
+          <div>
+            <label class="block text-slate-500 font-medium mb-1">หมวดหมู่ย่อย:</label>
+            <select id="filter-subcategory" onchange="handleSearchChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-medium text-slate-700 focus:outline-none focus:border-brand-500">
+              <option value="all">ทุกหมวดหมู่ย่อย</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-500 font-medium mb-1">ประเภทไฟล์:</label>
+            <select id="filter-filetype" onchange="handleSearchChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-medium text-slate-700 focus:outline-none focus:border-brand-500">
+              <option value="all">ทุกประเภทไฟล์ (All)</option>
+              <option value="PDF">PDF Documents (.pdf)</option>
+              <option value="DOCX">Word Documents (.docx)</option>
+              <option value="XLSX">Excel Sheets (.xlsx)</option>
+              <option value="PPTX">PowerPoint (.pptx)</option>
+              <option value="CANVA">Canva Links</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-500 font-medium mb-1">การจัดเรียง:</label>
+            <select id="filter-sorting" onchange="handleSearchChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-medium text-slate-700 focus:outline-none focus:border-brand-500">
+              <option value="latest">อัปเดตล่าสุด (Newest)</option>
+              <option value="downloads">ดาวน์โหลดสูงสุด (Popular)</option>
+              <option value="views">ยอดเข้าชมสูงสุด (Most Viewed)</option>
+              <option value="title_asc">ชื่อ ก - ฮ (A to Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tag Cloud Filter Pills -->
+        <div class="pt-3 border-t border-slate-100">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
+              <i class="fa-solid fa-tags text-brand-500"></i> แท็กป้ายกำกับ (คลิกเพื่อกรองข้ามหมวดหมู่):
+            </span>
+            <button onclick="clearSelectedTag()" id="clear-tag-btn" class="hidden text-[11px] text-red-500 hover:text-red-700 font-medium">
+              ล้างแท็กที่เลือก
+            </button>
+          </div>
+          <div id="repo-tags-cloud" class="flex flex-wrap gap-1.5"></div>
+        </div>
+
+      </div>
+
+      <!-- Document Cards Container -->
+      <div id="documents-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+      <!-- Empty State Indicator -->
+      <div id="no-results-box" class="hidden bg-white rounded-3xl p-12 text-center border border-slate-200 shadow-xs">
+        <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-3xl mx-auto mb-4">
+          <i class="fa-solid fa-folder-magnifying-glass"></i>
+        </div>
+        <h3 class="text-lg font-bold text-slate-700 mb-1">ไม่พบเอกสารที่ตรงกับเงื่อนไข</h3>
+        <p class="text-xs text-slate-500 max-w-md mx-auto mb-5">ลองเปลี่ยนคำค้นหา ปรับหมวดหมู่ย่อย หรือล้างตัวกรองแท็กเพื่อดูเอกสารอื่นๆ ทั้งหมด</p>
+        <button onclick="resetAllFilters()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow transition">
+          <i class="fa-solid fa-rotate-left mr-1.5"></i> ล้างตัวกรองทั้งหมด
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ================= VIEW 3: ADMIN CONTROL PANEL ================= -->
+    <section id="view-admin" class="space-y-8 hidden animate-fade-in">
+      
+      <!-- Admin Hero -->
+      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold mb-3">
+              <i class="fa-solid fa-shield-halved"></i> แผงควบคุมผู้ดูแลระบบ (Admin Console)
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">ศูนย์บริหารจัดการคลังเอกสาร ครูซอส</h2>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1">อัปโหลดไฟล์ด้วย Drag & Drop, จัดการหมวดหมู่, แท็ก, และสิทธิ์การเข้าถึง</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button onclick="openUploadModal()" class="px-5 py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-sm font-semibold shadow-lg transition flex items-center gap-2">
+              <i class="fa-solid fa-cloud-arrow-up text-base"></i> อัปโหลดเอกสารใหม่
+            </button>
+            <button onclick="exportDataJSON()" class="px-4 py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-sm font-medium border border-white/10 transition flex items-center gap-2">
+              <i class="fa-solid fa-file-export"></i> ส่งออกข้อมูล
+            </button>
+            <button onclick="resetToDefaultData()" class="px-4 py-3 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-xl text-sm font-medium border border-red-500/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-arrows-rotate"></i> กู้คืนข้อมูลตัวอย่าง
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drag & Drop Quick Drop Zone -->
+      <div id="dropzone-area" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)"
+           class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-3xl p-8 sm:p-10 bg-white hover:bg-brand-50/40 text-center transition-all cursor-pointer shadow-xs group">
+        <input type="file" id="admin-file-picker" onchange="handleFileSelected(event)" class="hidden" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png">
+        <div onclick="document.getElementById('admin-file-picker').click()">
+          <div class="w-16 h-16 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-3xl mx-auto mb-4 group-hover:scale-110 transition duration-300 shadow-sm">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-slate-800 mb-1">ลากไฟล์เอกสารมาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</h3>
+          <p class="text-xs text-slate-500 mb-3">รองรับไฟล์ PDF, Word (.docx), Excel (.xlsx), PowerPoint (.pptx) และรูปภาพ</p>
+          <span class="inline-block px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-medium border border-slate-200">
+            ระบบจะเปิดฟอร์มกรอกหมวดหมู่และแท็กอัตโนมัติเมื่อวางไฟล์
+          </span>
+        </div>
+      </div>
+
+      <!-- Admin Documents Management Table -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="font-bold text-slate-800 text-lg">รายการเอกสารทั้งหมดในระบบ</h3>
+            <p class="text-xs text-slate-500">จัดการ แก้ไขรายละเอียด เปลี่ยนหมวดหมู่ หรือลบเอกสารออกจากคลัง</p>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <input id="admin-table-search" type="text" oninput="renderAdminTable()" placeholder="ค้นหาในตารางแอดมิน..."
+                   class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-brand-500">
+          </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-200 custom-scrollbar">
+          <table class="w-full text-left text-xs text-slate-700">
+            <thead class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
+              <tr>
+                <th class="p-3.5">รหัส / ประเภท</th>
+                <th class="p-3.5">ชื่อเอกสาร / คำอธิบาย</th>
+                <th class="p-3.5">ฝ่ายบริหารงาน</th>
+                <th class="p-3.5">แท็กป้ายกำกับ</th>
+                <th class="p-3.5 text-center">สถิติ (วิว/โหลด)</th>
+                <th class="p-3.5 text-center">จัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-white border-t border-slate-200 mt-auto py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-slate-700">ระบบของครูซอส (TT001)</span>
+        <span>•</span>
+        <span>โรงเรียนวัดบางปูน</span>
+      </div>
+      <div>
+        พัฒนาสื่อการเรียนรู้ ๒๕๖๙ • โครงสร้าง ๔ ฝ่ายบริหารสถานศึกษา
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODAL: DOCUMENT PREVIEW ================= -->
+  <div id="preview-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4 animate-fade-in">
+    <div class="bg-white w-full max-w-5xl h-[92vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-5 bg-slate-900 text-white flex items-center justify-between gap-3 shrink-0">
+        <div class="flex items-center gap-3 overflow-hidden">
+          <div id="preview-type-icon" class="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-400 border border-brand-500/30 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-file-lines"></i>
+          </div>
+          <div class="overflow-hidden">
+            <h3 id="preview-doc-title" class="font-bold text-sm sm:text-base text-white truncate">ชื่อเอกสารตัวอย่าง</h3>
+            <div class="flex items-center gap-2 text-[11px] text-slate-300">
+              <span id="preview-doc-cat" class="px-2 py-0.5 rounded-full bg-white/10">หมวดงานวิชาการ</span>
+              <span id="preview-doc-size">2.4 MB</span>
+              <span>•</span>
+              <span id="preview-doc-date">15 พ.ค. 2569</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Viewer Controls -->
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button onclick="adjustPreviewZoom(-10)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200 flex items-center justify-center transition" title="ย่อ">
+            <i class="fa-solid fa-magnifying-glass-minus text-xs"></i>
+          </button>
+          <span id="preview-zoom-label" class="text-xs font-mono text-slate-300 px-1">100%</span>
+          <button onclick="adjustPreviewZoom(10)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200 flex items-center justify-center transition" title="ขยาย">
+            <i class="fa-solid fa-magnifying-glass-plus text-xs"></i>
+          </button>
+          <button onclick="printPreviewDocument()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200 flex items-center justify-center transition" title="พิมพ์เอกสาร">
+            <i class="fa-solid fa-print text-xs"></i>
+          </button>
+          <button onclick="copyPreviewShareLink()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200 flex items-center justify-center transition" title="คัดลอกลิงก์">
+            <i class="fa-solid fa-link text-xs"></i>
+          </button>
+          <button onclick="downloadCurrentPreviewDoc()" class="px-3.5 py-1.5 bg-brand-600 hover:bg-brand-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow transition">
+            <i class="fa-solid fa-download"></i> <span class="hidden sm:inline">ดาวน์โหลด</span>
+          </button>
+          <button onclick="closePreviewModal()" class="w-8 h-8 rounded-lg bg-red-500/20 hover:bg-red-500 text-red-300 hover:text-white flex items-center justify-center transition ml-2" title="ปิดหน้าต่าง">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Body -->
+      <div class="flex-1 bg-slate-200/90 overflow-y-auto p-4 sm:p-8 flex justify-center custom-scrollbar">
+        <div id="preview-page-container" class="transition-transform origin-top duration-150 w-full max-w-3xl">
+          
+          <div id="printArea" class="bg-white shadow-2xl rounded-xl p-8 sm:p-14 sarabun-text min-h-[900px] border border-slate-300 text-slate-900 relative">
+            
+            <div class="text-center mb-8">
+              <div id="preview-emblem-box" class="w-16 h-16 mx-auto mb-3 flex items-center justify-center text-4xl text-amber-700">
+                <i class="fa-solid fa-landmark"></i>
+              </div>
+              <h2 id="preview-paper-header" class="text-xl sm:text-2xl font-bold tracking-wide text-slate-900">
+                โรงเรียนวัดบางปูน
+              </h2>
+              <p id="preview-paper-sub" class="text-sm text-slate-600">
+                สำนักงานเขตพื้นที่การศึกษาประถมศึกษา • กระทรวงศึกษาธิการ
+              </p>
+              <div class="w-24 h-0.5 bg-slate-800 mx-auto mt-3"></div>
+            </div>
+
+            <!-- Meta Title Box -->
+            <div class="bg-slate-50 border-l-4 border-brand-600 p-4 rounded-r-xl mb-6">
+              <h3 id="preview-paper-title" class="font-bold text-base text-slate-900">หัวข้อเอกสาร</h3>
+              <p id="preview-paper-desc" class="text-sm text-slate-600 mt-1">คำอธิบายและวัตถุประสงค์การใช้งานเอกสาร</p>
+            </div>
+
+            <!-- Main Content Simulated Body -->
+            <div id="preview-paper-content" class="space-y-4 text-sm sm:text-base leading-relaxed text-justify text-slate-800"></div>
+
+            <!-- Signatures Section -->
+            <div class="mt-14 pt-8 border-t border-slate-200 grid grid-cols-2 gap-8 text-center text-xs sm:text-sm">
+              <div>
+                <p class="text-slate-400 mb-10">(ลงชื่อ).......................................................</p>
+                <p class="font-bold text-slate-800" id="preview-sign-1">ครูผู้รับผิดชอบ / ผู้จัดทำ</p>
+                <p class="text-slate-500">โรงเรียนวัดบางปูน</p>
+              </div>
+              <div>
+                <p class="text-slate-400 mb-10">(ลงชื่อ).......................................................</p>
+                <p class="font-bold text-slate-800">ผู้อำนวยการโรงเรียนวัดบางปูน</p>
+                <p class="text-slate-500">ผู้บริหารสถานศึกษา</p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Preview Footer -->
+      <div class="p-3 bg-slate-100 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>โหมดดูตัวอย่างออนไลน์ (Instant Viewer) ไม่จำเป็นต้องบันทึกลงเครื่อง</span>
+        </div>
+        <div id="preview-tags-bar" class="flex gap-1 overflow-x-auto"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL: UPLOAD & EDIT DOCUMENT ================= -->
+  <div id="upload-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 animate-fade-in">
+    <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden border border-slate-200 max-h-[95vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="p-5 bg-gradient-to-r from-brand-900 to-indigo-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-300 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-file-circle-plus"></i>
+          </div>
+          <div>
+            <h3 id="upload-modal-title" class="font-bold text-base">อัปโหลดและจัดหมวดหมู่เอกสารใหม่</h3>
+            <p class="text-xs text-slate-300">กรอกข้อมูล กำหนด ๔ ฝ่าย และใส่แท็กเพื่อความสะดวกในการสืบค้น</p>
+          </div>
+        </div>
+        <button onclick="closeUploadModal()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <form id="doc-upload-form" onsubmit="handleSaveDocument(event)" class="p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs sm:text-sm">
+        
+        <input type="hidden" id="edit-doc-id" value="">
+
+        <!-- Title -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">ชื่อเอกสาร / สื่อการเรียนรู้ <span class="text-red-500">*</span></label>
+          <input id="form-doc-title" required type="text" placeholder="เช่น แผนการจัดการเรียนรู้ Active Learning สังคมศึกษา ป.๔"
+                 class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-brand-500">
+        </div>
+
+        <!-- Category & Subcategory Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">หมวดฝ่ายบริหารงาน ๔ ฝ่าย <span class="text-red-500">*</span></label>
+            <select id="form-doc-category" onchange="updateFormSubcategories()" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-brand-500">
+              <option value="academic">๑. หมวดงานวิชาการ</option>
+              <option value="personnel">๒. หมวดงานบุคลากรและบริหารทั่วไป</option>
+              <option value="student">๓. หมวดงานกิจการนักเรียน</option>
+              <option value="budget">๔. หมวดงานงบประมาณและพัสดุ</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">หมวดหมู่ย่อย <span class="text-red-500">*</span></label>
+            <select id="form-doc-subcategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-brand-500">
+            </select>
+          </div>
+        </div>
+
+        <!-- File Type & File Size -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">ประเภทไฟล์ <span class="text-red-500">*</span></label>
+            <select id="form-doc-type" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-brand-500">
+              <option value="PDF">PDF Document (.pdf)</option>
+              <option value="DOCX">Microsoft Word (.docx)</option>
+              <option value="XLSX">Microsoft Excel (.xlsx)</option>
+              <option value="PPTX">Microsoft PowerPoint (.pptx)</option>
+              <option value="CANVA">Canva Presentation Link</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">ขนาดไฟล์โดยประมาณ</label>
+            <input id="form-doc-size" type="text" placeholder="เช่น 2.4 MB หรือ 15 หน้า" value="1.8 MB"
+                   class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-brand-500">
+          </div>
+        </div>
+
+        <!-- Tags Input -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">แท็กป้ายกำกับ (คั่นด้วยจุลภาค เช่น #รูปแบบ4คิด, #ป.4, #สังคมศึกษา)</label>
+          <input id="form-doc-tags" type="text" placeholder="รูปแบบ 4 คิด, Active Learning, ป.4, สังคมศึกษา"
+                 class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-brand-500">
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">คำอธิบายเอกสารสั้นๆ</label>
+          <textarea id="form-doc-desc" rows="3" placeholder="ระบุรายละเอียดสำคัญ วัตถุประสงค์ หรือคำแนะนำในการนำไปปรับใช้..."
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-brand-500"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-4 border-t border-slate-200 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeUploadModal()" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition">
+            ยกเลิก
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-md transition flex items-center gap-2">
+            <i class="fa-solid fa-floppy-disk"></i> บันทึกเอกสาร
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: FAVORITES DRAWER ================= -->
+  <div id="favorites-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-end p-0 animate-fade-in">
+    <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col border-l border-slate-200">
+      
+      <div class="p-5 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <i class="fa-solid fa-bookmark text-amber-400 text-lg"></i>
+          <h3 class="font-bold text-base">เอกสารที่บันทึกไว้ (Favorites)</h3>
+        </div>
+        <button onclick="toggleFavoritesModal()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <div id="favorites-list-container" class="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar"></div>
+
+      <div class="p-4 border-t border-slate-200 bg-slate-50 text-center text-xs text-slate-500">
+        เอกสารที่บันทึกไว้จะถูกเก็บในเบราว์เซอร์ของคุณเพื่อเรียกดูได้รวดเร็ว
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT APPLICATION CORE ================= -->
+  <script>
+    const DEFAULT_DOCUMENTS = [
+      {
+        id: "DOC-001",
+        title: "หลักสูตรสถานศึกษาโรงเรียนวัดบางปูน พุทธศักราช ๒๕๖๙ (ฉบับปรับปรุง)",
+        category: "academic",
+        subcategory: "หลักสูตรสถานศึกษา / โครงสร้างเวลาเรียน",
+        type: "PDF",
+        size: "4.8 MB",
+        date: "2026-05-10",
+        downloads: 142,
+        views: 380,
+        tags: ["หลักสูตร 2569", "โครงสร้างเวลาเรียน", "วิชาการ", "ทุกระดับชั้น"],
+        description: "เอกสารหลักสูตรแกนกลางสถานศึกษา โครงสร้างเวลาเรียน ๘ กลุ่มสาระ และกิจกรรมพัฒนาผู้เรียน ประจำปีการศึกษา ๒๕๖๙",
+        contentSample: "หลักสูตรสถานศึกษาโรงเรียนวัดบางปูน มุ่งพัฒนาผู้เรียนทุกคนให้เป็นมนุษย์ที่มีความสมดุลทั้งด้านร่างกาย ความรู้ คุณธรรม มีจิตสำนึกในความเป็นพลเมืองไทยและเป็นพลโลก ยึดมั่นในการปกครองตามระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข มีทักษะการคิดวิเคราะห์ คิดสร้างสรรค์ และมีทักษะชีวิตตามบริบทชุมชนวัดบางปูน"
+      },
+      {
+        id: "DOC-002",
+        title: "แผนการจัดการเรียนรู้ Active Learning สังคมศึกษา ป.๔ (รูปแบบ ๔ คิด)",
+        category: "academic",
+        subcategory: "สื่อการสอน / แผนการจัดการเรียนรู้",
+        type: "DOCX",
+        size: "3.2 MB",
+        date: "2026-05-18",
+        downloads: 215,
+        views: 520,
+        tags: ["Active Learning", "รูปแบบ 4 คิด", "ป.4", "สังคมศึกษา", "แผนการสอน"],
+        description: "แผนการจัดการเรียนรู้เชิงรุกบูรณาการกระบวนการ ๔ คิด (คิดคล่อง คิดยืดหยุ่น คิดริเริ่ม คิดละเอียดลออ) หน่วยการเรียนรู้ประวัติศาสตร์ท้องถิ่น",
+        contentSample: "แผนการจัดการเรียนรู้เชิงรุก (Active Learning) บูรณาการกระบวนการ '๔ คิด' ประกอบด้วย: ๑. ขั้นคิดคล่อง (Fluency Thinking) ระดมความคิดเห็นจากภาพจำลองชุมชน ๒. ขั้นคิดยืดหยุ่น (Flexibility Thinking) เชื่อมโยงบทบาทหน้าที่ของบุคคลในอดีตกับปัจจุบัน ๓. ขั้นคิดริเริ่ม (Originality Thinking) ออกแบบนวัตกรรมการอนุรักษ์ ๔. ขั้นคิดละเอียดลออ (Elaboration Thinking) จัดทำผังมโนทัศน์สรุปบทเรียน"
+      },
+      {
+        id: "DOC-003",
+        title: "แบบฟอร์มนิเทศการจัดการเรียนการสอนออนไลน์และในชั้นเรียน ปีการศึกษา ๒๕๖๙",
+        category: "academic",
+        subcategory: "แบบฟอร์มนิเทศการสอนออนไลน์",
+        type: "PDF",
+        size: "1.2 MB",
+        date: "2026-05-20",
+        downloads: 98,
+        views: 240,
+        tags: ["แบบฟอร์ม", "นิเทศการสอน", "วิชาการ", "การประเมิน"],
+        description: "แบบบันทึกการนิเทศการจัดการเรียนรู้ภายในสถานศึกษา ทั้งรูปแบบ On-Site และ Online พร้อมเกณฑ์รูบริกส์การประเมิน ๕ ระดับ",
+        contentSample: "แบบประเมินและนิเทศการจัดการเรียนรู้: ประเด็นการประเมินประกอบด้วย การจัดทำแผนการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ, การจัดกิจกรรมการเรียนรู้แบบ Active Learning, การใช้สื่อและเทคโนโลยีดิจิทัล, การวัดและประเมินผลตามสภาพจริง และการสร้างบรรยากาศที่ส่งเสริมการเรียนรู้เชิงบวก"
+      },
+      {
+        id: "DOC-004",
+        title: "แผนการจัดการเรียนรู้สะเต็มศึกษา (STEM Education) ป.๖ เรื่อง พลังงานสะอาด",
+        category: "academic",
+        subcategory: "สื่อการสอน / แผนการจัดการเรียนรู้",
+        type: "PPTX",
+        size: "8.5 MB",
+        date: "2026-06-02",
+        downloads: 130,
+        views: 290,
+        tags: ["STEM", "วิทยาศาสตร์", "ป.6", "Active Learning", "สื่อนำเสนอ"],
+        description: "ชุดสไลด์และแผนกิจกรรมการทดลองพลังงานแสงอาทิตย์และกังหันลม สำหรับนักเรียนชั้นประถมศึกษาปีที่ ๖",
+        contentSample: "กระบวนการจัดการเรียนรู้ STEM Education: S (Science) ศึกษาการเปลี่ยนรูปพลังงานแสงอาทิตย์เป็นพลังงานไฟฟ้า, T (Technology) สืบค้นข้อมูลเซลล์สุริยะ, E (Engineering) ออกแบบโครงสร้างแบบจำลองบ้านพลังงานสะอาด, M (Mathematics) คำนวณอัตราการผลิตกระแสไฟฟ้าและพื้นที่รับแสง"
+      },
+      {
+        id: "DOC-005",
+        title: "แบบฟอร์มขออนุญาตลาป่วย - ลากิจส่วนตัว ข้าราชการครูและบุคลากรทางการศึกษา",
+        category: "personnel",
+        subcategory: "แบบฟอร์มขออนุญาต (ลากิจ, ลาป่วย, ไปราชการ)",
+        type: "PDF",
+        size: "650 KB",
+        date: "2026-05-01",
+        downloads: 410,
+        views: 890,
+        tags: ["แบบฟอร์มลา", "ลากิจ", "ลาป่วย", "งานบุคลากร", "ระเบียบปฏิบัติ"],
+        description: "แบบฟอร์มใบลาตามระเบียบสำนักนายกรัฐมนตรีว่าด้วยการลาของข้าราชการ พ.ศ. ๒๕๕๕ พร้อมช่องลงนามมอบหมายงานสอนแทน",
+        contentSample: "บันทึกข้อความ ส่วนราชการ โรงเรียนวัดบางปูน เรื่อง ขอลา (ป่วย / กิจส่วนตัว) เรียน ผู้อำนวยการโรงเรียนวัดบางปูน ด้วยข้าพเจ้า มีความประสงค์ขอลาเนื่องจาก... ข้าพเจ้าได้มอบหมายงานในหน้าที่และมอบหมายให้คุณครู... ปฏิบัติการสอนแทนเป็นที่เรียบร้อยแล้ว"
+      },
+      {
+        id: "DOC-006",
+        title: "แบบฟอร์มขออนุมัติเดินทางไปราชการ / เข้ารับการฝึกอบรมพัฒนาวิชาชีพ",
+        category: "personnel",
+        subcategory: "แบบฟอร์มขออนุญาต (ลากิจ, ลาป่วย, ไปราชการ)",
+        type: "DOCX",
+        size: "720 KB",
+        date: "2026-05-05",
+        downloads: 185,
+        views: 430,
+        tags: ["ไปราชการ", "อบรมครู", "งานบุคลากร", "แบบฟอร์ม"],
+        description: "แบบขออนุมัติเดินทางไปปฏิบัติราชการ ขอใช้ยานพาหนะ และขอเบิกจ่ายค่าใช้จ่ายในการเดินทางไปราชการ",
+        contentSample: "แบบขออนุมัติเดินทางไปปฏิบัติราชการ: ข้าพเจ้ามีความประสงค์ขออนุมัติเดินทางไปราชการเพื่อเข้าร่วมการอบรมเชิงปฏิบัติการพัฒนาสื่อนวัตกรรม ณ สำนักงานเขตพื้นที่การศึกษา โดยขออนุมัติเดินทางโดยยานพาหนะส่วนบุคคล / รถยนต์ส่วนกลาง และขอเบิกจ่ายงบประมาณตามระเบียบทางราชการ"
+      },
+      {
+        id: "DOC-007",
+        title: "คำสั่งโรงเรียนวัดบางปูน ที่ ๐๑๒/๒๕๖๙ เรื่อง แต่งตั้งคณะกรรมการปฏิบัติหน้าที่เวรยาม",
+        category: "personnel",
+        subcategory: "คำสั่งโรงเรียน / ประกาศ / ระเบียบการ",
+        type: "PDF",
+        size: "1.4 MB",
+        date: "2026-05-12",
+        downloads: 160,
+        views: 350,
+        tags: ["คำสั่ง 2569", "เวรยาม", "งานบุคลากร", "ประกาศ"],
+        description: "คำสั่งแต่งตั้งครูเวรประจำวัน เวรกลางวันและเวรกลางคืน เพื่อรักษาความปลอดภัยสถานที่ราชการ ประจำภาคเรียนที่ ๑/๒๕๖๙",
+        contentSample: "คำสั่งโรงเรียนวัดบางปูน ที่ ๐๑๒/๒๕๖๙ เพื่อให้การดูแลรักษาความสงบเรียบร้อยและความปลอดภัยของทรัพย์สินทางราชการดำเนินไปด้วยความเรียบร้อย จึงแต่งตั้งคณะกรรมการปฏิบัติหน้าที่เวรยามประจำวันและผู้ตรวจเวร โดยให้ปฏิบัติหน้าที่อย่างเคร่งครัดตามระเบียบสำนักนายกรัฐมนตรี"
+      },
+      {
+        id: "DOC-008",
+        title: "แบบเสนอขอรับรางวัล 'คุรุชนคนคุณธรรม' ประจำปีการศึกษา ๒๕๖๙",
+        category: "personnel",
+        subcategory: "แบบฟอร์มเสนอขอรับรางวัล",
+        type: "DOCX",
+        size: "2.8 MB",
+        date: "2026-06-10",
+        downloads: 230,
+        views: 510,
+        tags: ["คุรุชนคนคุณธรรม", "รางวัลครู", "งานบุคลากร", "นวัตกรรมสร้างสรรค์"],
+        description: "แบบรายงานประวัติและผลงานเพื่อขอรับการประเมินรางวัลคุรุชนคนคุณธรรม โครงการโรงเรียนคุณธรรม สพฐ. ๕ ด้านคุณธรรมเป้าหมาย",
+        contentSample: "แบบประเมินรางวัลคุรุชนคนคุณธรรม (ประเภทครูผู้สอน): ประกอบด้วยการประเมินคุณธรรม ๕ ด้าน ได้แก่ ๑. ความพอเพียง ๒. ความกตัญญู ๓. ความซื่อสัตย์สุจริต ๔. ความรับผิดชอบ ๕. อุดมการณ์คุณธรรม พร้อมเอกสารหลักฐานเชิงประจักษ์และการรับรองจากผู้บริหาร"
+      },
+      {
+        id: "DOC-009",
+        title: "แบบเสนอผลงานนวัตกรรมสร้างสรรค์คนดี (ด้านการบริหารจัดการและการจัดการเรียนรู้)",
+        category: "personnel",
+        subcategory: "แบบฟอร์มเสนอขอรับรางวัล",
+        type: "DOCX",
+        size: "3.5 MB",
+        date: "2026-06-15",
+        downloads: 175,
+        views: 390,
+        tags: ["นวัตกรรมสร้างสรรค์", "คนดี", "งานบุคลากร", "วิชาการ"],
+        description: "เล่มรายงานนวัตกรรมการจัดการเรียนรู้เพื่อส่งเสริมคุณธรรมจริยธรรมของนักเรียนตามกรอบโรงเรียนคุณธรรม",
+        contentSample: "โครงร่างรายงานนวัตกรรมสร้างสรรค์คนดี: ความสำคัญของผลงานนวัตกรรม, วัตถุประสงค์และเป้าหมายของการดำเนินงาน, กระบวนการพัฒนานวัตกรรม (PDCA), ผลการดำเนินงานและประโยชน์ที่ได้รับ, ปัจจัยความสำเร็จ, บทเรียนที่ได้รับ (Lesson Learned) และการเผยแพร่ผลงาน"
+      },
+      {
+        id: "DOC-010",
+        title: "คู่มือการดำเนินงานสภานักเรียนและส่งเสริมประชาธิปไตยในโรงเรียนวัดบางปูน",
+        category: "student",
+        subcategory: "คู่มือการดำเนินงาน (สภานักเรียน, ความปลอดภัย)",
+        type: "PDF",
+        size: "3.1 MB",
+        date: "2026-05-14",
+        downloads: 110,
+        views: 260,
+        tags: ["สภานักเรียน", "ประชาธิปไตย", "กิจการนักเรียน", "คู่มือ"],
+        description: "คู่มือขั้นตอนการเลือกตั้งคณะกรรมการสภานักเรียน บทบาทหน้าที่ ธรรมนูญสภานักเรียน และการจัดกิจกรรมจิตอาสาพัฒนาโรงเรียน",
+        contentSample: "คู่มือสภานักเรียนโรงเรียนวัดบางปูน: ส่งเสริมให้นักเรียนได้เรียนรู้การมีส่วนร่วมตามวิถีประชาธิปไตย การเลือกตั้งประธานนักเรียน การประชุมสภานักเรียน การจัดทำโครงการส่งเสริมวินัย และการร่วมมือกับคณะครูในการจัดกิจกรรมหน้าเสาธง"
+      },
+      {
+        id: "DOC-011",
+        title: "คู่มือมาตรการความปลอดภัยในสถานศึกษา ๓ ด้าน (ภัยธรรมชาติ, อุบัติเหตุ, ความรุนแรง)",
+        category: "student",
+        subcategory: "คู่มือการดำเนินงาน (สภานักเรียน, ความปลอดภัย)",
+        type: "PDF",
+        size: "2.6 MB",
+        date: "2026-05-15",
+        downloads: 145,
+        views: 310,
+        tags: ["ความปลอดภัย", "แผนเผชิญเหตุ", "กิจการนักเรียน", "คู่มือ"],
+        description: "แนวทางปฏิบัติการป้องกันภัยในโรงเรียน แผนเผชิญเหตุฉุกเฉิน และเบอร์โทรศัพท์ประสานงานหน่วยงานภายนอก",
+        contentSample: "มาตรการความปลอดภัยสถานศึกษา: ๑. มาตรการป้องกันภัยธรรมชาติ (น้ำท่วม, วาตภัย) ๒. มาตรการป้องกันอุบัติเหตุในโรงเรียนและการเดินทาง ๓. มาตรการป้องกันภัยจากสารเสพติดและการกลั่นแกล้ง (Anti-Bullying) พร้อมแผนผังเส้นทางหนีไฟและจุดรวมพล"
+      },
+      {
+        id: "DOC-012",
+        title: "เอกสารและแบบรายงานการดำเนินโครงการโรงเรียนคุณธรรม สพฐ. ประจำปีการศึกษา ๒๕๖๙",
+        category: "student",
+        subcategory: "เอกสารและแบบรายงานโครงการโรงเรียนคุณธรรม",
+        type: "PDF",
+        size: "4.1 MB",
+        date: "2026-06-01",
+        downloads: 190,
+        views: 410,
+        tags: ["โรงเรียนคุณธรรม", "คุณธรรมอัตลักษณ์", "กิจการนักเรียน", "รายงานโครงการ"],
+        description: "ตารางคุณธรรมอัตลักษณ์ 'ซื่อสัตย์ รับผิดชอบ มีจิตอาสา' และแบบติดตามพฤติกรรมบ่งชี้เชิงบวกของนักเรียนทุกระดับชั้น",
+        contentSample: "รายงานผลการดำเนินโครงการโรงเรียนคุณธรรม สพฐ.: โครงสร้างคุณธรรมอัตลักษณ์ของโรงเรียนวัดบางปูน ประกอบด้วย ๓ คุณธรรมเป้าหมาย ได้แก่ ซื่อสัตย์ รับผิดชอบ และมีจิตอาสา โดยมีพฤติกรรมบ่งชี้เชิงบวกสำหรับนักเรียน ครู และบุคลากรทางการศึกษา พร้อมตารางประเมินผลรายภาคเรียน"
+      },
+      {
+        id: "DOC-013",
+        title: "แบบฟอร์มขออนุมัติจัดซื้อจัดจ้างพัสดุ / สื่อการเรียนการสอน (วงเงินไม่เกิน ๕,๐๐๐ บาท)",
+        category: "budget",
+        subcategory: "แบบฟอร์มขออนุมัติจัดซื้อจัดจ้าง",
+        type: "DOCX",
+        size: "820 KB",
+        date: "2026-05-08",
+        downloads: 320,
+        views: 680,
+        tags: ["จัดซื้อจัดจ้าง", "พัสดุ", "งบประมาณ", "แบบฟอร์ม"],
+        description: "บันทึกข้อความขออนุมัติจัดซื้อวัสดุการศึกษา ใบเสนอราคา และใบตรวจรับพัสดุสำหรับครูประจำชั้นและหัวหน้ากลุ่มสาระฯ",
+        contentSample: "บันทึกข้อความ ส่วนราชการ โรงเรียนวัดบางปูน เรื่อง ขออนุมัติจัดซื้อวัสดุการศึกษา/สื่อการเรียนรู้ เรียน ผู้อำนวยการโรงเรียนวัดบางปูน ด้วยกลุ่มสาระการเรียนรู้... มีความจำเป็นต้องจัดซื้อวัสดุการศึกษาเพื่อใช้ในการจัดกิจกรรมการเรียนการสอน จำนวน... รายการ รวมเป็นเงินทั้งสิ้น... บาท"
+      },
+      {
+        id: "DOC-014",
+        title: "รายงานสรุปผลการใช้จ่ายงบประมาณรายไตรมาส ปีงบประมาณ ๒๕๖๙",
+        category: "budget",
+        subcategory: "รายงานการใช้งบประมาณ",
+        type: "XLSX",
+        size: "1.5 MB",
+        date: "2026-06-30",
+        downloads: 95,
+        views: 220,
+        tags: ["รายงานงบประมาณ", "บัญชีการเงิน", "งบประมาณ", "พัสดุ"],
+        description: "สมุดบัญชีตาราง Excel สรุปยอดเงินอุดหนุนรายหัว ค่ากิจกรรมพัฒนาคุณภาพผู้เรียน และงบโครงการพัฒนาสถานศึกษา",
+        contentSample: "ตารางสรุปการใช้งบประมาณรายไตรมาส: บัญชีเงินอุดหนุนค่าใช้จ่ายรายหัวนักเรียน, บัญชีเงินกิจกรรมพัฒนาคุณภาพผู้เรียน (วิชาการ, ทัศนศึกษา, ICT), บัญชีเงินค่าเครื่องแบบและอุปกรณ์การเรียน, ยอดเงินคงเหลือยกไป และสถานะการเบิกจ่ายเปรียบเทียบกับแผนปฏิบัติการประจำปี"
+      },
+      {
+        id: "DOC-015",
+        title: "แบบฟอร์มขอเบิกจ่ายค่าใช้จ่ายในการเดินทางไปราชการ (ใบเบิกเงินสวัสดิการ)",
+        category: "budget",
+        subcategory: "แบบฟอร์มขออนุมัติจัดซื้อจัดจ้าง",
+        type: "PDF",
+        size: "910 KB",
+        date: "2026-05-09",
+        downloads: 210,
+        views: 460,
+        tags: ["เบิกเงิน", "ค่าเบี้ยเลี้ยง", "งบประมาณ", "ไปราชการ"],
+        description: "แบบใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ แบบ บก.๑๑๑ พร้อมตารางคำนวณเบี้ยเลี้ยง ค่าที่พัก และค่ายานพาหนะ",
+        contentSample: "ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ (แบบ บก.๑๑๑): ข้าพเจ้าขอเบิกค่าใช้จ่ายในการเดินทางไปราชการ ประกอบด้วย ค่าเบี้ยเลี้ยงเดินทาง... วัน, ค่าเช่าที่พัก... คืน, ค่ายานพาหนะ... บาท รวมเงินทั้งสิ้นที่ขอเบิก... บาท พร้อมแนบหลักฐานการจ่ายเงินและคำสั่งไปราชการ"
+      },
+      {
+        id: "DOC-016",
+        title: "สื่อการสอนสไลด์ Canva / PPT เรื่อง ประวัติศาสตร์อยุธยาและชุมชนบางปูน ป.๕",
+        category: "academic",
+        subcategory: "สื่อการสอน / แผนการจัดการเรียนรู้",
+        type: "CANVA",
+        size: "Interactive",
+        date: "2026-06-18",
+        downloads: 165,
+        views: 410,
+        tags: ["Canva", "ประวัติศาสตร์", "ป.5", "สื่อการสอน", "ชุมชนบางปูน"],
+        description: "สื่อการสอนมัลติมีเดียมีภาพเคลื่อนไหวและควิซเกม Kahoot เชื่อมโยงประวัติศาสตร์กรุงศรีอยุธยากับวิถีชีวิตชุมชนวัดบางปูน",
+        contentSample: "สื่อการเรียนรู้เชิงโต้ตอบ Canva: บทเรียนประวัติศาสตร์ท้องถิ่นชุมชนวัดบางปูน สัมพันธ์กับยุคสมัยอยุธยา การค้าขายทางสายน้ำ ศิลปวัฒนธรรมวัดบางปูน และเกมตอบคำถามทดสอบความเข้าใจผ่าน QR Code ท้ายบทเรียน"
+      }
+    ];
+
+    const SUBCATEGORIES = {
+      academic: [
+        "หลักสูตรสถานศึกษา / โครงสร้างเวลาเรียน",
+        "สื่อการสอน / แผนการจัดการเรียนรู้",
+        "แบบฟอร์มนิเทศการสอนออนไลน์"
+      ],
+      personnel: [
+        "คำสั่งโรงเรียน / ประกาศ / ระเบียบการ",
+        "แบบฟอร์มขออนุญาต (ลากิจ, ลาป่วย, ไปราชการ)",
+        "แบบฟอร์มเสนอขอรับรางวัล"
+      ],
+      student: [
+        "คู่มือการดำเนินงาน (สภานักเรียน, ความปลอดภัย)",
+        "เอกสารและแบบรายงานโครงการโรงเรียนคุณธรรม"
+      ],
+      budget: [
+        "แบบฟอร์มขออนุมัติจัดซื้อจัดจ้าง",
+        "รายงานการใช้งบประมาณ"
+      ]
+    };
+
+    let currentRole = localStorage.getItem('school_doc_role') || 'user';
+    let currentView = 'dashboard';
+    let documents = [];
+    let favorites = JSON.parse(localStorage.getItem('school_doc_favs') || '[]');
+    let currentCategoryFilter = 'all';
+    let currentSelectedTag = null;
+    let currentLayout = 'grid';
+    let currentPreviewDoc = null;
+    let currentZoom = 100;
+
+    function loadDocuments() {
+      const stored = localStorage.getItem('school_doc_data_v1');
+      if (stored) {
+        try {
+          documents = JSON.parse(stored);
+        } catch (e) {
+          documents = [...DEFAULT_DOCUMENTS];
+        }
+      } else {
+        documents = [...DEFAULT_DOCUMENTS];
+        saveDocuments();
+      }
+    }
+
+    function saveDocuments() {
+      localStorage.setItem('school_doc_data_v1', JSON.stringify(documents));
+    }
+
+    function saveFavorites() {
+      localStorage.setItem('school_doc_favs', JSON.stringify(favorites));
+      updateFavoritesBadge();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDocuments();
+      updateRoleUI();
+      updateFavoritesBadge();
+      renderDashboard();
+      renderRepository();
+      renderAdminTable();
+      populateSubcategoryDropdown('all');
+      renderTagsCloud();
+    });
+
+    function setRole(role) {
+      currentRole = role;
+      localStorage.setItem('school_doc_role', role);
+      updateRoleUI();
+      showToast(`สลับโหมดการทำงานเป็น: ${role === 'admin' ? 'ผู้ดูแลระบบ (Admin)' : 'ครูและบุคลากร (User)'}`, 'info');
+      
+      if (role === 'user' && currentView === 'admin') {
+        switchView('repository');
+      }
+      renderDashboard();
+      renderRepository();
+      renderAdminTable();
+    }
+
+    function toggleQuickRole() {
+      setRole(currentRole === 'admin' ? 'user' : 'admin');
+    }
+
+    function updateRoleUI() {
+      const userBtn = document.getElementById('role-btn-user');
+      const adminBtn = document.getElementById('role-btn-admin');
+      const banner = document.getElementById('role-banner');
+      const bannerIcon = document.getElementById('role-banner-icon');
+      const bannerTitle = document.getElementById('role-banner-title');
+      const bannerDesc = document.getElementById('role-banner-desc');
+      const quickRoleTarget = document.getElementById('quick-role-target');
+
+      if (currentRole === 'admin') {
+        adminBtn.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-white bg-indigo-700 shadow-sm flex items-center gap-1.5';
+        userBtn.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5';
+        
+        banner.className = 'mb-6 p-3 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-50 to-indigo-50 border border-amber-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-sm';
+        bannerIcon.className = 'fa-solid fa-shield-halved';
+        bannerIcon.parentElement.className = 'w-9 h-9 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-sm';
+        bannerTitle.innerHTML = 'กำลังใช้งานในสิทธิ์: <span class="text-amber-800 font-bold">ผู้ดูแลระบบ (Admin Mode)</span>';
+        bannerDesc.innerText = 'สิทธิ์เต็มรูปแบบ: อัปโหลด ลากวางไฟล์ สร้างหมวดหมู่ แก้ไข และลบเอกสาร';
+        quickRoleTarget.innerText = 'User (โหมดครู)';
+      } else {
+        userBtn.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-white bg-slate-700 shadow-sm flex items-center gap-1.5';
+        adminBtn.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5';
+        
+        banner.className = 'mb-6 p-3 sm:p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-sm';
+        bannerIcon.className = 'fa-solid fa-chalkboard-user';
+        bannerIcon.parentElement.className = 'w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm';
+        bannerTitle.innerHTML = 'กำลังใช้งานในสิทธิ์: <span class="text-blue-800 font-bold">คุณครูและบุคลากร (User Mode)</span>';
+        bannerDesc.innerText = 'ค้นหา ดูตัวอย่างเอกสาร (Preview) และดาวน์โหลดเอกสารไปปรับใช้แบบอ่านอย่างเดียว';
+        quickRoleTarget.innerText = 'Admin (ผู้ดูแล)';
+      }
+    }
+
+    function switchView(viewName) {
+      if (viewName === 'admin' && currentRole !== 'admin') {
+        showToast('กำลังเปิดหน้าจัดการในโหมดผู้ดูแลระบบ (Admin Mode)', 'info');
+        setRole('admin');
+      }
+
+      currentView = viewName;
+
+      document.getElementById('view-dashboard').classList.add('hidden');
+      document.getElementById('view-repository').classList.add('hidden');
+      document.getElementById('view-admin').classList.add('hidden');
+
+      document.getElementById(`view-${viewName}`).classList.remove('hidden');
+
+      ['dashboard', 'repository', 'admin'].forEach(v => {
+        const btn = document.getElementById(`nav-${v}`);
+        const mBtn = document.getElementById(`m-nav-${v}`);
+        if (btn) {
+          if (v === viewName) {
+            btn.className = 'nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-brand-700 bg-white shadow-sm';
+          } else {
+            btn.className = 'nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60';
+          }
+        }
+        if (mBtn) {
+          if (v === viewName) {
+            mBtn.className = 'flex items-center gap-1 px-3 py-1.5 rounded-lg text-brand-700 bg-white font-semibold shadow-xs';
+          } else {
+            mBtn.className = 'flex items-center gap-1 px-3 py-1.5 rounded-lg text-slate-600';
+          }
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderDashboard() {
+      const academicDocs = documents.filter(d => d.category === 'academic');
+      const personnelDocs = documents.filter(d => d.category === 'personnel');
+      const studentDocs = documents.filter(d => d.category === 'student');
+      const budgetDocs = documents.filter(d => d.category === 'budget');
+
+      document.getElementById('stat-academic-count').innerText = `${academicDocs.length} รายการ`;
+      document.getElementById('stat-personnel-count').innerText = `${personnelDocs.length} รายการ`;
+      document.getElementById('stat-student-count').innerText = `${studentDocs.length} รายการ`;
+      document.getElementById('stat-budget-count').innerText = `${budgetDocs.length} รายการ`;
+
+      const popular = [...documents].sort((a, b) => b.downloads - a.downloads).slice(0, 4);
+      const popContainer = document.getElementById('popular-docs-list');
+      popContainer.innerHTML = popular.map((doc, idx) => `
+        <div class="p-3.5 rounded-2xl bg-slate-50 hover:bg-brand-50/60 border border-slate-200/80 flex items-center justify-between gap-3 transition">
+          <div class="flex items-center gap-3 overflow-hidden">
+            <span class="w-7 h-7 rounded-xl ${idx === 0 ? 'bg-amber-500 text-white' : 'bg-slate-200 text-slate-700'} text-xs font-bold flex items-center justify-center shrink-0">
+              ${idx + 1}
+            </span>
+            <div class="overflow-hidden">
+              <h4 onclick="openPreviewModal('${doc.id}')" class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-600 cursor-pointer truncate">
+                ${doc.title}
+              </h4>
+              <div class="flex items-center gap-2 text-[11px] text-slate-500 mt-0.5">
+                <span class="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600 font-medium">${getCategoryName(doc.category)}</span>
+                <span><i class="fa-solid fa-download text-slate-400 mr-0.5"></i> ${doc.downloads} ครั้ง</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button onclick="openPreviewModal('${doc.id}')" class="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs transition" title="ดูตัวอย่าง">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button onclick="handleDownloadDoc('${doc.id}')" class="p-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs transition shadow-xs" title="ดาวน์โหลด">
+              <i class="fa-solid fa-download"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      const latest = [...documents].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
+      const latContainer = document.getElementById('latest-docs-list');
+      latContainer.innerHTML = latest.map(doc => `
+        <div class="p-3.5 rounded-2xl bg-slate-50 hover:bg-brand-50/60 border border-slate-200/80 flex items-center justify-between gap-3 transition">
+          <div class="flex items-center gap-3 overflow-hidden">
+            <div class="w-9 h-9 rounded-xl ${getFileTypeBadgeColor(doc.type)} text-white flex items-center justify-center text-xs font-bold shrink-0">
+              ${doc.type}
+            </div>
+            <div class="overflow-hidden">
+              <div class="flex items-center gap-2">
+                <h4 onclick="openPreviewModal('${doc.id}')" class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-600 cursor-pointer truncate">
+                  ${doc.title}
+                </h4>
+                <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold">ใหม่</span>
+              </div>
+              <div class="flex items-center gap-2 text-[11px] text-slate-500 mt-0.5">
+                <span><i class="fa-regular fa-calendar text-slate-400 mr-1"></i>${formatThaiDate(doc.date)}</span>
+                <span>•</span>
+                <span>${doc.size}</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button onclick="openPreviewModal('${doc.id}')" class="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs transition" title="ดูตัวอย่าง">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button onclick="handleDownloadDoc('${doc.id}')" class="p-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs transition shadow-xs" title="ดาวน์โหลด">
+              <i class="fa-solid fa-download"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function executeHeroSearch() {
+      const q = document.getElementById('hero-search-input').value.trim();
+      switchView('repository');
+      document.getElementById('main-search-input').value = q;
+      handleSearchChange();
+    }
+
+    function focusSearch() {
+      switchView('repository');
+      setTimeout(() => {
+        document.getElementById('main-search-input').focus();
+      }, 100);
+    }
+
+    function quickOpenDoc(docId) {
+      openPreviewModal(docId);
+    }
+
+    function filterByCategory(catKey) {
+      switchView('repository');
+      setCategoryFilter(catKey);
+    }
+
+    function filterByTag(tagName) {
+      switchView('repository');
+      currentSelectedTag = tagName;
+      document.getElementById('main-search-input').value = tagName;
+      handleSearchChange();
+    }
+
+    function showAllWithSort(sortKey) {
+      switchView('repository');
+      document.getElementById('filter-sorting').value = sortKey;
+      handleSearchChange();
+    }
+
+    function setCategoryFilter(cat) {
+      currentCategoryFilter = cat;
+      document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.className = 'cat-filter-btn active whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-brand-600 text-white shadow-sm';
+        } else {
+          btn.className = 'cat-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200';
+        }
+      });
+      populateSubcategoryDropdown(cat);
+      handleSearchChange();
+    }
+
+    function populateSubcategoryDropdown(cat) {
+      const select = document.getElementById('filter-subcategory');
+      select.innerHTML = '<option value="all">ทุกหมวดหมู่ย่อย</option>';
+
+      let subs = [];
+      if (cat === 'all') {
+        Object.values(SUBCATEGORIES).forEach(list => subs.push(...list));
+      } else if (SUBCATEGORIES[cat]) {
+        subs = SUBCATEGORIES[cat];
+      }
+
+      [...new Set(subs)].forEach(sub => {
+        const opt = document.createElement('option');
+        opt.value = sub;
+        opt.innerText = sub;
+        select.appendChild(opt);
+      });
+    }
+
+    function renderTagsCloud() {
+      const allTags = [];
+      documents.forEach(d => {
+        if (Array.isArray(d.tags)) {
+          allTags.push(...d.tags);
+        }
+      });
+      const tagCounts = {};
+      allTags.forEach(t => tagCounts[t] = (tagCounts[t] || 0) + 1);
+
+      const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]);
+      const container = document.getElementById('repo-tags-cloud');
+      
+      container.innerHTML = sortedTags.map(tag => {
+        const isSelected = currentSelectedTag === tag;
+        return `
+          <button onclick="toggleTagFilter('${tag}')" class="px-2.5 py-1 rounded-lg text-xs font-medium transition ${isSelected ? 'bg-brand-600 text-white shadow-xs' : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200/80'}">
+            #${tag} <span class="text-[10px] opacity-70">(${tagCounts[tag]})</span>
+          </button>
+        `;
+      }).join('');
+
+      const clearBtn = document.getElementById('clear-tag-btn');
+      if (currentSelectedTag) {
+        clearBtn.classList.remove('hidden');
+        clearBtn.innerText = `ล้างแท็ก #${currentSelectedTag}`;
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+    }
+
+    function toggleTagFilter(tag) {
+      if (currentSelectedTag === tag) {
+        currentSelectedTag = null;
+      } else {
+        currentSelectedTag = tag;
+      }
+      renderTagsCloud();
+      handleSearchChange();
+    }
+
+    function clearSelectedTag() {
+      currentSelectedTag = null;
+      renderTagsCloud();
+      handleSearchChange();
+    }
+
+    function handleSearchChange() {
+      const query = (document.getElementById('main-search-input').value || '').toLowerCase().trim();
+      const subCat = document.getElementById('filter-subcategory').value;
+      const fileType = document.getElementById('filter-filetype').value;
+      const sortBy = document.getElementById('filter-sorting').value;
+
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (query.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+
+      let filtered = documents.filter(doc => {
+        if (currentCategoryFilter !== 'all' && doc.category !== currentCategoryFilter) {
+          return false;
+        }
+        if (subCat !== 'all' && doc.subcategory !== subCat) {
+          return false;
+        }
+        if (fileType !== 'all' && doc.type !== fileType) {
+          return false;
+        }
+        if (currentSelectedTag && (!doc.tags || !doc.tags.includes(currentSelectedTag))) {
+          return false;
+        }
+        if (query) {
+          const matchTitle = (doc.title || '').toLowerCase().includes(query);
+          const matchDesc = (doc.description || '').toLowerCase().includes(query);
+          const matchSub = (doc.subcategory || '').toLowerCase().includes(query);
+          const matchTags = doc.tags ? doc.tags.some(t => t.toLowerCase().includes(query)) : false;
+          if (!matchTitle && !matchDesc && !matchSub && !matchTags) {
+            return false;
+          }
+        }
+        return true;
+      });
+
+      if (sortBy === 'latest') {
+        filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+      } else if (sortBy === 'downloads') {
+        filtered.sort((a, b) => b.downloads - a.downloads);
+      } else if (sortBy === 'views') {
+        filtered.sort((a, b) => b.views - a.views);
+      } else if (sortBy === 'title_asc') {
+        filtered.sort((a, b) => a.title.localeCompare(b.title, 'th'));
+      }
+
+      renderFilteredDocuments(filtered);
+    }
+
+    function clearSearch() {
+      document.getElementById('main-search-input').value = '';
+      currentSelectedTag = null;
+      renderTagsCloud();
+      handleSearchChange();
+    }
+
+    function resetAllFilters() {
+      document.getElementById('main-search-input').value = '';
+      currentCategoryFilter = 'all';
+      currentSelectedTag = null;
+      document.getElementById('filter-subcategory').value = 'all';
+      document.getElementById('filter-filetype').value = 'all';
+      document.getElementById('filter-sorting').value = 'latest';
+      setCategoryFilter('all');
+      renderTagsCloud();
+    }
+
+    function setViewLayout(layout) {
+      currentLayout = layout;
+      const gridBtn = document.getElementById('layout-btn-grid');
+      const listBtn = document.getElementById('layout-btn-list');
+
+      if (layout === 'grid') {
+        gridBtn.className = 'p-1.5 rounded-lg bg-white shadow-xs text-brand-700 font-semibold';
+        listBtn.className = 'p-1.5 rounded-lg text-slate-500 hover:text-slate-900';
+      } else {
+        listBtn.className = 'p-1.5 rounded-lg bg-white shadow-xs text-brand-700 font-semibold';
+        gridBtn.className = 'p-1.5 rounded-lg text-slate-500 hover:text-slate-900';
+      }
+      handleSearchChange();
+    }
+
+    function renderFilteredDocuments(list) {
+      const container = document.getElementById('documents-container');
+      const countEl = document.getElementById('repo-results-count');
+      const noResults = document.getElementById('no-results-box');
+
+      countEl.innerText = `พบ ${list.length} รายการ`;
+
+      if (list.length === 0) {
+        container.innerHTML = '';
+        container.classList.add('hidden');
+        noResults.classList.remove('hidden');
+        return;
+      }
+
+      noResults.classList.add('hidden');
+      container.classList.remove('hidden');
+
+      if (currentLayout === 'grid') {
+        container.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5';
+        container.innerHTML = list.map(doc => renderDocCardHTML(doc)).join('');
+      } else {
+        container.className = 'flex flex-col gap-3';
+        container.innerHTML = list.map(doc => renderDocListItemHTML(doc)).join('');
+      }
+    }
+
+    function renderDocCardHTML(doc) {
+      const isFav = favorites.includes(doc.id);
+      const catBadge = getCategoryBadgeHTML(doc.category);
+      const typeBadge = getFileTypeBadgeColor(doc.type);
+
+      return `
+        <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group hover:border-brand-300">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-1.5">
+                ${catBadge}
+                <span class="w-7 h-7 rounded-lg ${typeBadge} text-white text-[10px] font-bold flex items-center justify-center">
+                  ${doc.type}
+                </span>
+              </div>
+              <button onclick="toggleFavorite('${doc.id}')" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-amber-500 transition flex items-center justify-center">
+                <i class="fa-solid fa-bookmark ${isFav ? 'text-amber-500' : ''}"></i>
+              </button>
+            </div>
+
+            <h3 onclick="openPreviewModal('${doc.id}')" class="font-bold text-slate-800 text-sm sm:text-base mb-1.5 hover:text-brand-600 cursor-pointer line-clamp-2 leading-snug">
+              ${doc.title}
+            </h3>
+            <p class="text-[11px] text-slate-400 font-medium mb-2.5 line-clamp-1">
+              <i class="fa-regular fa-folder mr-1"></i>${doc.subcategory}
+            </p>
+
+            <p class="text-xs text-slate-600 line-clamp-2 mb-3.5 leading-relaxed">
+              ${doc.description || 'ไม่มีคำอธิบายเพิ่มเติม'}
+            </p>
+
+            <div class="flex flex-wrap gap-1 mb-4">
+              ${(doc.tags || []).map(t => `
+                <span onclick="filterByTag('${t}')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-brand-100 text-slate-600 hover:text-brand-700 text-[10px] font-medium transition cursor-pointer">
+                  #${t}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2.5 text-slate-400 text-[11px]">
+              <span><i class="fa-solid fa-download text-slate-400 mr-0.5"></i> ${doc.downloads}</span>
+              <span><i class="fa-solid fa-eye text-slate-400 mr-0.5"></i> ${doc.views}</span>
+              <span>•</span>
+              <span>${doc.size}</span>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button onclick="openPreviewModal('${doc.id}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-xs transition flex items-center gap-1">
+                <i class="fa-solid fa-eye text-brand-600"></i> ดูตัวอย่าง
+              </button>
+              <button onclick="handleDownloadDoc('${doc.id}')" class="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-xl text-xs transition shadow-xs flex items-center gap-1">
+                <i class="fa-solid fa-download"></i> โหลด
+              </button>
+              ${currentRole === 'admin' ? `
+                <button onclick="openEditModal('${doc.id}')" class="p-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-xs" title="แก้ไข">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button onclick="confirmDeleteDoc('${doc.id}')" class="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs" title="ลบ">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDocListItemHTML(doc) {
+      const isFav = favorites.includes(doc.id);
+      const catBadge = getCategoryBadgeHTML(doc.category);
+      const typeBadge = getFileTypeBadgeColor(doc.type);
+
+      return `
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex items-start gap-3.5 overflow-hidden">
+            <div class="w-10 h-10 rounded-xl ${typeBadge} text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+              ${doc.type}
+            </div>
+            <div class="overflow-hidden">
+              <div class="flex items-center gap-2 mb-1">
+                ${catBadge}
+                <span class="text-[11px] text-slate-400 font-medium truncate">${doc.subcategory}</span>
+              </div>
+              <h3 onclick="openPreviewModal('${doc.id}')" class="font-bold text-slate-800 text-sm hover:text-brand-600 cursor-pointer truncate">
+                ${doc.title}
+              </h3>
+              <p class="text-xs text-slate-500 line-clamp-1 mt-0.5">${doc.description}</p>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between md:justify-end gap-3 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-slate-100 text-xs">
+            <div class="text-right text-[11px] text-slate-400 hidden sm:block">
+              <div>${formatThaiDate(doc.date)} • ${doc.size}</div>
+              <div>ดาวน์โหลด ${doc.downloads} ครั้ง</div>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button onclick="toggleFavorite('${doc.id}')" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-amber-500 transition">
+                <i class="fa-solid fa-bookmark ${isFav ? 'text-amber-500' : ''}"></i>
+              </button>
+              <button onclick="openPreviewModal('${doc.id}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-xs transition">
+                <i class="fa-solid fa-eye text-brand-600 mr-1"></i> ดูตัวอย่าง
+              </button>
+              <button onclick="handleDownloadDoc('${doc.id}')" class="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-xl text-xs transition shadow-xs">
+                <i class="fa-solid fa-download mr-1"></i> โหลด
+              </button>
+              ${currentRole === 'admin' ? `
+                <button onclick="openEditModal('${doc.id}')" class="p-2 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-xl text-xs" title="แก้ไข">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button onclick="confirmDeleteDoc('${doc.id}')" class="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs" title="ลบ">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function openPreviewModal(docId) {
+      const doc = documents.find(d => d.id === docId);
+      if (!doc) return;
+
+      currentPreviewDoc = doc;
+      doc.views = (doc.views || 0) + 1;
+      saveDocuments();
+
+      document.getElementById('preview-doc-title').innerText = doc.title;
+      document.getElementById('preview-doc-cat').innerText = getCategoryName(doc.category);
+      document.getElementById('preview-doc-size').innerText = doc.size;
+      document.getElementById('preview-doc-date').innerText = formatThaiDate(doc.date);
+      document.getElementById('preview-paper-title').innerText = doc.title;
+      document.getElementById('preview-paper-desc').innerText = doc.description || 'เอกสารราชการโรงเรียนวัดบางปูน';
+
+      const typeIcon = document.getElementById('preview-type-icon');
+      if (doc.type === 'PDF') typeIcon.innerHTML = '<i class="fa-solid fa-file-pdf text-red-400"></i>';
+      else if (doc.type === 'DOCX') typeIcon.innerHTML = '<i class="fa-solid fa-file-word text-blue-400"></i>';
+      else if (doc.type === 'XLSX') typeIcon.innerHTML = '<i class="fa-solid fa-file-excel text-emerald-400"></i>';
+      else if (doc.type === 'PPTX') typeIcon.innerHTML = '<i class="fa-solid fa-file-powerpoint text-orange-400"></i>';
+      else typeIcon.innerHTML = '<i class="fa-solid fa-palette text-pink-400"></i>';
+
+      const bodyContainer = document.getElementById('preview-paper-content');
+      bodyContainer.innerHTML = `
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 mb-4 text-xs font-mono text-slate-500">
+          <div class="flex justify-between">
+            <span>รหัสอ้างอิงเอกสาร: ${doc.id}</span>
+            <span>หมวดหมู่ย่อย: ${doc.subcategory}</span>
+          </div>
+        </div>
+        <p class="text-indent-8 font-normal leading-relaxed text-slate-800">
+          ${doc.contentSample || doc.description || 'รายละเอียดเนื้อหาของเอกสารฉบับสมบูรณ์ โรงเรียนวัดบางปูน พร้อมสำหรับการนำไปปรับใช้ในการจัดการเรียนรู้หรือการปฏิบัติงานในสถานศึกษา'}
+        </p>
+        <div class="my-6 p-6 rounded-2xl bg-brand-50/50 border border-brand-200/80 space-y-2">
+          <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-brand-600"></i> สรุปข้อปฏิบัติและคำแนะนำในการนำไปใช้:
+          </h4>
+          <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+            <li>ครูผู้สอนสามารถดาวน์โหลดไฟล์ต้นฉบับเพื่อนำไปปรับแก้ไขให้สอดคล้องกับบริบทชั้นเรียน</li>
+            <li>การจัดทำแผนบูรณาการรูปแบบ ๔ คิด ให้เน้นการบันทึกผลหลังการสอนตามสภาพจริง</li>
+            <li>หากเป็นแบบฟอร์มขออนุมัติ ให้พิมพ์เอกสารและเสนอผ่านหัวหน้าฝ่ายงานก่อนเสนอผู้อำนวยการ</li>
+          </ul>
+        </div>
+      `;
+
+      const tagsBar = document.getElementById('preview-tags-bar');
+      tagsBar.innerHTML = (doc.tags || []).map(t => `
+        <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 text-[10px] font-medium">#${t}</span>
+      `).join('');
+
+      currentZoom = 100;
+      updateZoomStyle();
+
+      document.getElementById('preview-modal').classList.remove('hidden');
+    }
+
+    function closePreviewModal() {
+      document.getElementById('preview-modal').classList.add('hidden');
+      currentPreviewDoc = null;
+    }
+
+    function adjustPreviewZoom(delta) {
+      currentZoom = Math.max(50, Math.min(180, currentZoom + delta));
+      updateZoomStyle();
+    }
+
+    function updateZoomStyle() {
+      document.getElementById('preview-zoom-label').innerText = `${currentZoom}%`;
+      const page = document.getElementById('preview-page-container');
+      page.style.transform = `scale(${currentZoom / 100})`;
+    }
+
+    function printPreviewDocument() {
+      window.print();
+    }
+
+    function copyPreviewShareLink() {
+      if (!currentPreviewDoc) return;
+      const dummyUrl = `${window.location.origin}${window.location.pathname}#${currentPreviewDoc.id}`;
+      navigator.clipboard.writeText(dummyUrl).then(() => {
+        showToast('คัดลอกลิงก์เอกสารไปยังคลิปบอร์ดแล้ว', 'success');
+      }).catch(() => {
+        showToast(`ลิงก์เอกสาร: ${dummyUrl}`, 'info');
+      });
+    }
+
+    function downloadCurrentPreviewDoc() {
+      if (currentPreviewDoc) {
+        handleDownloadDoc(currentPreviewDoc.id);
+      }
+    }
+
+    function handleDownloadDoc(docId) {
+      const doc = documents.find(d => d.id === docId);
+      if (!doc) return;
+
+      doc.downloads = (doc.downloads || 0) + 1;
+      saveDocuments();
+      renderDashboard();
+      renderRepository();
+      renderAdminTable();
+
+      const element = document.createElement('a');
+      const fileContent = `=== โรงเรียนวัดบางปูน - ระบบของครูซอส ===\n\nชื่อเอกสาร: ${doc.title}\nหมวดหมู่: ${getCategoryName(doc.category)}\nหมวดหมู่ย่อย: ${doc.subcategory}\nประเภทไฟล์: ${doc.type}\nวันที่: ${doc.date}\nแท็ก: ${(doc.tags || []).join(', ')}\n\n--- สรุปเนื้อหา ---\n${doc.description}\n\n${doc.contentSample || ''}\n\n(ดาวน์โหลดจากระบบคลังเอกสาร TT001)`;
+      
+      const file = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+      element.href = URL.createObjectURL(file);
+      element.download = `${doc.title.replace(/[\/\\?%*:|"<>]/g, '_')}.${doc.type.toLowerCase() === 'canva' ? 'txt' : doc.type.toLowerCase()}`;
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+
+      showToast(`เริ่มดาวน์โหลด "${doc.title}" เรียบร้อยแล้ว`, 'success');
+    }
+
+    function toggleFavorite(docId) {
+      const idx = favorites.indexOf(docId);
+      if (idx > -1) {
+        favorites.splice(idx, 1);
+        showToast('นำออกจากรายการที่บันทึกแล้ว', 'info');
+      } else {
+        favorites.push(docId);
+        showToast('บันทึกเอกสารลงในรายการโปรดแล้ว', 'success');
+      }
+      saveFavorites();
+      renderRepository();
+      renderFavoritesDrawer();
+    }
+
+    function updateFavoritesBadge() {
+      document.getElementById('fav-count-badge').innerText = favorites.length;
+    }
+
+    function toggleFavoritesModal() {
+      const modal = document.getElementById('favorites-modal');
+      if (modal.classList.contains('hidden')) {
+        renderFavoritesDrawer();
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function renderFavoritesDrawer() {
+      const container = document.getElementById('favorites-list-container');
+      const favDocs = documents.filter(d => favorites.includes(d.id));
+
+      if (favDocs.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-slate-400">
+            <i class="fa-solid fa-bookmark text-4xl mb-3 opacity-40"></i>
+            <p class="text-xs">ยังไม่มีเอกสารที่บันทึกไว้</p>
+            <p class="text-[11px] text-slate-400 mt-1">กดไอคอนบุ๊กมาร์กที่การ์ดเอกสารเพื่อเก็บไว้อ่านภายหลัง</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = favDocs.map(doc => `
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+          <div class="overflow-hidden">
+            <h4 onclick="openPreviewModal('${doc.id}'); toggleFavoritesModal();" class="text-xs font-bold text-slate-800 hover:text-brand-600 cursor-pointer truncate">
+              ${doc.title}
+            </h4>
+            <span class="text-[10px] text-slate-500">${getCategoryName(doc.category)} • ${doc.size}</span>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button onclick="handleDownloadDoc('${doc.id}')" class="p-1.5 bg-brand-600 text-white rounded-lg text-xs" title="ดาวน์โหลด">
+              <i class="fa-solid fa-download"></i>
+            </button>
+            <button onclick="toggleFavorite('${doc.id}')" class="p-1.5 bg-red-50 text-red-600 rounded-lg text-xs" title="ลบออก">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAdminTable() {
+      const search = (document.getElementById('admin-table-search').value || '').toLowerCase().trim();
+      const tbody = document.getElementById('admin-table-body');
+
+      const filtered = documents.filter(d => {
+        if (!search) return true;
+        return d.title.toLowerCase().includes(search) || 
+               d.category.toLowerCase().includes(search) || 
+               d.subcategory.toLowerCase().includes(search) ||
+               (d.tags && d.tags.some(t => t.toLowerCase().includes(search)));
+      });
+
+      tbody.innerHTML = filtered.map(doc => `
+        <tr class="hover:bg-slate-50/80 transition">
+          <td class="p-3.5 whitespace-nowrap font-mono text-[11px] text-slate-500">
+            <span class="px-2 py-0.5 rounded bg-slate-100 font-bold text-slate-700">${doc.type}</span>
+            <div class="text-[10px] mt-0.5 text-slate-400">${doc.id}</div>
+          </td>
+          <td class="p-3.5 max-w-xs">
+            <div class="font-bold text-slate-800 hover:text-brand-600 cursor-pointer line-clamp-1" onclick="openPreviewModal('${doc.id}')">
+              ${doc.title}
+            </div>
+            <div class="text-[11px] text-slate-400 line-clamp-1">${doc.description || 'ไม่มีคำอธิบาย'}</div>
+          </td>
+          <td class="p-3.5 whitespace-nowrap">
+            <span class="text-xs font-semibold">${getCategoryName(doc.category)}</span>
+            <div class="text-[10px] text-slate-400 truncate max-w-[160px]">${doc.subcategory}</div>
+          </td>
+          <td class="p-3.5">
+            <div class="flex flex-wrap gap-1 max-w-[180px]">
+              ${(doc.tags || []).slice(0, 3).map(t => `<span class="px-1.5 py-0.2 rounded bg-slate-100 text-[10px] text-slate-600">#${t}</span>`).join('')}
+            </div>
+          </td>
+          <td class="p-3.5 text-center whitespace-nowrap">
+            <span class="text-slate-700 font-semibold">${doc.views}</span> / <span class="text-brand-600 font-bold">${doc.downloads}</span>
+          </td>
+          <td class="p-3.5 text-center whitespace-nowrap">
+            <div class="flex items-center justify-center gap-1.5">
+              <button onclick="openPreviewModal('${doc.id}')" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700" title="ดูตัวอย่าง">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <button onclick="openEditModal('${doc.id}')" class="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700" title="แก้ไข">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button onclick="confirmDeleteDoc('${doc.id}')" class="p-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600" title="ลบเอกสาร">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      document.getElementById('dropzone-area').classList.add('border-brand-500', 'bg-brand-50');
+    }
+
+    function handleDragLeave(e) {
+      e.preventDefault();
+      document.getElementById('dropzone-area').classList.remove('border-brand-500', 'bg-brand-50');
+    }
+
+    function handleFileDrop(e) {
+      e.preventDefault();
+      document.getElementById('dropzone-area').classList.remove('border-brand-500', 'bg-brand-50');
+      
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        processUploadedFile(files[0]);
+      }
+    }
+
+    function handleFileSelected(e) {
+      const files = e.target.files;
+      if (files.length > 0) {
+        processUploadedFile(files[0]);
+      }
+    }
+
+    function processUploadedFile(file) {
+      openUploadModal();
+      
+      const cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+      document.getElementById('form-doc-title').value = cleanName;
+      
+      const ext = file.name.split('.').pop().toUpperCase();
+      const typeSelect = document.getElementById('form-doc-type');
+      if (['PDF', 'DOCX', 'XLSX', 'PPTX'].includes(ext)) {
+        typeSelect.value = ext;
+      } else if (['DOC'].includes(ext)) {
+        typeSelect.value = 'DOCX';
+      } else if (['XLS'].includes(ext)) {
+        typeSelect.value = 'XLSX';
+      } else if (['PPT'].includes(ext)) {
+        typeSelect.value = 'PPTX';
+      }
+
+      const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+      document.getElementById('form-doc-size').value = `${sizeMB} MB`;
+
+      showToast(`ตรวจพบไฟล์ "${file.name}" กรุณาตรวจสอบหมวดหมู่และแท็กก่อนบันทึก`, 'info');
+    }
+
+    function openUploadModal() {
+      document.getElementById('upload-modal-title').innerText = 'อัปโหลดและจัดหมวดหมู่เอกสารใหม่';
+      document.getElementById('edit-doc-id').value = '';
+      document.getElementById('doc-upload-form').reset();
+      updateFormSubcategories();
+      document.getElementById('upload-modal').classList.remove('hidden');
+    }
+
+    function openEditModal(docId) {
+      const doc = documents.find(d => d.id === docId);
+      if (!doc) return;
+
+      document.getElementById('upload-modal-title').innerText = 'แก้ไขข้อมูลเอกสาร';
+      document.getElementById('edit-doc-id').value = doc.id;
+      document.getElementById('form-doc-title').value = doc.title;
+      document.getElementById('form-doc-category').value = doc.category;
+      updateFormSubcategories();
+      document.getElementById('form-doc-subcategory').value = doc.subcategory;
+      document.getElementById('form-doc-type').value = doc.type;
+      document.getElementById('form-doc-size').value = doc.size;
+      document.getElementById('form-doc-tags').value = (doc.tags || []).join(', ');
+      document.getElementById('form-doc-desc').value = doc.description || '';
+
+      document.getElementById('upload-modal').classList.remove('hidden');
+    }
+
+    function closeUploadModal() {
+      document.getElementById('upload-modal').classList.add('hidden');
+    }
+
+    function updateFormSubcategories() {
+      const cat = document.getElementById('form-doc-category').value;
+      const subSelect = document.getElementById('form-doc-subcategory');
+      subSelect.innerHTML = '';
+
+      const list = SUBCATEGORIES[cat] || [];
+      list.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.innerText = item;
+        subSelect.appendChild(opt);
+      });
+    }
+
+    function handleSaveDocument(e) {
+      e.preventDefault();
+
+      const editId = document.getElementById('edit-doc-id').value;
+      const title = document.getElementById('form-doc-title').value.trim();
+      const category = document.getElementById('form-doc-category').value;
+      const subcategory = document.getElementById('form-doc-subcategory').value;
+      const type = document.getElementById('form-doc-type').value;
+      const size = document.getElementById('form-doc-size').value.trim() || '1.5 MB';
+      const desc = document.getElementById('form-doc-desc').value.trim();
+      
+      const rawTags = document.getElementById('form-doc-tags').value;
+      const tags = rawTags.split(/[,#]/).map(t => t.trim()).filter(t => t.length > 0);
+
+      if (editId) {
+        const doc = documents.find(d => d.id === editId);
+        if (doc) {
+          doc.title = title;
+          doc.category = category;
+          doc.subcategory = subcategory;
+          doc.type = type;
+          doc.size = size;
+          doc.description = desc;
+          doc.tags = tags;
+          showToast('บันทึกการแก้ไขเอกสารเรียบร้อยแล้ว', 'success');
+        }
+      } else {
+        const newId = `DOC-${String(documents.length + 1).padStart(3, '0')}`;
+        const newDoc = {
+          id: newId,
+          title: title,
+          category: category,
+          subcategory: subcategory,
+          type: type,
+          size: size,
+          date: new Date().toISOString().split('T')[0],
+          downloads: 0,
+          views: 1,
+          tags: tags.length > 0 ? tags : ['ทั่วไป'],
+          description: desc,
+          contentSample: `เอกสาร ${title} จัดทำขึ้นเพื่อใช้ในการดำเนินงานของโรงเรียนวัดบางปูน ฝ่าย${getCategoryName(category)}`
+        };
+        documents.unshift(newDoc);
+        showToast('เพิ่มเอกสารเข้าสู่คลังสำเร็จ!', 'success');
+      }
+
+      saveDocuments();
+      closeUploadModal();
+      renderDashboard();
+      renderRepository();
+      renderAdminTable();
+      renderTagsCloud();
+    }
+
+    function confirmDeleteDoc(docId) {
+      const doc = documents.find(d => d.id === docId);
+      if (!doc) return;
+
+      if (confirm(`คุณต้องการลบเอกสาร "${doc.title}" หรือไม่?`)) {
+        documents = documents.filter(d => d.id !== docId);
+        favorites = favorites.filter(id => id !== docId);
+        saveDocuments();
+        saveFavorites();
+        renderDashboard();
+        renderRepository();
+        renderAdminTable();
+        renderTagsCloud();
+        showToast('ลบเอกสารออกจากระบบเรียบร้อยแล้ว', 'info');
+      }
+    }
+
+    function resetToDefaultData() {
+      if (confirm('คุณต้องการรีเซ็ตข้อมูลเอกสารทั้งหมดกลับเป็นค่าเริ่มต้นตัวอย่างหรือไม่?')) {
+        documents = [...DEFAULT_DOCUMENTS];
+        saveDocuments();
+        renderDashboard();
+        renderRepository();
+        renderAdminTable();
+        renderTagsCloud();
+        showToast('กู้คืนข้อมูลตัวอย่างเริ่มต้น ๑๖ รายการสำเร็จ', 'success');
+      }
+    }
+
+    function exportDataJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(documents, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `watbangpun_docs_backup_${new Date().toISOString().split('T')[0]}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast('ส่งออกไฟล์ข้อมูล JSON สำเร็จ', 'success');
+    }
+
+    function getCategoryName(catKey) {
+      const map = {
+        academic: 'งานวิชาการ',
+        personnel: 'งานบุคลากรและบริหารทั่วไป',
+        student: 'งานกิจการนักเรียน',
+        budget: 'งานงบประมาณและพัสดุ'
+      };
+      return map[catKey] || catKey;
+    }
+
+    function getCategoryBadgeHTML(catKey) {
+      if (catKey === 'academic') {
+        return `<span class="px-2.5 py-0.5 rounded-full bg-academic-50 text-academic-700 border border-academic-100 text-[11px] font-bold">วิชาการ</span>`;
+      } else if (catKey === 'personnel') {
+        return `<span class="px-2.5 py-0.5 rounded-full bg-personnel-50 text-personnel-700 border border-personnel-100 text-[11px] font-bold">บุคลากร</span>`;
+      } else if (catKey === 'student') {
+        return `<span class="px-2.5 py-0.5 rounded-full bg-student-50 text-student-700 border border-student-100 text-[11px] font-bold">กิจการนักเรียน</span>`;
+      } else if (catKey === 'budget') {
+        return `<span class="px-2.5 py-0.5 rounded-full bg-budget-50 text-budget-700 border border-budget-100 text-[11px] font-bold">งบประมาณ</span>`;
+      }
+      return `<span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold">${catKey}</span>`;
+    }
+
+    function getFileTypeBadgeColor(type) {
+      const map = {
+        PDF: 'bg-red-500',
+        DOCX: 'bg-blue-600',
+        XLSX: 'bg-emerald-600',
+        PPTX: 'bg-orange-500',
+        CANVA: 'bg-pink-600'
+      };
+      return map[type] || 'bg-slate-700';
+    }
+
+    function formatThaiDate(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      const months = [
+        'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.',
+        'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'
+      ];
+      const day = date.getDate();
+      const month = months[date.getMonth()];
+      const year = date.getFullYear() + 543;
+      return `${day} ${month} ${year}`;
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-slate-900 text-white';
+      let icon = 'fa-solid fa-circle-info text-blue-400';
+      if (type === 'success') {
+        bg = 'bg-emerald-900 text-white border border-emerald-700';
+        icon = 'fa-solid fa-circle-check text-emerald-400';
+      } else if (type === 'error') {
+        bg = 'bg-red-900 text-white border border-red-700';
+        icon = 'fa-solid fa-circle-exclamation text-red-400';
+      }
+
+      toast.className = `${bg} px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-xs font-medium pointer-events-auto transition-all transform duration-300 translate-y-2 opacity-0`;
+      toast.innerHTML = `<i class="${icon} text-base"></i> <span>${message}</span>`;
+      
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
