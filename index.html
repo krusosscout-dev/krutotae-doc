@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="th" class="h-full">
+<html lang="th" class="h-full" data-theme="indigo">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัล - โรงเรียนวัดบางปูน</title>
+  <title>ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัลสถานศึกษา</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,52 +12,12 @@
       darkMode: 'class',
       theme: {
         extend: {
-          colors: {
-            brand: {
-              50: '#f0f7ff',
-              100: '#e0effe',
-              200: '#bae0fd',
-              300: '#7cc5fb',
-              400: '#36a6f6',
-              500: '#0c87eb',
-              600: '#0268c7',
-              700: '#0353a1',
-              800: '#074684',
-              900: '#0b3c6f',
-              950: '#082649',
-            },
-            academic: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-            },
-            personnel: {
-              50: '#f0fdf4',
-              100: '#dcfce7',
-              500: '#22c55e',
-              600: '#16a34a',
-              700: '#15803d',
-            },
-            student: {
-              50: '#fdf4ff',
-              100: '#fae8ff',
-              500: '#d946ef',
-              600: '#c026d3',
-              700: '#a21caf',
-            },
-            budget: {
-              50: '#fffbeb',
-              100: '#fef3c7',
-              500: '#f59e0b',
-              600: '#d97706',
-              700: '#b45309',
-            }
-          },
           fontFamily: {
             sans: ['Prompt', 'Sarabun', 'sans-serif'],
             sarabun: ['Sarabun', 'sans-serif'],
+          },
+          boxShadow: {
+            'card-hover': '0 20px 30px -10px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
           }
         }
       }
@@ -69,22 +29,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome Icons -->
+  <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <style>
     body { font-family: 'Prompt', sans-serif; }
     .sarabun-text { font-family: 'Sarabun', sans-serif; }
+    
     .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafc; border-radius: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     
+    .bg-grid-pattern {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .animate-fade-in { animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
@@ -93,6 +59,81 @@
     }
     .shake-anim { animation: shake 0.4s ease-in-out; }
 
+    /* ================= DYNAMIC THEMES CSS VARIABLES ================= */
+    :root[data-theme="indigo"] {
+      --theme-primary: #4f46e5;
+      --theme-primary-hover: #4338ca;
+      --theme-primary-light: #eef2ff;
+      --theme-primary-text: #4f46e5;
+      --theme-hero-from: #1e1b4b;
+      --theme-hero-via: #0f172a;
+      --theme-hero-to: #312e81;
+      --theme-accent: #3b82f6;
+      --theme-badge-bg: #e0e7ff;
+      --theme-badge-text: #3730a3;
+    }
+
+    :root[data-theme="emerald"] {
+      --theme-primary: #059669;
+      --theme-primary-hover: #047857;
+      --theme-primary-light: #ecfdf5;
+      --theme-primary-text: #059669;
+      --theme-hero-from: #064e3b;
+      --theme-hero-via: #022c22;
+      --theme-hero-to: #047857;
+      --theme-accent: #10b981;
+      --theme-badge-bg: #d1fae5;
+      --theme-badge-text: #065f46;
+    }
+
+    :root[data-theme="amber"] {
+      --theme-primary: #ea580c;
+      --theme-primary-hover: #c2410c;
+      --theme-primary-light: #fff7ed;
+      --theme-primary-text: #ea580c;
+      --theme-hero-from: #431407;
+      --theme-hero-via: #1c1917;
+      --theme-hero-to: #7c2d12;
+      --theme-accent: #f59e0b;
+      --theme-badge-bg: #ffedd5;
+      --theme-badge-text: #9a3412;
+    }
+
+    :root[data-theme="midnight"] {
+      --theme-primary: #0284c7;
+      --theme-primary-hover: #0369a1;
+      --theme-primary-light: #f0f9ff;
+      --theme-primary-text: #0284c7;
+      --theme-hero-from: #090d16;
+      --theme-hero-via: #0f172a;
+      --theme-hero-to: #1e293b;
+      --theme-accent: #38bdf8;
+      --theme-badge-bg: #e0f2fe;
+      --theme-badge-text: #075985;
+    }
+
+    :root[data-theme="rose"] {
+      --theme-primary: #e11d48;
+      --theme-primary-hover: #be123c;
+      --theme-primary-light: #fff1f2;
+      --theme-primary-text: #e11d48;
+      --theme-hero-from: #4c0519;
+      --theme-hero-via: #1c1917;
+      --theme-hero-to: #881337;
+      --theme-accent: #f43f5e;
+      --theme-badge-bg: #ffe4e6;
+      --theme-badge-text: #9f1239;
+    }
+
+    .theme-primary-bg { background-color: var(--theme-primary); }
+    .theme-primary-bg-hover:hover { background-color: var(--theme-primary-hover); }
+    .theme-primary-text { color: var(--theme-primary-text); }
+    .theme-primary-light { background-color: var(--theme-primary-light); }
+    .theme-badge { background-color: var(--theme-badge-bg); color: var(--theme-badge-text); }
+    .theme-hero-bg {
+      background: linear-gradient(135deg, var(--theme-hero-from) 0%, var(--theme-hero-via) 50%, var(--theme-hero-to) 100%);
+    }
+
     @media print {
       body * { visibility: hidden; }
       #printArea, #printArea * { visibility: visible; }
@@ -100,386 +141,424 @@
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-full flex flex-col antialiased selection:bg-brand-500 selection:text-white">
+<body class="bg-slate-50/80 text-slate-800 min-h-full flex flex-col antialiased selection:bg-indigo-600 selection:text-white transition-colors duration-300">
 
-  <!-- ================= TOP NAVIGATION BAR ================= -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+  <!-- ================= TOP NAVIGATION BAR (CLEAR, DISTINCT & THEMED) ================= -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 sm:h-20 gap-4">
+      <div class="flex items-center justify-between h-20 gap-4">
         
-        <!-- School Brand & Identity -->
-        <div class="flex items-center gap-3.5 cursor-pointer" onclick="switchView('dashboard')">
-          <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-blue-700 via-indigo-700 to-slate-900 text-white flex items-center justify-center shadow-md shadow-indigo-500/20">
-            <i class="fa-solid fa-graduation-cap text-xl sm:text-2xl"></i>
+        <!-- Brand Identity -->
+        <div class="flex items-center gap-3.5 cursor-pointer group" onclick="switchView('dashboard')">
+          <div class="relative w-12 h-12 rounded-2xl theme-primary-bg text-white flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition duration-300">
+            <i class="fa-solid fa-graduation-cap text-2xl"></i>
+            <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full"></span>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
-                คลังเอกสารและสื่อการเรียนรู้
+              <span class="text-lg font-bold text-slate-900 tracking-tight group-hover:opacity-80 transition">
+                คลังเอกสารสถานศึกษา
               </span>
-              <span class="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-semibold border border-blue-200">
-                โรงเรียนวัดบางปูน
+              <span class="hidden sm:inline-flex text-[11px] px-2.5 py-0.5 rounded-full theme-badge font-bold shadow-xs">
+                ดิจิทัล ๒๕๖๙
               </span>
             </div>
-            <p class="text-xs text-slate-500 font-normal">ระบบบริหารจัดการเอกสาร ๔ ฝ่าย • ประจำปีการศึกษา ๒๕๖๙</p>
+            <p class="text-xs text-slate-500 font-medium">Smart School Document & Learning Hub (TT001)</p>
           </div>
         </div>
 
-        <!-- Center Nav Items (Desktop) -->
-        <nav class="hidden md:flex items-center gap-1 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/80">
-          <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all text-blue-700 bg-white shadow-xs">
-            <i class="fa-solid fa-house mr-1.5"></i> หน้าแรก
+        <!-- Center Menu Tabs -->
+        <nav id="desktop-navbar" class="hidden md:flex items-center gap-1.5 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/90 shadow-inner">
+          <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 bg-white theme-primary-text shadow-sm">
+            <i class="fa-solid fa-house-chimney text-sm"></i>
+            <span>หน้าแรก</span>
           </button>
-          <button onclick="switchView('repository')" id="nav-repository" class="nav-btn px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60">
-            <i class="fa-solid fa-folder-tree mr-1.5"></i> คลังเอกสาร ๔ ฝ่าย
+          <button onclick="switchView('repository')" id="nav-repository" class="nav-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-white/70">
+            <i class="fa-solid fa-folder-tree text-sm"></i>
+            <span>คลังเอกสาร ๔ ฝ่าย</span>
           </button>
-          <button onclick="handleAdminNavClick()" id="nav-admin" class="nav-btn px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60">
-            <i class="fa-solid fa-shield-halved mr-1.5"></i> จัดการระบบ <span id="nav-admin-badge" class="hidden text-[10px] px-1.5 py-0.2 rounded-full bg-amber-500 text-white font-bold ml-1">Admin</span>
+          <button onclick="switchView('admin')" id="nav-admin-tab" class="hidden nav-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 text-amber-900 bg-amber-100 hover:bg-amber-200 border border-amber-300/60 shadow-xs">
+            <i class="fa-solid fa-screwdriver-wrench text-amber-700 text-sm"></i>
+            <span>แผงจัดการแอดมิน</span>
           </button>
         </nav>
 
-        <!-- Right User Actions & Admin Auth Button -->
+        <!-- Right Quick Actions (Theme Switcher, Favorites, Admin) -->
         <div class="flex items-center gap-2 sm:gap-3">
           
-          <!-- Bookmarked Drawer Toggle -->
-          <button onclick="toggleFavoritesModal()" title="เอกสารที่บันทึกไว้" class="relative w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition border border-slate-200/80">
-            <i class="fa-solid fa-bookmark text-sm text-amber-500"></i>
-            <span id="fav-count-badge" class="absolute -top-1 -right-1 bg-amber-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">0</span>
+          <!-- Live Theme Switcher Dropdown Trigger -->
+          <div class="relative">
+            <button onclick="toggleThemeMenu()" id="theme-btn" title="เปลี่ยนโทนสีระบบ" class="px-3 py-2 rounded-2xl bg-slate-100/90 hover:bg-slate-200 text-slate-700 flex items-center gap-2 transition border border-slate-200/80 hover:scale-105 active:scale-95 shadow-xs text-xs font-bold">
+              <i class="fa-solid fa-palette text-sm theme-primary-text"></i>
+              <span class="hidden lg:inline" id="current-theme-label">โทนคราม (Indigo)</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+            </button>
+
+            <!-- Theme Popover Menu -->
+            <div id="theme-menu" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 z-50 animate-fade-in text-xs space-y-1">
+              <div class="px-3 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                เลือกโทนสีที่ต้องการ
+              </div>
+              <button onclick="applyTheme('indigo')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-100 transition text-slate-700 font-semibold">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-indigo-600 shadow-xs"></span>
+                  <span>๑. โทนคราม (Indigo Modern)</span>
+                </div>
+                <i id="theme-check-indigo" class="fa-solid fa-check text-indigo-600 text-xs"></i>
+              </button>
+              <button onclick="applyTheme('emerald')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-100 transition text-slate-700 font-semibold">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-600 shadow-xs"></span>
+                  <span>๒. โทนมรกต (Emerald Green)</span>
+                </div>
+                <i id="theme-check-emerald" class="fa-solid fa-check text-emerald-600 text-xs hidden"></i>
+              </button>
+              <button onclick="applyTheme('amber')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-100 transition text-slate-700 font-semibold">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-amber-600 shadow-xs"></span>
+                  <span>๓. โทนอำพัน (Warm Amber)</span>
+                </div>
+                <i id="theme-check-amber" class="fa-solid fa-check text-amber-600 text-xs hidden"></i>
+              </button>
+              <button onclick="applyTheme('midnight')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-100 transition text-slate-700 font-semibold">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-sky-600 shadow-xs"></span>
+                  <span>๔. โทนฟ้าน้ำทะเล (Cyan Marine)</span>
+                </div>
+                <i id="theme-check-midnight" class="fa-solid fa-check text-sky-600 text-xs hidden"></i>
+              </button>
+              <button onclick="applyTheme('rose')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-100 transition text-slate-700 font-semibold">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-rose-600 shadow-xs"></span>
+                  <span>๕. โทนกุหลาบ (Rose Blossom)</span>
+                </div>
+                <i id="theme-check-rose" class="fa-solid fa-check text-rose-600 text-xs hidden"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bookmarked Drawer Trigger -->
+          <button onclick="toggleFavoritesModal()" title="เอกสารที่บันทึกไว้" class="relative w-11 h-11 rounded-2xl bg-slate-100/80 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition border border-slate-200/80 hover:scale-105 active:scale-95 shadow-xs">
+            <i class="fa-solid fa-bookmark text-base text-amber-500"></i>
+            <span id="fav-count-badge" class="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow-md border-2 border-white">0</span>
           </button>
 
-          <!-- Admin Login / Logout Button -->
-          <div id="admin-auth-container">
-            <!-- Dynamically Rendered: Login Button OR Logged-in Pill -->
-          </div>
+          <!-- Single Admin Entry / Status -->
+          <div id="admin-auth-container"></div>
 
         </div>
       </div>
     </div>
 
-    <!-- Mobile Nav Sub-bar -->
-    <div class="md:hidden flex border-t border-slate-200 bg-white px-2 py-1.5 justify-around text-xs font-medium">
-      <button onclick="switchView('dashboard')" id="m-nav-dashboard" class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-blue-700 bg-blue-50 font-semibold">
+    <!-- Mobile Sub Navigation -->
+    <div class="md:hidden flex border-t border-slate-200/90 bg-white/95 backdrop-blur px-2 py-2 justify-around text-xs font-semibold">
+      <button onclick="switchView('dashboard')" id="m-nav-dashboard" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl theme-primary-light theme-primary-text font-bold">
         <i class="fa-solid fa-house"></i> หน้าแรก
       </button>
-      <button onclick="switchView('repository')" id="m-nav-repository" class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-slate-600">
+      <button onclick="switchView('repository')" id="m-nav-repository" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-slate-600">
         <i class="fa-solid fa-folder-open"></i> คลังเอกสาร
       </button>
-      <button onclick="handleAdminNavClick()" id="m-nav-admin" class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-slate-600">
-        <i class="fa-solid fa-shield-halved"></i> แอดมิน
+      <button onclick="handleMobileAdminClick()" id="m-nav-admin" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-slate-600">
+        <i class="fa-solid fa-shield-halved"></i> <span id="m-nav-admin-text">แอดมิน</span>
       </button>
     </div>
   </header>
 
   <!-- ================= NOTIFICATION TOAST CONTAINER ================= -->
-  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
 
   <!-- ================= MAIN CONTENT AREA ================= -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 
-    <!-- ADMIN LOGGED IN ALERT BANNER (Only shows when Admin is verified) -->
-    <div id="admin-active-banner" class="hidden mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50 border border-amber-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-sm shadow-xs animate-fade-in">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-          <i class="fa-solid fa-lock-open text-base"></i>
+    <!-- ADMIN ACTIVE BAR -->
+    <div id="admin-active-banner" class="hidden mb-8 p-5 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl border border-slate-700 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 animate-fade-in relative overflow-hidden">
+      <div class="flex items-center gap-3.5 z-10">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-400/30 flex items-center justify-center text-xl shrink-0 shadow-inner">
+          <i class="fa-solid fa-user-shield"></i>
         </div>
         <div>
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-slate-900">เข้าสู่ระบบในสิทธิ์: ผู้ดูแลระบบ (Administrator)</span>
-            <span class="text-[10px] px-2 py-0.2 rounded-full bg-amber-200 text-amber-900 font-bold">ยืนยันตัวตนแล้ว</span>
+          <div class="flex items-center gap-2.5">
+            <span class="font-bold text-base text-white">คุณกำลังใช้งานใน: โหมดผู้ดูแลระบบ (Admin Control Mode)</span>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">เข้าสู่ระบบแล้ว</span>
           </div>
-          <p class="text-xs text-slate-600">คุณสามารถอัปโหลดไฟล์ด้วย Drag & Drop, แก้ไขข้อมูล, ปรับเปลี่ยนหมวดหมู่ และลบเอกสารได้</p>
+          <p class="text-xs text-slate-300 mt-0.5">มีสิทธิ์เต็มในการอัปโหลดไฟล์ด้วย Drag & Drop, แก้ไขข้อมูล, ลบเอกสาร และเปลี่ยนรหัสผ่าน</p>
         </div>
       </div>
-      <div class="flex items-center gap-2 self-end sm:self-auto">
-        <button onclick="openUploadModal()" class="text-xs px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-medium shadow-xs transition flex items-center gap-1.5">
-          <i class="fa-solid fa-cloud-arrow-up"></i> อัปโหลดไฟล์
+
+      <div class="flex flex-wrap items-center gap-2.5 self-end md:self-auto z-10">
+        <button onclick="switchView('admin')" id="admin-banner-panel-btn" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-xl text-xs font-bold shadow-md shadow-amber-500/20 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-screwdriver-wrench"></i> แผงจัดการแอดมิน
         </button>
-        <button onclick="adminLogout()" class="text-xs px-3 py-1.5 bg-white hover:bg-slate-100 border border-slate-300 rounded-xl font-medium text-slate-700 shadow-xs transition flex items-center gap-1">
-          <i class="fa-solid fa-right-from-bracket text-red-500"></i> ออกจากระบบ
+        <button onclick="switchView('dashboard')" id="admin-banner-view-btn" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-medium border border-white/10 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-eye"></i> ดูมุมมองคุณครู
+        </button>
+        <button onclick="openChangePasswordModal()" class="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-medium border border-white/10 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-key text-amber-400"></i> เปลี่ยนรหัสผ่าน
+        </button>
+        <button onclick="adminLogout()" class="px-3.5 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-xl text-xs font-medium border border-red-500/30 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ
         </button>
       </div>
     </div>
 
-    <!-- ================= VIEW 1: DASHBOARD (หน้าแรก & กระดานสรุป) ================= -->
-    <section id="view-dashboard" class="space-y-8 animate-fade-in">
+    <!-- ================= VIEW 1: DASHBOARD ================= -->
+    <section id="view-dashboard" class="space-y-10 animate-fade-in">
       
-      <!-- Modern Hero Search Banner -->
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 text-white p-6 sm:p-10 shadow-xl border border-slate-800">
-        <div class="absolute -right-8 -bottom-8 opacity-10 text-white text-[180px] pointer-events-none">
-          <i class="fa-solid fa-book-bookmark"></i>
-        </div>
+      <!-- Modern Dynamic Themed Hero Banner -->
+      <div class="relative overflow-hidden rounded-[32px] theme-hero-bg text-white p-7 sm:p-12 shadow-2xl border border-white/10 bg-grid-pattern transition-all duration-500">
         
         <div class="relative z-10 max-w-3xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-semibold text-blue-200 mb-4">
-            <i class="fa-solid fa-circle-check text-emerald-400"></i> ศูนย์รวมเอกสารและสื่อการสอน โรงเรียนวัดบางปูน ๒๕๖๙
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-white/90 mb-5 shadow-inner">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>ศูนย์รวมเอกสารและสื่อการสอนสถานศึกษา ประจำปีการศึกษา ๒๕๖๙</span>
           </div>
-          <h1 class="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-3">
-            สืบค้นและดาวน์โหลดเอกสารสถานศึกษา
+
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight mb-4">
+            สืบค้นและดาวน์โหลด <br class="hidden sm:inline"/>
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-white/80">
+              เอกสารและสื่อนวัตกรรมดิจิทัล
+            </span>
           </h1>
-          <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 font-normal">
-            เข้าถึงหลักสูตร แผนการจัดการเรียนรู้ สื่อการสอน คำสั่งโรงเรียน และแบบฟอร์มราชการ ๔ ฝ่ายบริหาร เพื่อความสะดวกรวดเร็วในการปฏิบัติงานของครูและบุคลากร
+
+          <p class="text-slate-200 text-sm sm:text-base leading-relaxed mb-8 font-normal max-w-2xl">
+            เข้าถึงหลักสูตรสถานศึกษา แผนการสอนเชิงรุก Active Learning (รูปแบบ ๔ คิด, STEM) คำสั่ง ประกาศ และแบบฟอร์มราชการ ๔ ฝ่ายบริหาร เพื่อความสะดวกรวดเร็วในการจัดการศึกษา
           </p>
 
-          <!-- Unified Search Bar -->
-          <div class="bg-white p-2 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-stretch gap-2 text-slate-800">
-            <div class="flex-1 flex items-center px-3.5 gap-3">
-              <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
-              <input id="hero-search-input" type="text" placeholder="พิมพ์ชื่อเอกสาร เช่น แผน 4 คิด, แบบฟอร์มลา, ป.4, สังคมศึกษา..." 
-                     class="w-full bg-transparent border-none outline-none text-sm text-slate-800 placeholder-slate-400 py-2.5">
+          <!-- Interactive Search Input Bar -->
+          <div class="bg-white/95 backdrop-blur-lg p-2.5 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-stretch gap-2.5 border border-white/40">
+            <div class="flex-1 flex items-center px-4 gap-3.5">
+              <i class="fa-solid fa-magnifying-glass theme-primary-text text-lg"></i>
+              <input id="hero-search-input" type="text" placeholder="พิมพ์ชื่อเอกสาร เช่น แผน 4 คิด, แบบฟอร์มลา, สังคมศึกษา, ป.4, สภานักเรียน..." 
+                     class="w-full bg-transparent border-none outline-none text-sm text-slate-800 placeholder-slate-400 py-3 font-medium">
             </div>
-            <button onclick="executeHeroSearch()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-md">
+            <button onclick="executeHeroSearch()" class="px-8 py-3.5 theme-primary-bg theme-primary-bg-hover active:scale-98 text-white rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 shadow-lg">
               <span>ค้นหาเอกสาร</span>
               <i class="fa-solid fa-arrow-right text-xs"></i>
             </button>
           </div>
 
-          <!-- Quick Discovery Tags -->
-          <div class="mt-4 flex flex-wrap items-center gap-1.5 text-xs text-slate-300">
-            <span class="text-slate-400"><i class="fa-solid fa-tags mr-1"></i> คำค้นยอดนิยม:</span>
-            <button onclick="filterByTag('รูปแบบ 4 คิด')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-blue-200 border border-white/10">#รูปแบบ 4 คิด</button>
-            <button onclick="filterByTag('Active Learning')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-blue-200 border border-white/10">#Active Learning</button>
-            <button onclick="filterByTag('แบบฟอร์มลา')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-blue-200 border border-white/10">#แบบฟอร์มลา</button>
-            <button onclick="filterByTag('คุรุชนคนคุณธรรม')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-blue-200 border border-white/10">#คุรุชนคนคุณธรรม</button>
-            <button onclick="filterByTag('จัดซื้อจัดจ้าง')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition text-blue-200 border border-white/10">#จัดซื้อจัดจ้าง</button>
+          <!-- Quick Discovery Tag Pills -->
+          <div class="mt-5 flex flex-wrap items-center gap-2 text-xs">
+            <span class="text-slate-300 font-medium"><i class="fa-solid fa-fire text-amber-400 mr-1"></i> คำค้นยอดนิยม:</span>
+            <button onclick="filterByTag('รูปแบบ 4 คิด')" class="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 transition text-white border border-white/10 backdrop-blur font-medium">#รูปแบบ 4 คิด</button>
+            <button onclick="filterByTag('Active Learning')" class="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 transition text-white border border-white/10 backdrop-blur font-medium">#Active Learning</button>
+            <button onclick="filterByTag('แบบฟอร์มลา')" class="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 transition text-white border border-white/10 backdrop-blur font-medium">#แบบฟอร์มลา</button>
+            <button onclick="filterByTag('คุรุชนคนคุณธรรม')" class="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 transition text-white border border-white/10 backdrop-blur font-medium">#คุรุชนคนคุณธรรม</button>
+            <button onclick="filterByTag('จัดซื้อจัดจ้าง')" class="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 transition text-white border border-white/10 backdrop-blur font-medium">#จัดซื้อจัดจ้าง</button>
           </div>
         </div>
       </div>
 
-      <!-- Quick Metrics Grid -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        
-        <div onclick="filterByCategory('academic')" class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4 hover:shadow-md hover:border-academic-500 transition cursor-pointer group">
-          <div class="w-12 h-12 rounded-2xl bg-academic-50 text-academic-600 border border-academic-100 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition">
-            <i class="fa-solid fa-book-open"></i>
-          </div>
+      <!-- 4 Administrative Departments: Bento Grid -->
+      <div>
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-6">
           <div>
-            <span class="text-xs text-slate-500 font-medium">๑. งานวิชาการ</span>
-            <h4 id="stat-academic-count" class="text-lg sm:text-xl font-bold text-slate-900">0 รายการ</h4>
+            <div class="text-xs font-bold theme-primary-text uppercase tracking-wider mb-1">Information Architecture</div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">หมวดหมู่เอกสาร ๔ ฝ่ายบริหาร</h2>
           </div>
+          <p class="text-xs sm:text-sm text-slate-500">เลือกฝ่ายบริหารเพื่อเข้าสู่แฟ้มและหมวดหมู่ย่อย</p>
         </div>
 
-        <div onclick="filterByCategory('personnel')" class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4 hover:shadow-md hover:border-personnel-500 transition cursor-pointer group">
-          <div class="w-12 h-12 rounded-2xl bg-personnel-50 text-personnel-600 border border-personnel-100 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition">
-            <i class="fa-solid fa-users"></i>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Category 1: Academic -->
+          <div onclick="filterByCategory('academic')" class="bg-white rounded-3xl p-6 border-2 border-sky-100 hover:border-sky-500 transition-all duration-300 cursor-pointer shadow-xs hover:shadow-card-hover hover:-translate-y-1 group flex flex-col justify-between relative overflow-hidden">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-600 to-blue-400 text-white flex items-center justify-center text-2xl mb-5 shadow-lg shadow-sky-500/25 group-hover:scale-110 transition duration-300">
+                <i class="fa-solid fa-book-open"></i>
+              </div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-slate-900 text-lg group-hover:text-sky-600 transition">๑. หมวดงานวิชาการ</h3>
+                <span id="stat-academic-count" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200">0 รายการ</span>
+              </div>
+              <ul class="text-xs text-slate-500 space-y-2 mb-6">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-sky-500"></i> หลักสูตรสถานศึกษา / เวลาเรียน</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-sky-500"></i> แผน Active Learning (๔ คิด)</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-sky-500"></i> แบบฟอร์มนิเทศการสอนออนไลน์</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-sky-600">
+              <span>เข้าสู่แฟ้มวิชาการ</span>
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-1.5 transition duration-200"></i>
+            </div>
           </div>
-          <div>
-            <span class="text-xs text-slate-500 font-medium">๒. งานบุคลากร</span>
-            <h4 id="stat-personnel-count" class="text-lg sm:text-xl font-bold text-slate-900">0 รายการ</h4>
-          </div>
-        </div>
 
-        <div onclick="filterByCategory('student')" class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4 hover:shadow-md hover:border-student-500 transition cursor-pointer group">
-          <div class="w-12 h-12 rounded-2xl bg-student-50 text-student-600 border border-student-100 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition">
-            <i class="fa-solid fa-children"></i>
+          <!-- Category 2: Personnel -->
+          <div onclick="filterByCategory('personnel')" class="bg-white rounded-3xl p-6 border-2 border-emerald-100 hover:border-emerald-500 transition-all duration-300 cursor-pointer shadow-xs hover:shadow-card-hover hover:-translate-y-1 group flex flex-col justify-between relative overflow-hidden">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 text-white flex items-center justify-center text-2xl mb-5 shadow-lg shadow-emerald-500/25 group-hover:scale-110 transition duration-300">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-slate-900 text-lg group-hover:text-emerald-600 transition">๒. หมวดงานบุคลากร</h3>
+                <span id="stat-personnel-count" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">0 รายการ</span>
+              </div>
+              <ul class="text-xs text-slate-500 space-y-2 mb-6">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-500"></i> คำสั่งสถานศึกษา / ประกาศระเบียบ</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-500"></i> แบบฟอร์มขออนุญาตลา / ราชการ</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-500"></i> ขอรับรางวัล คุรุชนคนคุณธรรม</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-600">
+              <span>เข้าสู่แฟ้มบุคลากร</span>
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-1.5 transition duration-200"></i>
+            </div>
           </div>
-          <div>
-            <span class="text-xs text-slate-500 font-medium">๓. กิจการนักเรียน</span>
-            <h4 id="stat-student-count" class="text-lg sm:text-xl font-bold text-slate-900">0 รายการ</h4>
-          </div>
-        </div>
 
-        <div onclick="filterByCategory('budget')" class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4 hover:shadow-md hover:border-budget-500 transition cursor-pointer group">
-          <div class="w-12 h-12 rounded-2xl bg-budget-50 text-budget-600 border border-budget-100 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition">
-            <i class="fa-solid fa-file-invoice-dollar"></i>
+          <!-- Category 3: Student Affairs -->
+          <div onclick="filterByCategory('student')" class="bg-white rounded-3xl p-6 border-2 border-purple-100 hover:border-purple-500 transition-all duration-300 cursor-pointer shadow-xs hover:shadow-card-hover hover:-translate-y-1 group flex flex-col justify-between relative overflow-hidden">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-400 text-white flex items-center justify-center text-2xl mb-5 shadow-lg shadow-purple-500/25 group-hover:scale-110 transition duration-300">
+                <i class="fa-solid fa-children"></i>
+              </div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-slate-900 text-lg group-hover:text-purple-600 transition">๓. กิจการนักเรียน</h3>
+                <span id="stat-student-count" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">0 รายการ</span>
+              </div>
+              <ul class="text-xs text-slate-500 space-y-2 mb-6">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-purple-500"></i> คู่มือสภานักเรียน / ความปลอดภัย</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-purple-500"></i> รายงานโครงการโรงเรียนคุณธรรม</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-purple-500"></i> กิจกรรมพัฒนาผู้เรียน / แนะแนว</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-purple-600">
+              <span>เข้าสู่แฟ้มกิจการนักเรียน</span>
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-1.5 transition duration-200"></i>
+            </div>
           </div>
-          <div>
-            <span class="text-xs text-slate-500 font-medium">๔. งบประมาณ/พัสดุ</span>
-            <h4 id="stat-budget-count" class="text-lg sm:text-xl font-bold text-slate-900">0 รายการ</h4>
-          </div>
-        </div>
 
+          <!-- Category 4: Budget & Finance -->
+          <div onclick="filterByCategory('budget')" class="bg-white rounded-3xl p-6 border-2 border-amber-100 hover:border-amber-500 transition-all duration-300 cursor-pointer shadow-xs hover:shadow-card-hover hover:-translate-y-1 group flex flex-col justify-between relative overflow-hidden">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-600 to-orange-400 text-white flex items-center justify-center text-2xl mb-5 shadow-lg shadow-amber-500/25 group-hover:scale-110 transition duration-300">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+              </div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-slate-900 text-lg group-hover:text-amber-600 transition">๔. งบประมาณ/พัสดุ</h3>
+                <span id="stat-budget-count" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">0 รายการ</span>
+              </div>
+              <ul class="text-xs text-slate-500 space-y-2 mb-6">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-amber-500"></i> ขออนุมัติจัดซื้อจัดจ้างพัสดุ/สื่อ</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-amber-500"></i> รายงานการใช้งบประมาณรายไตรมาส</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-amber-500"></i> ทะเบียนคุมพัสดุและครุภัณฑ์</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-amber-600">
+              <span>เข้าสู่แฟ้มงบประมาณ</span>
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-1.5 transition duration-200"></i>
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      <!-- Quick Shortcuts to Frequent Daily Forms -->
-      <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-7 shadow-lg border border-slate-800">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-          <div>
-            <h3 class="text-lg font-bold flex items-center gap-2">
-              <i class="fa-solid fa-bolt text-amber-400"></i> ทางลัดแบบฟอร์มประจำวัน (Quick Access)
-            </h3>
-            <p class="text-xs text-slate-300">เข้าถึงแบบฟอร์มขออนุญาตและเอกสารสำคัญที่ต้องใช้บ่อยในคลิกเดียว</p>
+      <!-- Quick Daily Forms Grid -->
+      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-700">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold">แบบฟอร์มที่ต้องใช้บ่อย (Quick Forms Access)</h3>
+              <p class="text-xs text-slate-300">คลิกเพื่อดูตัวอย่างและดาวน์โหลดแบบฟอร์มราชการได้ทันที</p>
+            </div>
           </div>
-          <span class="text-xs px-3 py-1 bg-white/10 rounded-full text-slate-300 self-start sm:self-auto border border-white/10">
+          <span class="text-xs px-3.5 py-1 bg-white/10 rounded-full text-white border border-white/10 self-start sm:self-auto font-medium">
             ประจำปีการศึกษา ๒๕๖๙
           </span>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <button onclick="quickOpenDoc('DOC-005')" class="p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition flex flex-col justify-between group">
-            <div class="flex items-center justify-between mb-2">
-              <span class="w-8 h-8 rounded-xl bg-personnel-500 text-white flex items-center justify-center text-sm shadow">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <button onclick="quickOpenDoc('DOC-005')" class="p-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition duration-200 flex flex-col justify-between group hover:border-white/30">
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-sm shadow">
                 <i class="fa-solid fa-file-signature"></i>
               </span>
               <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition"></i>
             </div>
-            <span class="text-xs font-semibold text-slate-100 line-clamp-1">แบบฟอร์มขอลาป่วย-ลากิจ</span>
-            <span class="text-[10px] text-slate-300">งานบุคลากร • PDF</span>
+            <span class="text-xs font-bold text-slate-100 line-clamp-1">ใบลาป่วย-ลากิจส่วนตัว</span>
+            <span class="text-[10px] text-slate-300 mt-1">งานบุคลากร • PDF</span>
           </button>
 
-          <button onclick="quickOpenDoc('DOC-006')" class="p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition flex flex-col justify-between group">
-            <div class="flex items-center justify-between mb-2">
-              <span class="w-8 h-8 rounded-xl bg-personnel-500 text-white flex items-center justify-center text-sm shadow">
+          <button onclick="quickOpenDoc('DOC-006')" class="p-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition duration-200 flex flex-col justify-between group hover:border-white/30">
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-sm shadow">
                 <i class="fa-solid fa-car-side"></i>
               </span>
               <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition"></i>
             </div>
-            <span class="text-xs font-semibold text-slate-100 line-clamp-1">ขออนุมัติไปราชการ</span>
-            <span class="text-[10px] text-slate-300">งานบุคลากร • DOCX</span>
+            <span class="text-xs font-bold text-slate-100 line-clamp-1">ขออนุมัติไปราชการ</span>
+            <span class="text-[10px] text-slate-300 mt-1">งานบุคลากร • DOCX</span>
           </button>
 
-          <button onclick="quickOpenDoc('DOC-002')" class="p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition flex flex-col justify-between group">
-            <div class="flex items-center justify-between mb-2">
-              <span class="w-8 h-8 rounded-xl bg-academic-500 text-white flex items-center justify-center text-sm shadow">
+          <button onclick="quickOpenDoc('DOC-002')" class="p-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition duration-200 flex flex-col justify-between group hover:border-white/30">
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-9 h-9 rounded-xl bg-sky-500 text-white flex items-center justify-center text-sm shadow">
                 <i class="fa-solid fa-book-bookmark"></i>
               </span>
               <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition"></i>
             </div>
-            <span class="text-xs font-semibold text-slate-100 line-clamp-1">แผนการสอน ๔ คิด (ป.๔)</span>
-            <span class="text-[10px] text-slate-300">งานวิชาการ • สังคมศึกษา</span>
+            <span class="text-xs font-bold text-slate-100 line-clamp-1">แผนการสอน ๔ คิด (ป.๔)</span>
+            <span class="text-[10px] text-slate-300 mt-1">งานวิชาการ • สังคมศึกษา</span>
           </button>
 
-          <button onclick="quickOpenDoc('DOC-013')" class="p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition flex flex-col justify-between group">
-            <div class="flex items-center justify-between mb-2">
-              <span class="w-8 h-8 rounded-xl bg-budget-500 text-white flex items-center justify-center text-sm shadow">
+          <button onclick="quickOpenDoc('DOC-013')" class="p-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-left transition duration-200 flex flex-col justify-between group hover:border-white/30">
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center text-sm shadow">
                 <i class="fa-solid fa-cart-shopping"></i>
               </span>
               <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition"></i>
             </div>
-            <span class="text-xs font-semibold text-slate-100 line-clamp-1">ขออนุมัติจัดซื้อจัดจ้าง</span>
-            <span class="text-[10px] text-slate-300">งานงบประมาณ • แบบฟอร์ม</span>
+            <span class="text-xs font-bold text-slate-100 line-clamp-1">ขออนุมัติจัดซื้อจัดจ้าง</span>
+            <span class="text-[10px] text-slate-300 mt-1">งานงบประมาณ • แบบฟอร์ม</span>
           </button>
         </div>
       </div>
 
-      <!-- Section: Most Downloaded & Latest Uploads (2 Columns) -->
+      <!-- Popular & Latest Split Section -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         <!-- Popular Downloads -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs flex flex-col">
-          <div class="flex items-center justify-between mb-5">
-            <div class="flex items-center gap-2.5">
-              <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
-                <i class="fa-solid fa-fire text-base"></i>
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-xs flex flex-col">
+          <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200/60 flex items-center justify-center text-lg font-bold shadow-xs">
+                <i class="fa-solid fa-fire"></i>
               </div>
               <div>
-                <h3 class="font-bold text-slate-800">เอกสารยอดนิยม / ดาวน์โหลดบ่อย</h3>
-                <p class="text-xs text-slate-500">เอกสารที่มีการนำไปใช้งานสูงสุดในระบบ</p>
+                <h3 class="font-bold text-slate-900 text-base">เอกสารยอดนิยม (Most Downloaded)</h3>
+                <p class="text-xs text-slate-500">เอกสารที่มีการนำไปใช้งานสูงสุดในสถานศึกษา</p>
               </div>
             </div>
-            <button onclick="showAllWithSort('downloads')" class="text-xs font-semibold text-blue-600 hover:text-blue-700">ดูทั้งหมด <i class="fa-solid fa-arrow-right ml-1"></i></button>
+            <button onclick="showAllWithSort('downloads')" class="text-xs font-bold theme-primary-text flex items-center gap-1 transition">
+              <span>ดูทั้งหมด</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
           </div>
 
           <div id="popular-docs-list" class="space-y-3 flex-1"></div>
         </div>
 
         <!-- Latest Uploads -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs flex flex-col">
-          <div class="flex items-center justify-between mb-5">
-            <div class="flex items-center gap-2.5">
-              <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
-                <i class="fa-solid fa-clock-rotate-left text-base"></i>
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-xs flex flex-col">
+          <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200/60 flex items-center justify-center text-lg font-bold shadow-xs">
+                <i class="fa-solid fa-clock-rotate-left"></i>
               </div>
               <div>
-                <h3 class="font-bold text-slate-800">เอกสารอัปโหลดล่าสุด</h3>
-                <p class="text-xs text-slate-500">เอกสารและสื่อที่เพิ่มเข้ามาใหม่ล่าสุด</p>
+                <h3 class="font-bold text-slate-900 text-base">เอกสารอัปเดตล่าสุด (New Arrivals)</h3>
+                <p class="text-xs text-slate-500">เอกสารและสื่อการสอนที่เพิ่มเข้ามาใหม่ล่าสุด</p>
               </div>
             </div>
-            <button onclick="showAllWithSort('latest')" class="text-xs font-semibold text-blue-600 hover:text-blue-700">ดูทั้งหมด <i class="fa-solid fa-arrow-right ml-1"></i></button>
+            <button onclick="showAllWithSort('latest')" class="text-xs font-bold theme-primary-text flex items-center gap-1 transition">
+              <span>ดูทั้งหมด</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
           </div>
 
           <div id="latest-docs-list" class="space-y-3 flex-1"></div>
         </div>
 
-      </div>
-
-      <!-- Categories Explorer Cards -->
-      <div>
-        <div class="flex items-center justify-between mb-5">
-          <div>
-            <h3 class="text-xl font-bold text-slate-900">โครงสร้างการจัดเก็บข้อมูล ๔ ฝ่ายบริหาร</h3>
-            <p class="text-xs sm:text-sm text-slate-500">เลือกฝ่ายบริหารเพื่อเข้าสู่แฟ้มเอกสารและหมวดหมู่ย่อย</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          
-          <!-- Category 1 -->
-          <div onclick="filterByCategory('academic')" class="bg-white rounded-3xl p-6 border-2 border-academic-100 hover:border-academic-500 transition-all cursor-pointer shadow-xs hover:shadow-lg group flex flex-col justify-between">
-            <div>
-              <div class="w-12 h-12 rounded-2xl bg-academic-50 text-academic-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition duration-300">
-                <i class="fa-solid fa-book-open"></i>
-              </div>
-              <h4 class="font-bold text-slate-900 text-base mb-2 group-hover:text-academic-600 transition">หมวดงานวิชาการ</h4>
-              <ul class="text-xs text-slate-500 space-y-1.5 mb-4">
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-academic-500"></i> หลักสูตรสถานศึกษา / เวลาเรียน</li>
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-academic-500"></i> แผน Active Learning (๔ คิด)</li>
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-academic-500"></i> แบบฟอร์มนิเทศการสอนออนไลน์</li>
-              </ul>
-            </div>
-            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-academic-600">
-              <span>เข้าสู่แฟ้มวิชาการ</span>
-              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
-            </div>
-          </div>
-
-          <!-- Category 2 -->
-          <div onclick="filterByCategory('personnel')" class="bg-white rounded-3xl p-6 border-2 border-personnel-100 hover:border-personnel-500 transition-all cursor-pointer shadow-xs hover:shadow-lg group flex flex-col justify-between">
-            <div>
-              <div class="w-12 h-12 rounded-2xl bg-personnel-50 text-personnel-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition duration-300">
-                <i class="fa-solid fa-users"></i>
-              </div>
-              <h4 class="font-bold text-slate-900 text-base mb-2 group-hover:text-personnel-600 transition">หมวดงานบุคลากรและบริหารทั่วไป</h4>
-              <ul class="text-xs text-slate-500 space-y-1.5 mb-4">
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-personnel-500"></i> คำสั่งโรงเรียน / ประกาศ / ระเบียบ</li>
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-personnel-500"></i> แบบฟอร์มขออนุญาตลา / ราชการ</li>
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-personnel-500"></i> ขอรับรางวัล คุรุชนคนคุณธรรม</li>
-              </ul>
-            </div>
-            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-personnel-600">
-              <span>เข้าสู่แฟ้มบุคลากร</span>
-              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
-            </div>
-          </div>
-
-          <!-- Category 3 -->
-          <div onclick="filterByCategory('student')" class="bg-white rounded-3xl p-6 border-2 border-student-100 hover:border-student-500 transition-all cursor-pointer shadow-xs hover:shadow-lg group flex flex-col justify-between">
-            <div>
-              <div class="w-12 h-12 rounded-2xl bg-student-50 text-student-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition duration-300">
-                <i class="fa-solid fa-children"></i>
-              </div>
-              <h4 class="font-bold text-slate-900 text-base mb-2 group-hover:text-student-600 transition">หมวดงานกิจการนักเรียน</h4>
-              <ul class="text-xs text-slate-500 space-y-1.5 mb-4">
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-student-500"></i> คู่มือสภานักเรียน / ความปลอดภัย</li>
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-student-500"></i> เอกสารโครงการโรงเรียนคุณธรรม</li>
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-student-500"></i> กิจกรรมพัฒนาผู้เรียน / แนะแนว</li>
-              </ul>
-            </div>
-            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-student-600">
-              <span>เข้าสู่แฟ้มกิจการนักเรียน</span>
-              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
-            </div>
-          </div>
-
-          <!-- Category 4 -->
-          <div onclick="filterByCategory('budget')" class="bg-white rounded-3xl p-6 border-2 border-budget-100 hover:border-budget-500 transition-all cursor-pointer shadow-xs hover:shadow-lg group flex flex-col justify-between">
-            <div>
-              <div class="w-12 h-12 rounded-2xl bg-budget-50 text-budget-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition duration-300">
-                <i class="fa-solid fa-file-invoice-dollar"></i>
-              </div>
-              <h4 class="font-bold text-slate-900 text-base mb-2 group-hover:text-budget-600 transition">หมวดงานงบประมาณและพัสดุ</h4>
-              <ul class="text-xs text-slate-500 space-y-1.5 mb-4">
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-budget-500"></i> แบบขออนุมัติจัดซื้อจัดจ้างพัสดุ</li>
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-budget-500"></i> รายงานการใช้งบประมาณรายไตรมาส</li>
-                <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-budget-500"></i> ทะเบียนคุมพัสดุและครุภัณฑ์</li>
-              </ul>
-            </div>
-            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-budget-600">
-              <span>เข้าสู่แฟ้มงบประมาณ</span>
-              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
-            </div>
-          </div>
-
-        </div>
       </div>
 
     </section>
@@ -488,100 +567,101 @@
     <section id="view-repository" class="space-y-6 hidden animate-fade-in">
       
       <!-- Repository Header & Search Controls -->
-      <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-5">
         
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
-              <i class="fa-solid fa-folder-open text-blue-600"></i> คลังเอกสารและสื่อการเรียนรู้ ๔ ฝ่าย
+            <div class="text-xs font-bold theme-primary-text uppercase tracking-wider mb-1">Smart Document Repository</div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2.5">
+              <i class="fa-solid fa-folder-open theme-primary-text"></i> คลังเอกสารและสื่อการเรียนรู้ ๔ ฝ่าย
             </h2>
-            <p class="text-xs sm:text-sm text-slate-500">สืบค้นเอกสาร พร้อมตัวกรองหมวดหมู่และระบบดูตัวอย่าง (Preview) ได้ทันที</p>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">สืบค้นเอกสาร กรองหมวดหมู่ย่อย และเปิดดูตัวอย่าง (Preview) ได้ทันที</p>
           </div>
 
-          <!-- Total Results Counter & View Switcher -->
+          <!-- Total Counter & Layout Switcher -->
           <div class="flex items-center gap-3 self-end md:self-auto">
-            <span id="repo-results-count" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 border border-slate-200">
+            <span id="repo-results-count" class="text-xs font-bold px-3.5 py-2 rounded-xl theme-badge shadow-xs">
               พบ 0 รายการ
             </span>
-            <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
-              <button onclick="setViewLayout('grid')" id="layout-btn-grid" class="p-1.5 rounded-lg bg-white shadow-xs text-blue-700 font-semibold" title="แสดงแบบการ์ด">
-                <i class="fa-solid fa-grip"></i>
+            <div class="flex items-center bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs shadow-inner">
+              <button onclick="setViewLayout('grid')" id="layout-btn-grid" class="px-2.5 py-1.5 rounded-lg bg-white shadow-xs theme-primary-text font-bold transition" title="แสดงแบบการ์ด">
+                <i class="fa-solid fa-grip mr-1"></i> การ์ด
               </button>
-              <button onclick="setViewLayout('list')" id="layout-btn-list" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900" title="แสดงแบบตารางรายการ">
-                <i class="fa-solid fa-list"></i>
+              <button onclick="setViewLayout('list')" id="layout-btn-list" class="px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 font-medium transition" title="แสดงแบบตาราง">
+                <i class="fa-solid fa-list mr-1"></i> รายการ
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Main Search Input -->
+        <!-- Main Live Search Bar -->
         <div class="relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 theme-primary-text text-base"></i>
           <input id="main-search-input" type="text" oninput="handleSearchChange()" placeholder="ค้นหาด้วยคีย์เวิร์ด ชื่อเอกสาร คำอธิบาย หรือ Tag (เช่น สังคมศึกษา, ๔ คิด, ลาป่วย, จัดซื้อ)..." 
-                 class="w-full pl-11 pr-24 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
-          <button onclick="clearSearch()" id="clear-search-btn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-xs px-2.5 py-1 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg transition font-medium">
+                 class="w-full pl-12 pr-28 py-3.5 bg-slate-50/80 border border-slate-200/90 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition shadow-inner">
+          <button onclick="clearSearch()" id="clear-search-btn" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-xs px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl transition font-semibold">
             <i class="fa-solid fa-xmark mr-1"></i> ล้างคำค้น
           </button>
         </div>
 
-        <!-- Category Tabs -->
+        <!-- 4-Category Filter Tabs -->
         <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
-          <button onclick="setCategoryFilter('all')" class="cat-filter-btn active whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-blue-600 text-white shadow-xs" data-cat="all">
+          <button onclick="setCategoryFilter('all')" class="cat-filter-btn active whitespace-nowrap px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all theme-primary-bg text-white shadow-md" data-cat="all">
             <i class="fa-solid fa-layer-group mr-1.5"></i> ทุกหมวดหมู่ (ทั้งหมด)
           </button>
-          <button onclick="setCategoryFilter('academic')" class="cat-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-cat="academic">
-            <i class="fa-solid fa-book-open mr-1.5 text-academic-600"></i> ๑. งานวิชาการ
+          <button onclick="setCategoryFilter('academic')" class="cat-filter-btn whitespace-nowrap px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-100 hover:bg-sky-50 text-slate-600 hover:text-sky-700" data-cat="academic">
+            <i class="fa-solid fa-book-open mr-1.5 text-sky-600"></i> ๑. งานวิชาการ
           </button>
-          <button onclick="setCategoryFilter('personnel')" class="cat-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-cat="personnel">
-            <i class="fa-solid fa-users mr-1.5 text-personnel-600"></i> ๒. บุคลากร & ทั่วไป
+          <button onclick="setCategoryFilter('personnel')" class="cat-filter-btn whitespace-nowrap px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-100 hover:bg-emerald-50 text-slate-600 hover:text-emerald-700" data-cat="personnel">
+            <i class="fa-solid fa-users mr-1.5 text-emerald-600"></i> ๒. บุคลากร & ทั่วไป
           </button>
-          <button onclick="setCategoryFilter('student')" class="cat-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-cat="student">
-            <i class="fa-solid fa-children mr-1.5 text-student-600"></i> ๓. กิจการนักเรียน
+          <button onclick="setCategoryFilter('student')" class="cat-filter-btn whitespace-nowrap px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-100 hover:bg-purple-50 text-slate-600 hover:text-purple-700" data-cat="student">
+            <i class="fa-solid fa-children mr-1.5 text-purple-600"></i> ๓. กิจการนักเรียน
           </button>
-          <button onclick="setCategoryFilter('budget')" class="cat-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-cat="budget">
-            <i class="fa-solid fa-file-invoice-dollar mr-1.5 text-budget-600"></i> ๔. งบประมาณ & พัสดุ
+          <button onclick="setCategoryFilter('budget')" class="cat-filter-btn whitespace-nowrap px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-100 hover:bg-amber-50 text-slate-600 hover:text-amber-700" data-cat="budget">
+            <i class="fa-solid fa-file-invoice-dollar mr-1.5 text-amber-600"></i> ๔. งบประมาณ & พัสดุ
           </button>
         </div>
 
-        <!-- Secondary Filters Row -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100 text-xs">
+        <!-- Filter Sub-options Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-4 border-t border-slate-100 text-xs">
           <div>
-            <label class="block text-slate-500 font-medium mb-1">หมวดหมู่ย่อย:</label>
-            <select id="filter-subcategory" onchange="handleSearchChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-medium text-slate-700 focus:outline-none focus:border-blue-500">
+            <label class="block text-slate-500 font-bold mb-1.5">หมวดหมู่ย่อยในฝ่าย:</label>
+            <select id="filter-subcategory" onchange="handleSearchChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-700 focus:outline-none focus:border-indigo-500">
               <option value="all">ทุกหมวดหมู่ย่อย</option>
             </select>
           </div>
 
           <div>
-            <label class="block text-slate-500 font-medium mb-1">ประเภทไฟล์:</label>
-            <select id="filter-filetype" onchange="handleSearchChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-medium text-slate-700 focus:outline-none focus:border-blue-500">
-              <option value="all">ทุกประเภทไฟล์ (All)</option>
+            <label class="block text-slate-500 font-bold mb-1.5">ประเภทไฟล์:</label>
+            <select id="filter-filetype" onchange="handleSearchChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-700 focus:outline-none focus:border-indigo-500">
+              <option value="all">ทุกประเภทไฟล์ (All Formats)</option>
               <option value="PDF">PDF Documents (.pdf)</option>
-              <option value="DOCX">Word Documents (.docx)</option>
-              <option value="XLSX">Excel Sheets (.xlsx)</option>
-              <option value="PPTX">PowerPoint (.pptx)</option>
-              <option value="CANVA">Canva Links</option>
+              <option value="DOCX">Microsoft Word (.docx)</option>
+              <option value="XLSX">Microsoft Excel (.xlsx)</option>
+              <option value="PPTX">Microsoft PowerPoint (.pptx)</option>
+              <option value="CANVA">Canva Presentation Link</option>
             </select>
           </div>
 
           <div>
-            <label class="block text-slate-500 font-medium mb-1">การจัดเรียง:</label>
-            <select id="filter-sorting" onchange="handleSearchChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-medium text-slate-700 focus:outline-none focus:border-blue-500">
+            <label class="block text-slate-500 font-bold mb-1.5">การจัดเรียงรายการ:</label>
+            <select id="filter-sorting" onchange="handleSearchChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-700 focus:outline-none focus:border-indigo-500">
               <option value="latest">อัปเดตล่าสุด (Newest)</option>
-              <option value="downloads">ดาวน์โหลดสูงสุด (Popular)</option>
+              <option value="downloads">ดาวน์โหลดสูงสุด (Most Popular)</option>
               <option value="views">ยอดเข้าชมสูงสุด (Most Viewed)</option>
               <option value="title_asc">ชื่อ ก - ฮ (A to Z)</option>
             </select>
           </div>
         </div>
 
-        <!-- Tag Cloud Filter Pills -->
-        <div class="pt-3 border-t border-slate-100">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
-              <i class="fa-solid fa-tags text-blue-500"></i> แท็กป้ายกำกับ (คลิกเพื่อกรองข้ามหมวดหมู่):
+        <!-- Tag Cloud Quick Filter -->
+        <div class="pt-4 border-t border-slate-100">
+          <div class="flex items-center justify-between mb-2.5">
+            <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+              <i class="fa-solid fa-tags theme-primary-text"></i> แท็กป้ายกำกับ (คลิกเพื่อกรองข้ามหมวดหมู่):
             </span>
-            <button onclick="clearSelectedTag()" id="clear-tag-btn" class="hidden text-[11px] text-red-500 hover:text-red-700 font-medium">
+            <button onclick="clearSelectedTag()" id="clear-tag-btn" class="hidden text-xs text-red-500 hover:text-red-700 font-bold">
               ล้างแท็กที่เลือก
             </button>
           </div>
@@ -590,46 +670,49 @@
 
       </div>
 
-      <!-- Document Cards Container -->
-      <div id="documents-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      <!-- Documents Dynamic Grid / List -->
+      <div id="documents-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
       <!-- Empty State Indicator -->
       <div id="no-results-box" class="hidden bg-white rounded-3xl p-12 text-center border border-slate-200 shadow-xs">
-        <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-3xl mx-auto mb-4">
+        <div class="w-16 h-16 rounded-full theme-primary-light theme-primary-text flex items-center justify-center text-3xl mx-auto mb-4">
           <i class="fa-solid fa-folder-magnifying-glass"></i>
         </div>
-        <h3 class="text-lg font-bold text-slate-700 mb-1">ไม่พบเอกสารที่ตรงกับเงื่อนไข</h3>
-        <p class="text-xs text-slate-500 max-w-md mx-auto mb-5">ลองเปลี่ยนคำค้นหา ปรับหมวดหมู่ย่อย หรือล้างตัวกรองแท็กเพื่อดูเอกสารอื่นๆ ทั้งหมด</p>
-        <button onclick="resetAllFilters()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow transition">
+        <h3 class="text-lg font-bold text-slate-800 mb-1">ไม่พบเอกสารที่ตรงกับเงื่อนไข</h3>
+        <p class="text-xs text-slate-500 max-w-md mx-auto mb-5 font-normal">ลองเปลี่ยนคำค้นหา ปรับหมวดหมู่ย่อย หรือล้างตัวกรองแท็กเพื่อดูเอกสารอื่นๆ ทั้งหมดในระบบ</p>
+        <button onclick="resetAllFilters()" class="px-6 py-2.5 theme-primary-bg theme-primary-bg-hover text-white rounded-xl text-xs font-bold shadow-md transition">
           <i class="fa-solid fa-rotate-left mr-1.5"></i> ล้างตัวกรองทั้งหมด
         </button>
       </div>
 
     </section>
 
-    <!-- ================= VIEW 3: ADMIN CONTROL PANEL (Locked & Protected) ================= -->
+    <!-- ================= VIEW 3: DEDICATED ADMIN CONTROL CONSOLE ================= -->
     <section id="view-admin" class="space-y-8 hidden animate-fade-in">
       
       <!-- Admin Header Banner -->
-      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-800">
+      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-700">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold mb-3">
-              <i class="fa-solid fa-shield-halved"></i> แผงควบคุมผู้ดูแลระบบ (Admin Console)
+              <i class="fa-solid fa-screwdriver-wrench"></i> แผงควบคุมระบบ (Admin Control Center)
             </div>
-            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">ศูนย์บริหารจัดการคลังเอกสาร</h2>
-            <p class="text-xs sm:text-sm text-slate-300 mt-1">อัปโหลดไฟล์ด้วย Drag & Drop, จัดการหมวดหมู่, แก้ไขรายละเอียด, และจัดการระบบ</p>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">ศูนย์บริหารจัดการและควบคุมระบบ</h2>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1">อัปโหลดไฟล์ด้วย Drag & Drop, แก้ไข/ลบเอกสาร, สถิติระบบ, และเปลี่ยนรหัสผ่าน</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2.5">
-            <button onclick="openUploadModal()" class="px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold shadow-lg transition flex items-center gap-2">
+            <button onclick="openUploadModal()" class="px-5 py-2.5 theme-primary-bg theme-primary-bg-hover text-white rounded-xl text-xs sm:text-sm font-bold shadow-md transition flex items-center gap-2">
               <i class="fa-solid fa-cloud-arrow-up text-base"></i> อัปโหลดเอกสารใหม่
             </button>
-            <button onclick="exportDataJSON()" class="px-4 py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-sm font-medium border border-white/10 transition flex items-center gap-2">
-              <i class="fa-solid fa-file-export"></i> ส่งออกข้อมูล
+            <button onclick="switchView('dashboard')" class="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs sm:text-sm font-medium border border-white/10 transition flex items-center gap-2">
+              <i class="fa-solid fa-eye"></i> ดูหน้าเว็บแบบครู
             </button>
-            <button onclick="adminLogout()" class="px-4 py-3 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-xl text-sm font-medium border border-red-500/30 transition flex items-center gap-2">
-              <i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ
+            <button onclick="openChangePasswordModal()" class="px-4 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 rounded-xl text-xs sm:text-sm font-medium border border-amber-400/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-key"></i> เปลี่ยนรหัสผ่าน
+            </button>
+            <button onclick="exportDataJSON()" class="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs sm:text-sm font-medium border border-white/10 transition flex items-center gap-2">
+              <i class="fa-solid fa-file-export"></i> สำรองข้อมูล
             </button>
           </div>
         </div>
@@ -637,10 +720,10 @@
 
       <!-- Drag & Drop Quick Drop Zone -->
       <div id="dropzone-area" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)"
-           class="border-2 border-dashed border-slate-300 hover:border-blue-500 rounded-3xl p-8 sm:p-10 bg-white hover:bg-blue-50/40 text-center transition-all cursor-pointer shadow-xs group">
+           class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-3xl p-8 sm:p-12 bg-white hover:bg-indigo-50/40 text-center transition-all cursor-pointer shadow-xs group">
         <input type="file" id="admin-file-picker" onchange="handleFileSelected(event)" class="hidden" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png">
         <div onclick="document.getElementById('admin-file-picker').click()">
-          <div class="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-3xl mx-auto mb-4 group-hover:scale-110 transition duration-300 shadow-xs">
+          <div class="w-16 h-16 rounded-2xl theme-primary-light theme-primary-text flex items-center justify-center text-3xl mx-auto mb-4 group-hover:scale-110 transition duration-300 shadow-xs">
             <i class="fa-solid fa-cloud-arrow-up"></i>
           </div>
           <h3 class="text-base sm:text-lg font-bold text-slate-900 mb-1">ลากไฟล์เอกสารมาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</h3>
@@ -652,7 +735,7 @@
       </div>
 
       <!-- Admin Documents Management Table -->
-      <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+      <div class="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-xs space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h3 class="font-bold text-slate-900 text-lg">รายการเอกสารทั้งหมดในระบบ</h3>
@@ -661,20 +744,20 @@
           
           <div class="flex items-center gap-2">
             <input id="admin-table-search" type="text" oninput="renderAdminTable()" placeholder="ค้นหาในตารางแอดมิน..."
-                   class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-blue-500">
+                   class="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-700 focus:outline-none focus:border-indigo-500">
           </div>
         </div>
 
         <div class="overflow-x-auto rounded-2xl border border-slate-200 custom-scrollbar">
           <table class="w-full text-left text-xs text-slate-700">
-            <thead class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
+            <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
               <tr>
-                <th class="p-3.5">รหัส / ประเภท</th>
-                <th class="p-3.5">ชื่อเอกสาร / คำอธิบาย</th>
-                <th class="p-3.5">ฝ่ายบริหารงาน</th>
-                <th class="p-3.5">แท็กป้ายกำกับ</th>
-                <th class="p-3.5 text-center">สถิติ (วิว/โหลด)</th>
-                <th class="p-3.5 text-center">จัดการ</th>
+                <th class="p-4">รหัส / ประเภท</th>
+                <th class="p-4">ชื่อเอกสาร / คำอธิบาย</th>
+                <th class="p-4">ฝ่ายบริหารงาน</th>
+                <th class="p-4">แท็กป้ายกำกับ</th>
+                <th class="p-4 text-center">สถิติ (วิว/โหลด)</th>
+                <th class="p-4 text-center">จัดการ</th>
               </tr>
             </thead>
             <tbody id="admin-table-body" class="divide-y divide-slate-100"></tbody>
@@ -687,25 +770,27 @@
   </main>
 
   <!-- ================= FOOTER ================= -->
-  <footer class="bg-white border-t border-slate-200 mt-auto py-6 text-center text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="flex items-center gap-2">
-        <span class="font-semibold text-slate-800">ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัล (TT001)</span>
+  <footer class="bg-white border-t border-slate-200 mt-auto py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <div class="w-6 h-6 rounded-lg theme-primary-bg text-white flex items-center justify-center text-xs font-bold">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="font-bold text-slate-800">ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัลสถานศึกษา (TT001)</span>
         <span>•</span>
-        <span>โรงเรียนวัดบางปูน</span>
+        <span>เพื่อการพัฒนาการศึกษา</span>
       </div>
-      <div>
+      <div class="text-slate-400">
         พัฒนาสื่อการเรียนรู้ ๒๕๖๙ • โครงสร้าง ๔ ฝ่ายบริหารสถานศึกษา
       </div>
     </div>
   </footer>
 
-  <!-- ================= MODAL: ADMIN LOGIN AUTHENTICATION (ความปลอดภัยสูง) ================= -->
+  <!-- ================= MODAL: ADMIN LOGIN ================= -->
   <div id="admin-login-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4 animate-fade-in">
     <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
       
-      <!-- Modal Header -->
-      <div class="p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white text-center relative">
+      <div class="p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white text-center relative">
         <button onclick="closeAdminLoginModal()" class="absolute right-4 top-4 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
           <i class="fa-solid fa-xmark text-sm"></i>
         </button>
@@ -713,10 +798,9 @@
           <i class="fa-solid fa-shield-halved"></i>
         </div>
         <h3 class="font-bold text-lg text-white">เข้าสู่ระบบผู้ดูแล (Admin Security)</h3>
-        <p class="text-xs text-slate-300 mt-1">พื้นที่สงวนสิทธิ์เฉพาะผู้ดูแลระบบโรงเรียนวัดบางปูนเท่านั้น</p>
+        <p class="text-xs text-slate-300 mt-1">พื้นที่สงวนสิทธิ์เฉพาะผู้ดูแลระบบสถานศึกษาเท่านั้น</p>
       </div>
 
-      <!-- Modal Body -->
       <form id="admin-login-form" onsubmit="handleAdminLogin(event)" class="p-6 space-y-4 text-xs sm:text-sm">
         
         <div>
@@ -724,9 +808,9 @@
           <div class="relative">
             <i class="fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
             <input id="admin-password-input" type="password" required placeholder="กรอกรหัสผ่านผู้ดูแล..." autofocus
-                   class="w-full pl-10 pr-10 py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition">
-            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
-              <i id="eye-icon" class="fa-solid fa-eye text-xs"></i>
+                   class="w-full pl-10 pr-10 py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+            <button type="button" onclick="togglePasswordVisibility('admin-password-input', 'eye-icon-login')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+              <i id="eye-icon-login" class="fa-solid fa-eye text-xs"></i>
             </button>
           </div>
           <p id="admin-login-error" class="hidden text-xs text-red-600 font-semibold mt-1.5 flex items-center gap-1">
@@ -734,19 +818,18 @@
           </p>
         </div>
 
-        <div class="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs">
-          <p class="font-semibold flex items-center gap-1.5">
-            <i class="fa-solid fa-circle-info"></i> รหัสผ่านเริ่มต้นสำหรับผู้ดูแลระบบ:
+        <div class="p-3.5 rounded-xl theme-primary-light text-slate-800 border border-slate-200 text-xs">
+          <p class="font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-info theme-primary-text"></i> รหัสผ่านเริ่มต้น: <span class="font-mono font-bold theme-primary-text bg-white px-2 py-0.5 rounded border border-slate-200">admin1234</span>
           </p>
-          <p class="mt-1 text-slate-600 font-mono">รหัสผ่าน: <span class="bg-white px-2 py-0.5 rounded font-bold text-blue-700 border border-blue-200">admin1234</span> หรือ <span class="bg-white px-2 py-0.5 rounded font-bold text-blue-700 border border-blue-200">2569</span></p>
+          <p class="text-[11px] text-slate-500 mt-1">ผู้ดูแลระบบสามารถเปลี่ยนรหัสผ่านใหม่ได้ตลอดเวลาในหน้าจัดการแอดมิน</p>
         </div>
 
-        <!-- Submit Buttons -->
         <div class="pt-2 flex items-center justify-end gap-2.5">
           <button type="button" onclick="closeAdminLoginModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition text-xs">
             ยกเลิก
           </button>
-          <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md transition flex items-center gap-2 text-xs">
+          <button type="submit" class="px-6 py-2.5 rounded-xl theme-primary-bg theme-primary-bg-hover text-white font-bold shadow-md transition flex items-center gap-2 text-xs">
             <i class="fa-solid fa-lock-open"></i> ยืนยันเข้าสู่ระบบ
           </button>
         </div>
@@ -756,14 +839,90 @@
     </div>
   </div>
 
+  <!-- ================= MODAL: CHANGE ADMIN PASSWORD ================= -->
+  <div id="change-password-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4 animate-fade-in">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+      
+      <div class="p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-400/30 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-key"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-base">เปลี่ยนรหัสผ่านผู้ดูแลระบบ</h3>
+            <p class="text-xs text-slate-300">กำหนดรหัสผ่านใหม่สำหรับเข้าใช้งานโหมด Admin</p>
+          </div>
+        </div>
+        <button onclick="closeChangePasswordModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <form id="change-password-form" onsubmit="handleChangeAdminPassword(event)" class="p-6 space-y-4 text-xs sm:text-sm">
+        
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">รหัสผ่านปัจจุบัน <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <input id="pwd-current" type="password" required placeholder="กรอกรหัสผ่านเดิม..."
+                   class="w-full pl-3.5 pr-10 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 font-medium focus:outline-none focus:border-indigo-600">
+            <button type="button" onclick="togglePasswordVisibility('pwd-current', 'eye-icon-curr')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+              <i id="eye-icon-curr" class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">รหัสผ่านใหม่ (อย่างน้อย ๔ ตัวอักษร) <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <input id="pwd-new" type="password" required minlength="4" placeholder="ตั้งรหัสผ่านใหม่..."
+                   class="w-full pl-3.5 pr-10 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 font-medium focus:outline-none focus:border-indigo-600">
+            <button type="button" onclick="togglePasswordVisibility('pwd-new', 'eye-icon-new')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+              <i id="eye-icon-new" class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">ยืนยันรหัสผ่านใหม่อีกครั้ง <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <input id="pwd-confirm" type="password" required minlength="4" placeholder="กรอกรหัสผ่านใหม่อีกครั้ง..."
+                   class="w-full pl-3.5 pr-10 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 font-medium focus:outline-none focus:border-indigo-600">
+            <button type="button" onclick="togglePasswordVisibility('pwd-confirm', 'eye-icon-conf')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+              <i id="eye-icon-conf" class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <p id="pwd-change-error" class="hidden text-xs text-red-600 font-semibold flex items-center gap-1">
+          <i class="fa-solid fa-circle-exclamation"></i> <span id="pwd-change-error-text">ข้อผิดพลาด</span>
+        </p>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+          <button type="button" onclick="resetToDefaultPassword()" class="text-xs text-slate-400 hover:text-slate-600 font-medium underline">
+            กู้คืนรหัสผ่านเริ่มต้น
+          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeChangePasswordModal()" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition text-xs">
+              ยกเลิก
+            </button>
+            <button type="submit" class="px-5 py-2 rounded-xl theme-primary-bg theme-primary-bg-hover text-white font-bold shadow-md transition flex items-center gap-1.5 text-xs">
+              <i class="fa-solid fa-floppy-disk"></i> บันทึกรหัสผ่าน
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
   <!-- ================= MODAL: DOCUMENT PREVIEW ================= -->
-  <div id="preview-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4 animate-fade-in">
+  <div id="preview-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4 animate-fade-in">
     <div class="bg-white w-full max-w-5xl h-[92vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
       
-      <!-- Modal Header -->
-      <div class="p-4 sm:p-5 bg-slate-900 text-white flex items-center justify-between gap-3 shrink-0">
+      <div class="p-4 sm:p-5 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-between gap-3 shrink-0">
         <div class="flex items-center gap-3 overflow-hidden">
-          <div id="preview-type-icon" class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center text-lg shrink-0">
+          <div id="preview-type-icon" class="w-10 h-10 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center text-lg shrink-0">
             <i class="fa-solid fa-file-lines"></i>
           </div>
           <div class="overflow-hidden">
@@ -777,7 +936,6 @@
           </div>
         </div>
 
-        <!-- Viewer Controls -->
         <div class="flex items-center gap-1.5 shrink-0">
           <button onclick="adjustPreviewZoom(-10)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200 flex items-center justify-center transition" title="ย่อ">
             <i class="fa-solid fa-magnifying-glass-minus text-xs"></i>
@@ -792,7 +950,7 @@
           <button onclick="copyPreviewShareLink()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200 flex items-center justify-center transition" title="คัดลอกลิงก์">
             <i class="fa-solid fa-link text-xs"></i>
           </button>
-          <button onclick="downloadCurrentPreviewDoc()" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow transition">
+          <button onclick="downloadCurrentPreviewDoc()" class="px-4 py-1.5 theme-primary-bg theme-primary-bg-hover text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow transition">
             <i class="fa-solid fa-download"></i> <span class="hidden sm:inline">ดาวน์โหลด</span>
           </button>
           <button onclick="closePreviewModal()" class="w-8 h-8 rounded-lg bg-red-500/20 hover:bg-red-500 text-red-300 hover:text-white flex items-center justify-center transition ml-2" title="ปิดหน้าต่าง">
@@ -801,11 +959,9 @@
         </div>
       </div>
 
-      <!-- Preview Body -->
       <div class="flex-1 bg-slate-200/90 overflow-y-auto p-4 sm:p-8 flex justify-center custom-scrollbar">
         <div id="preview-page-container" class="transition-transform origin-top duration-150 w-full max-w-3xl">
           
-          <!-- Authentic Thai Official Document Layout -->
           <div id="printArea" class="bg-white shadow-2xl rounded-xl p-8 sm:p-14 sarabun-text min-h-[900px] border border-slate-300 text-slate-900 relative">
             
             <div class="text-center mb-8">
@@ -813,33 +969,30 @@
                 <i class="fa-solid fa-landmark"></i>
               </div>
               <h2 class="text-xl sm:text-2xl font-bold tracking-wide text-slate-900">
-                โรงเรียนวัดบางปูน
+                เอกสารทางการศึกษา
               </h2>
               <p class="text-sm text-slate-600">
-                สำนักงานเขตพื้นที่การศึกษาประถมศึกษา • กระทรวงศึกษาธิการ
+                สำนักงานเขตพื้นที่การศึกษา • กระทรวงศึกษาธิการ
               </p>
               <div class="w-24 h-0.5 bg-slate-800 mx-auto mt-3"></div>
             </div>
 
-            <!-- Meta Title Box -->
-            <div class="bg-slate-50 border-l-4 border-blue-600 p-4 rounded-r-xl mb-6">
+            <div class="bg-slate-50 border-l-4 border-slate-800 p-4 rounded-r-xl mb-6">
               <h3 id="preview-paper-title" class="font-bold text-base text-slate-900">หัวข้อเอกสาร</h3>
               <p id="preview-paper-desc" class="text-sm text-slate-600 mt-1">คำอธิบายและวัตถุประสงค์การใช้งานเอกสาร</p>
             </div>
 
-            <!-- Main Content Simulated Body -->
             <div id="preview-paper-content" class="space-y-4 text-sm sm:text-base leading-relaxed text-justify text-slate-800"></div>
 
-            <!-- Signatures Section -->
             <div class="mt-14 pt-8 border-t border-slate-200 grid grid-cols-2 gap-8 text-center text-xs sm:text-sm">
               <div>
                 <p class="text-slate-400 mb-10">(ลงชื่อ).......................................................</p>
                 <p class="font-bold text-slate-800">ครูผู้รับผิดชอบ / ผู้จัดทำ</p>
-                <p class="text-slate-500">โรงเรียนวัดบางปูน</p>
+                <p class="text-slate-500">สถานศึกษา</p>
               </div>
               <div>
                 <p class="text-slate-400 mb-10">(ลงชื่อ).......................................................</p>
-                <p class="font-bold text-slate-800">ผู้อำนวยการโรงเรียนวัดบางปูน</p>
+                <p class="font-bold text-slate-800">ผู้อำนวยการสถานศึกษา</p>
                 <p class="text-slate-500">ผู้บริหารสถานศึกษา</p>
               </div>
             </div>
@@ -849,11 +1002,10 @@
         </div>
       </div>
 
-      <!-- Preview Footer -->
       <div class="p-3 bg-slate-100 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
         <div class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>โหมดดูตัวอย่างออนไลน์ (Instant Viewer) ไม่จำเป็นต้องบันทึกลงเครื่อง</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>โหมดดูตัวอย่างออนไลน์ (Instant Viewer) สะดวกรวดเร็ว ไม่เปลืองพื้นที่เครื่อง</span>
         </div>
         <div id="preview-tags-bar" class="flex gap-1 overflow-x-auto"></div>
       </div>
@@ -862,13 +1014,12 @@
   </div>
 
   <!-- ================= MODAL: UPLOAD & EDIT DOCUMENT ================= -->
-  <div id="upload-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 animate-fade-in">
+  <div id="upload-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 animate-fade-in">
     <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden border border-slate-200 max-h-[95vh] flex flex-col">
       
-      <!-- Modal Header -->
-      <div class="p-5 bg-gradient-to-r from-slate-900 to-indigo-900 text-white flex items-center justify-between">
+      <div class="p-5 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-300 flex items-center justify-center text-lg">
+          <div class="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center text-lg">
             <i class="fa-solid fa-file-circle-plus"></i>
           </div>
           <div>
@@ -881,23 +1032,20 @@
         </button>
       </div>
 
-      <!-- Form Body -->
       <form id="doc-upload-form" onsubmit="handleSaveDocument(event)" class="p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs sm:text-sm">
         
         <input type="hidden" id="edit-doc-id" value="">
 
-        <!-- Title -->
         <div>
           <label class="block font-bold text-slate-700 mb-1">ชื่อเอกสาร / สื่อการเรียนรู้ <span class="text-red-500">*</span></label>
           <input id="form-doc-title" required type="text" placeholder="เช่น แผนการจัดการเรียนรู้ Active Learning สังคมศึกษา ป.๔"
-                 class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-blue-500">
+                 class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-indigo-500">
         </div>
 
-        <!-- Category & Subcategory Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">หมวดฝ่ายบริหารงาน ๔ ฝ่าย <span class="text-red-500">*</span></label>
-            <select id="form-doc-category" onchange="updateFormSubcategories()" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-blue-500">
+            <select id="form-doc-category" onchange="updateFormSubcategories()" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-indigo-500">
               <option value="academic">๑. หมวดงานวิชาการ</option>
               <option value="personnel">๒. หมวดงานบุคลากรและบริหารทั่วไป</option>
               <option value="student">๓. หมวดงานกิจการนักเรียน</option>
@@ -907,16 +1055,15 @@
 
           <div>
             <label class="block font-bold text-slate-700 mb-1">หมวดหมู่ย่อย <span class="text-red-500">*</span></label>
-            <select id="form-doc-subcategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-blue-500">
+            <select id="form-doc-subcategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-indigo-500">
             </select>
           </div>
         </div>
 
-        <!-- File Type & File Size -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">ประเภทไฟล์ <span class="text-red-500">*</span></label>
-            <select id="form-doc-type" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-blue-500">
+            <select id="form-doc-type" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-indigo-500">
               <option value="PDF">PDF Document (.pdf)</option>
               <option value="DOCX">Microsoft Word (.docx)</option>
               <option value="XLSX">Microsoft Excel (.xlsx)</option>
@@ -928,30 +1075,27 @@
           <div>
             <label class="block font-bold text-slate-700 mb-1">ขนาดไฟล์โดยประมาณ</label>
             <input id="form-doc-size" type="text" placeholder="เช่น 2.4 MB หรือ 15 หน้า" value="1.8 MB"
-                   class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-blue-500">
+                   class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-indigo-500">
           </div>
         </div>
 
-        <!-- Tags Input -->
         <div>
           <label class="block font-bold text-slate-700 mb-1">แท็กป้ายกำกับ (คั่นด้วยจุลภาค เช่น #รูปแบบ4คิด, #ป.4, #สังคมศึกษา)</label>
           <input id="form-doc-tags" type="text" placeholder="รูปแบบ 4 คิด, Active Learning, ป.4, สังคมศึกษา"
-                 class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-blue-500">
+                 class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-indigo-500">
         </div>
 
-        <!-- Description -->
         <div>
           <label class="block font-bold text-slate-700 mb-1">คำอธิบายเอกสารสั้นๆ</label>
           <textarea id="form-doc-desc" rows="3" placeholder="ระบุรายละเอียดสำคัญ วัตถุประสงค์ หรือคำแนะนำในการนำไปปรับใช้..."
-                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-blue-500"></textarea>
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium text-slate-800 focus:outline-none focus:border-indigo-500"></textarea>
         </div>
 
-        <!-- Submit Button -->
         <div class="pt-4 border-t border-slate-200 flex items-center justify-end gap-3">
           <button type="button" onclick="closeUploadModal()" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition">
             ยกเลิก
           </button>
-          <button type="submit" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md transition flex items-center gap-2">
+          <button type="submit" class="px-6 py-2.5 rounded-xl theme-primary-bg theme-primary-bg-hover text-white font-bold shadow-md transition flex items-center gap-2">
             <i class="fa-solid fa-floppy-disk"></i> บันทึกเอกสาร
           </button>
         </div>
@@ -964,7 +1108,7 @@
   <div id="favorites-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-end p-0 animate-fade-in">
     <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col border-l border-slate-200">
       
-      <div class="p-5 bg-slate-900 text-white flex items-center justify-between">
+      <div class="p-5 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-between">
         <div class="flex items-center gap-2.5">
           <i class="fa-solid fa-bookmark text-amber-400 text-lg"></i>
           <h3 class="font-bold text-base">เอกสารที่บันทึกไว้ (Favorites)</h3>
@@ -984,12 +1128,65 @@
 
   <!-- ================= JAVASCRIPT APPLICATION CORE ================= -->
   <script>
-    const MASTER_PASSWORDS = ["admin1234", "2569", "watbangpun2569"];
+    const DEFAULT_MASTER_PASSWORDS = ["admin1234", "2569", "school2569"];
+
+    function getActiveAdminPasswords() {
+      const customPwd = localStorage.getItem('school_admin_custom_passcode');
+      if (customPwd) {
+        return [customPwd, ...DEFAULT_MASTER_PASSWORDS];
+      }
+      return DEFAULT_MASTER_PASSWORDS;
+    }
+
+    const THEME_NAMES = {
+      indigo: "โทนคราม (Indigo Modern)",
+      emerald: "โทนมรกต (Emerald Green)",
+      amber: "โทนอำพัน (Warm Amber)",
+      midnight: "โทนฟ้าน้ำทะเล (Cyan Marine)",
+      rose: "โทนกุหลาบ (Rose Blossom)"
+    };
+
+    function applyTheme(themeKey) {
+      document.documentElement.setAttribute('data-theme', themeKey);
+      localStorage.setItem('school_active_theme', themeKey);
+      
+      const label = document.getElementById('current-theme-label');
+      if (label && THEME_NAMES[themeKey]) {
+        label.innerText = THEME_NAMES[themeKey];
+      }
+
+      ['indigo', 'emerald', 'amber', 'midnight', 'rose'].forEach(k => {
+        const check = document.getElementById(`theme-check-${k}`);
+        if (check) {
+          if (k === themeKey) check.classList.remove('hidden');
+          else check.classList.add('hidden');
+        }
+      });
+
+      const menu = document.getElementById('theme-menu');
+      if (menu) menu.classList.add('hidden');
+      
+      showToast(`เปลี่ยนโทนสีเป็น "${THEME_NAMES[themeKey]}" เรียบร้อยแล้ว`, 'info');
+    }
+
+    function toggleThemeMenu() {
+      const menu = document.getElementById('theme-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Close theme menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const themeBtn = document.getElementById('theme-btn');
+      const themeMenu = document.getElementById('theme-menu');
+      if (themeBtn && themeMenu && !themeBtn.contains(e.target) && !themeMenu.contains(e.target)) {
+        themeMenu.classList.add('hidden');
+      }
+    });
 
     const DEFAULT_DOCUMENTS = [
       {
         id: "DOC-001",
-        title: "หลักสูตรสถานศึกษาโรงเรียนวัดบางปูน พุทธศักราช ๒๕๖๙ (ฉบับปรับปรุง)",
+        title: "หลักสูตรสถานศึกษา พุทธศักราช ๒๕๖๙ (ฉบับปรับปรุง)",
         category: "academic",
         subcategory: "หลักสูตรสถานศึกษา / โครงสร้างเวลาเรียน",
         type: "PDF",
@@ -999,7 +1196,7 @@
         views: 380,
         tags: ["หลักสูตร 2569", "โครงสร้างเวลาเรียน", "วิชาการ", "ทุกระดับชั้น"],
         description: "เอกสารหลักสูตรแกนกลางสถานศึกษา โครงสร้างเวลาเรียน ๘ กลุ่มสาระ และกิจกรรมพัฒนาผู้เรียน ประจำปีการศึกษา ๒๕๖๙",
-        contentSample: "หลักสูตรสถานศึกษาโรงเรียนวัดบางปูน มุ่งพัฒนาผู้เรียนทุกคนให้เป็นมนุษย์ที่มีความสมดุลทั้งด้านร่างกาย ความรู้ คุณธรรม มีจิตสำนึกในความเป็นพลเมืองไทยและเป็นพลโลก ยึดมั่นในการปกครองตามระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข มีทักษะการคิดวิเคราะห์ คิดสร้างสรรค์ และมีทักษะชีวิตตามบริบทชุมชนวัดบางปูน"
+        contentSample: "หลักสูตรสถานศึกษา มุ่งพัฒนาผู้เรียนทุกคนให้เป็นมนุษย์ที่มีความสมดุลทั้งด้านร่างกาย ความรู้ คุณธรรม มีจิตสำนึกในความเป็นพลเมืองไทยและเป็นพลโลก ยึดมั่นในการปกครองตามระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข มีทักษะการคิดวิเคราะห์ คิดสร้างสรรค์ และมีทักษะชีวิตตามบริบทของสถานศึกษา"
       },
       {
         id: "DOC-002",
@@ -1055,7 +1252,7 @@
         views: 890,
         tags: ["แบบฟอร์มลา", "ลากิจ", "ลาป่วย", "งานบุคลากร", "ระเบียบปฏิบัติ"],
         description: "แบบฟอร์มใบลาตามระเบียบสำนักนายกรัฐมนตรีว่าด้วยการลาของข้าราชการ พ.ศ. ๒๕๕๕ พร้อมช่องลงนามมอบหมายงานสอนแทน",
-        contentSample: "บันทึกข้อความ ส่วนราชการ โรงเรียนวัดบางปูน เรื่อง ขอลา (ป่วย / กิจส่วนตัว) เรียน ผู้อำนวยการโรงเรียนวัดบางปูน ด้วยข้าพเจ้า มีความประสงค์ขอลาเนื่องจาก... ข้าพเจ้าได้มอบหมายงานในหน้าที่และมอบหมายให้คุณครู... ปฏิบัติการสอนแทนเป็นที่เรียบร้อยแล้ว"
+        contentSample: "บันทึกข้อความ ส่วนราชการ สถานศึกษา เรื่อง ขอลา (ป่วย / กิจส่วนตัว) เรียน ผู้อำนวยการสถานศึกษา ด้วยข้าพเจ้า มีความประสงค์ขอลาเนื่องจาก... ข้าพเจ้าได้มอบหมายงานในหน้าที่และมอบหมายให้คุณครู... ปฏิบัติการสอนแทนเป็นที่เรียบร้อยแล้ว"
       },
       {
         id: "DOC-006",
@@ -1073,7 +1270,7 @@
       },
       {
         id: "DOC-007",
-        title: "คำสั่งโรงเรียนวัดบางปูน ที่ ๐๑๒/๒๕๖๙ เรื่อง แต่งตั้งคณะกรรมการปฏิบัติหน้าที่เวรยาม",
+        title: "คำสั่งสถานศึกษา ที่ ๐๑๒/๒๕๖๙ เรื่อง แต่งตั้งคณะกรรมการปฏิบัติหน้าที่เวรยาม",
         category: "personnel",
         subcategory: "คำสั่งโรงเรียน / ประกาศ / ระเบียบการ",
         type: "PDF",
@@ -1083,7 +1280,7 @@
         views: 350,
         tags: ["คำสั่ง 2569", "เวรยาม", "งานบุคลากร", "ประกาศ"],
         description: "คำสั่งแต่งตั้งครูเวรประจำวัน เวรกลางวันและเวรกลางคืน เพื่อรักษาความปลอดภัยสถานที่ราชการ ประจำภาคเรียนที่ ๑/๒๕๖๙",
-        contentSample: "คำสั่งโรงเรียนวัดบางปูน ที่ ๐๑๒/๒๕๖๙ เพื่อให้การดูแลรักษาความสงบเรียบร้อยและความปลอดภัยของทรัพย์สินทางราชการดำเนินไปด้วยความเรียบร้อย จึงแต่งตั้งคณะกรรมการปฏิบัติหน้าที่เวรยามประจำวันและผู้ตรวจเวร โดยให้ปฏิบัติหน้าที่อย่างเคร่งครัดตามระเบียบสำนักนายกรัฐมนตรี"
+        contentSample: "คำสั่งสถานศึกษา ที่ ๐๑๒/๒๕๖๙ เพื่อให้การดูแลรักษาความสงบเรียบร้อยและความปลอดภัยของทรัพย์สินทางราชการดำเนินไปด้วยความเรียบร้อย จึงแต่งตั้งคณะกรรมการปฏิบัติหน้าที่เวรยามประจำวันและผู้ตรวจเวร โดยให้ปฏิบัติหน้าที่อย่างเคร่งครัดตามระเบียบสำนักนายกรัฐมนตรี"
       },
       {
         id: "DOC-008",
@@ -1115,7 +1312,7 @@
       },
       {
         id: "DOC-010",
-        title: "คู่มือการดำเนินงานสภานักเรียนและส่งเสริมประชาธิปไตยในโรงเรียนวัดบางปูน",
+        title: "คู่มือการดำเนินงานสภานักเรียนและส่งเสริมประชาธิปไตยในสถานศึกษา",
         category: "student",
         subcategory: "คู่มือการดำเนินงาน (สภานักเรียน, ความปลอดภัย)",
         type: "PDF",
@@ -1125,7 +1322,7 @@
         views: 260,
         tags: ["สภานักเรียน", "ประชาธิปไตย", "กิจการนักเรียน", "คู่มือ"],
         description: "คู่มือขั้นตอนการเลือกตั้งคณะกรรมการสภานักเรียน บทบาทหน้าที่ ธรรมนูญสภานักเรียน และการจัดกิจกรรมจิตอาสาพัฒนาโรงเรียน",
-        contentSample: "คู่มือสภานักเรียนโรงเรียนวัดบางปูน: ส่งเสริมให้นักเรียนได้เรียนรู้การมีส่วนร่วมตามวิถีประชาธิปไตย การเลือกตั้งประธานนักเรียน การประชุมสภานักเรียน การจัดทำโครงการส่งเสริมวินัย และการร่วมมือกับคณะครูในการจัดกิจกรรมหน้าเสาธง"
+        contentSample: "คู่มือสภานักเรียนสถานศึกษา: ส่งเสริมให้นักเรียนได้เรียนรู้การมีส่วนร่วมตามวิถีประชาธิปไตย การเลือกตั้งประธานนักเรียน การประชุมสภานักเรียน การจัดทำโครงการส่งเสริมวินัย และการร่วมมือกับคณะครูในการจัดกิจกรรมหน้าเสาธง"
       },
       {
         id: "DOC-011",
@@ -1153,7 +1350,7 @@
         views: 410,
         tags: ["โรงเรียนคุณธรรม", "คุณธรรมอัตลักษณ์", "กิจการนักเรียน", "รายงานโครงการ"],
         description: "ตารางคุณธรรมอัตลักษณ์ 'ซื่อสัตย์ รับผิดชอบ มีจิตอาสา' และแบบติดตามพฤติกรรมบ่งชี้เชิงบวกของนักเรียนทุกระดับชั้น",
-        contentSample: "รายงานผลการดำเนินโครงการโรงเรียนคุณธรรม สพฐ.: โครงสร้างคุณธรรมอัตลักษณ์ของโรงเรียนวัดบางปูน ประกอบด้วย ๓ คุณธรรมเป้าหมาย ได้แก่ ซื่อสัตย์ รับผิดชอบ และมีจิตอาสา โดยมีพฤติกรรมบ่งชี้เชิงบวกสำหรับนักเรียน ครู และบุคลากรทางการศึกษา พร้อมตารางประเมินผลรายภาคเรียน"
+        contentSample: "รายงานผลการดำเนินโครงการโรงเรียนคุณธรรม สพฐ.: โครงสร้างคุณธรรมอัตลักษณ์ของสถานศึกษา ประกอบด้วย ๓ คุณธรรมเป้าหมาย ได้แก่ ซื่อสัตย์ รับผิดชอบ และมีจิตอาสา โดยมีพฤติกรรมบ่งชี้เชิงบวกสำหรับนักเรียน ครู และบุคลากรทางการศึกษา พร้อมตารางประเมินผลรายภาคเรียน"
       },
       {
         id: "DOC-013",
@@ -1167,7 +1364,7 @@
         views: 680,
         tags: ["จัดซื้อจัดจ้าง", "พัสดุ", "งบประมาณ", "แบบฟอร์ม"],
         description: "บันทึกข้อความขออนุมัติจัดซื้อวัสดุการศึกษา ใบเสนอราคา และใบตรวจรับพัสดุสำหรับครูประจำชั้นและหัวหน้ากลุ่มสาระฯ",
-        contentSample: "บันทึกข้อความ ส่วนราชการ โรงเรียนวัดบางปูน เรื่อง ขออนุมัติจัดซื้อวัสดุการศึกษา/สื่อการเรียนรู้ เรียน ผู้อำนวยการโรงเรียนวัดบางปูน ด้วยกลุ่มสาระการเรียนรู้... มีความจำเป็นต้องจัดซื้อวัสดุการศึกษาเพื่อใช้ในการจัดกิจกรรมการเรียนการสอน จำนวน... รายการ รวมเป็นเงินทั้งสิ้น... บาท"
+        contentSample: "บันทึกข้อความ ส่วนราชการ สถานศึกษา เรื่อง ขออนุมัติจัดซื้อวัสดุการศึกษา/สื่อการเรียนรู้ เรียน ผู้อำนวยการสถานศึกษา ด้วยกลุ่มสาระการเรียนรู้... มีความจำเป็นต้องจัดซื้อวัสดุการศึกษาเพื่อใช้ในการจัดกิจกรรมการเรียนการสอน จำนวน... รายการ รวมเป็นเงินทั้งสิ้น... บาท"
       },
       {
         id: "DOC-014",
@@ -1199,7 +1396,7 @@
       },
       {
         id: "DOC-016",
-        title: "สื่อการสอนสไลด์ Canva / PPT เรื่อง ประวัติศาสตร์อยุธยาและชุมชนบางปูน ป.๕",
+        title: "สื่อการสอนสไลด์ Canva / PPT เรื่อง ประวัติศาสตร์และความเป็นมาของท้องถิ่น ป.๕",
         category: "academic",
         subcategory: "สื่อการสอน / แผนการจัดการเรียนรู้",
         type: "CANVA",
@@ -1207,9 +1404,9 @@
         date: "2026-06-18",
         downloads: 165,
         views: 410,
-        tags: ["Canva", "ประวัติศาสตร์", "ป.5", "สื่อการสอน", "ชุมชนบางปูน"],
-        description: "สื่อการสอนมัลติมีเดียมีภาพเคลื่อนไหวและควิซเกม Kahoot เชื่อมโยงประวัติศาสตร์กรุงศรีอยุธยากับวิถีชีวิตชุมชนวัดบางปูน",
-        contentSample: "สื่อการเรียนรู้เชิงโต้ตอบ Canva: บทเรียนประวัติศาสตร์ท้องถิ่นชุมชนวัดบางปูน สัมพันธ์กับยุคสมัยอยุธยา การค้าขายทางสายน้ำ ศิลปวัฒนธรรมวัดบางปูน และเกมตอบคำถามทดสอบความเข้าใจผ่าน QR Code ท้ายบทเรียน"
+        tags: ["Canva", "ประวัติศาสตร์", "ป.5", "สื่อการสอน", "ท้องถิ่น"],
+        description: "สื่อการสอนมัลติมีเดียมีภาพเคลื่อนไหวและควิซเกม Kahoot เชื่อมโยงประวัติศาสตร์ท้องถิ่นกับวิถีชีวิตชุมชนและศิลปวัฒนธรรม",
+        contentSample: "สื่อการเรียนรู้เชิงโต้ตอบ Canva: บทเรียนประวัติศาสตร์ท้องถิ่น สัมพันธ์กับยุคสมัย การตั้งถิ่นฐาน การค้าขายทางสายน้ำ ศิลปวัฒนธรรมท้องถิ่น และเกมตอบคำถามทดสอบความเข้าใจผ่าน QR Code ท้ายบทเรียน"
       }
     ];
 
@@ -1234,10 +1431,10 @@
       ]
     };
 
-    let isAdminLoggedIn = sessionStorage.getItem('watbangpun_admin_session') === 'true';
+    let isAdminLoggedIn = sessionStorage.getItem('school_admin_session') === 'true';
     let currentView = 'dashboard';
     let documents = [];
-    let favorites = JSON.parse(localStorage.getItem('watbangpun_favs') || '[]');
+    let favorites = JSON.parse(localStorage.getItem('school_favs_v3') || '[]');
     let currentCategoryFilter = 'all';
     let currentSelectedTag = null;
     let currentLayout = 'grid';
@@ -1245,7 +1442,7 @@
     let currentZoom = 100;
 
     function loadDocuments() {
-      const stored = localStorage.getItem('watbangpun_docs_v2');
+      const stored = localStorage.getItem('school_docs_v3');
       if (stored) {
         try {
           documents = JSON.parse(stored);
@@ -1259,15 +1456,18 @@
     }
 
     function saveDocuments() {
-      localStorage.setItem('watbangpun_docs_v2', JSON.stringify(documents));
+      localStorage.setItem('school_docs_v3', JSON.stringify(documents));
     }
 
     function saveFavorites() {
-      localStorage.setItem('watbangpun_favs', JSON.stringify(favorites));
+      localStorage.setItem('school_favs_v3', JSON.stringify(favorites));
       updateFavoritesBadge();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('school_active_theme') || 'indigo';
+      applyTheme(savedTheme);
+
       loadDocuments();
       updateAdminAuthUI();
       updateFavoritesBadge();
@@ -1279,37 +1479,37 @@
     });
 
     /* =========================================================================
-       ADMIN SECURITY & AUTHENTICATION
+       ADMIN SECURITY & AUTHENTICATION (SEPARATED & CLEAR)
        ========================================================================= */
     function updateAdminAuthUI() {
       const authContainer = document.getElementById('admin-auth-container');
       const activeBanner = document.getElementById('admin-active-banner');
-      const adminBadge = document.getElementById('nav-admin-badge');
+      const adminNavTab = document.getElementById('nav-admin-tab');
+      const mNavAdminText = document.getElementById('m-nav-admin-text');
 
       if (isAdminLoggedIn) {
         authContainer.innerHTML = `
-          <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-300 rounded-xl px-3 py-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span class="text-xs font-bold text-amber-900">Admin</span>
-            <button onclick="adminLogout()" title="ออกจากระบบ" class="text-slate-400 hover:text-red-600 transition ml-1">
-              <i class="fa-solid fa-right-from-bracket text-xs"></i>
-            </button>
-          </div>
+          <button onclick="switchView('admin')" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-2xl px-4 py-2.5 text-xs font-bold shadow-md shadow-amber-500/20 transition active:scale-95">
+            <i class="fa-solid fa-user-shield"></i>
+            <span>โหมดแอดมิน</span>
+          </button>
         `;
         activeBanner.classList.remove('hidden');
-        adminBadge.classList.remove('hidden');
+        adminNavTab.classList.remove('hidden');
+        if (mNavAdminText) mNavAdminText.innerText = 'แผงแอดมิน';
       } else {
         authContainer.innerHTML = `
-          <button onclick="openAdminLoginModal()" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center gap-1.5">
-            <i class="fa-solid fa-lock text-amber-400 text-xs"></i> <span class="hidden sm:inline">เข้าสู่ระบบแอดมิน</span>
+          <button onclick="openAdminLoginModal()" class="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-2 hover:shadow-md active:scale-95">
+            <i class="fa-solid fa-lock text-amber-400 text-xs"></i> <span>เข้าสู่ระบบแอดมิน</span>
           </button>
         `;
         activeBanner.classList.add('hidden');
-        adminBadge.classList.add('hidden');
+        adminNavTab.classList.add('hidden');
+        if (mNavAdminText) mNavAdminText.innerText = 'แอดมิน';
       }
     }
 
-    function handleAdminNavClick() {
+    function handleMobileAdminClick() {
       if (isAdminLoggedIn) {
         switchView('admin');
       } else {
@@ -1330,9 +1530,28 @@
       document.getElementById('admin-login-modal').classList.add('hidden');
     }
 
-    function togglePasswordVisibility() {
-      const input = document.getElementById('admin-password-input');
-      const icon = document.getElementById('eye-icon');
+    function openChangePasswordModal() {
+      if (!isAdminLoggedIn) {
+        openAdminLoginModal();
+        return;
+      }
+      document.getElementById('pwd-current').value = '';
+      document.getElementById('pwd-new').value = '';
+      document.getElementById('pwd-confirm').value = '';
+      document.getElementById('pwd-change-error').classList.add('hidden');
+      document.getElementById('change-password-modal').classList.remove('hidden');
+      setTimeout(() => {
+        document.getElementById('pwd-current').focus();
+      }, 100);
+    }
+
+    function closeChangePasswordModal() {
+      document.getElementById('change-password-modal').classList.add('hidden');
+    }
+
+    function togglePasswordVisibility(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
       if (input.type === 'password') {
         input.type = 'text';
         icon.className = 'fa-solid fa-eye-slash text-xs';
@@ -1347,10 +1566,11 @@
       const pwd = document.getElementById('admin-password-input').value.trim();
       const errorMsg = document.getElementById('admin-login-error');
       const formBox = document.querySelector('#admin-login-modal > div');
+      const validPasswords = getActiveAdminPasswords();
 
-      if (MASTER_PASSWORDS.includes(pwd)) {
+      if (validPasswords.includes(pwd)) {
         isAdminLoggedIn = true;
-        sessionStorage.setItem('watbangpun_admin_session', 'true');
+        sessionStorage.setItem('school_admin_session', 'true');
         updateAdminAuthUI();
         closeAdminLoginModal();
         showToast('ยืนยันตัวตนผู้ดูแลระบบสำเร็จ ยินดีต้อนรับ!', 'success');
@@ -1363,14 +1583,60 @@
       }
     }
 
+    function handleChangeAdminPassword(e) {
+      e.preventDefault();
+      const currentPwd = document.getElementById('pwd-current').value.trim();
+      const newPwd = document.getElementById('pwd-new').value.trim();
+      const confirmPwd = document.getElementById('pwd-confirm').value.trim();
+      
+      const errorBox = document.getElementById('pwd-change-error');
+      const errorText = document.getElementById('pwd-change-error-text');
+      const formBox = document.querySelector('#change-password-modal > div');
+      const validPasswords = getActiveAdminPasswords();
+
+      if (!validPasswords.includes(currentPwd)) {
+        errorText.innerText = 'รหัสผ่านปัจจุบันไม่ถูกต้อง';
+        errorBox.classList.remove('hidden');
+        formBox.classList.add('shake-anim');
+        setTimeout(() => formBox.classList.remove('shake-anim'), 500);
+        return;
+      }
+
+      if (newPwd.length < 4) {
+        errorText.innerText = 'รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย ๔ ตัวอักษร';
+        errorBox.classList.remove('hidden');
+        formBox.classList.add('shake-anim');
+        setTimeout(() => formBox.classList.remove('shake-anim'), 500);
+        return;
+      }
+
+      if (newPwd !== confirmPwd) {
+        errorText.innerText = 'รหัสผ่านใหม่และการยืนยันไม่ตรงกัน';
+        errorBox.classList.remove('hidden');
+        formBox.classList.add('shake-anim');
+        setTimeout(() => formBox.classList.remove('shake-anim'), 500);
+        return;
+      }
+
+      localStorage.setItem('school_admin_custom_passcode', newPwd);
+      closeChangePasswordModal();
+      showToast('เปลี่ยนรหัสผ่านผู้ดูแลระบบสำเร็จเรียบร้อยแล้ว!', 'success');
+    }
+
+    function resetToDefaultPassword() {
+      if (confirm('คุณต้องการกู้คืนรหัสผ่านผู้ดูแลระบบกลับเป็นค่าเริ่มต้น (admin1234) หรือไม่?')) {
+        localStorage.removeItem('school_admin_custom_passcode');
+        closeChangePasswordModal();
+        showToast('กู้คืนรหัสผ่านเริ่มต้น (admin1234) สำเร็จ', 'info');
+      }
+    }
+
     function adminLogout() {
       isAdminLoggedIn = false;
-      sessionStorage.removeItem('watbangpun_admin_session');
+      sessionStorage.removeItem('school_admin_session');
       updateAdminAuthUI();
       showToast('ออกจากระบบผู้ดูแลเรียบร้อยแล้ว', 'info');
-      if (currentView === 'admin') {
-        switchView('dashboard');
-      }
+      switchView('dashboard');
       renderRepository();
     }
 
@@ -1388,24 +1654,21 @@
 
       document.getElementById(`view-${viewName}`).classList.remove('hidden');
 
-      ['dashboard', 'repository', 'admin'].forEach(v => {
-        const btn = document.getElementById(`nav-${v}`);
-        const mBtn = document.getElementById(`m-nav-${v}`);
-        if (btn) {
-          if (v === viewName) {
-            btn.className = 'nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all text-blue-700 bg-white shadow-xs';
-          } else {
-            btn.className = 'nav-btn px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60';
-          }
-        }
-        if (mBtn) {
-          if (v === viewName) {
-            mBtn.className = 'flex items-center gap-1 px-3 py-1.5 rounded-lg text-blue-700 bg-blue-50 font-semibold';
-          } else {
-            mBtn.className = 'flex items-center gap-1 px-3 py-1.5 rounded-lg text-slate-600';
-          }
-        }
-      });
+      const navDash = document.getElementById('nav-dashboard');
+      const navRepo = document.getElementById('nav-repository');
+      const navAdmin = document.getElementById('nav-admin-tab');
+
+      if (navDash) navDash.className = viewName === 'dashboard' ? 'nav-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 bg-white theme-primary-text shadow-sm' : 'nav-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-white/70';
+      if (navRepo) navRepo.className = viewName === 'repository' ? 'nav-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 bg-white theme-primary-text shadow-sm' : 'nav-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-white/70';
+      if (navAdmin) navAdmin.className = viewName === 'admin' ? 'nav-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 text-amber-950 bg-amber-200 border border-amber-300 shadow-sm' : 'nav-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 text-amber-900 bg-amber-100 hover:bg-amber-200 border border-amber-300/60 shadow-xs';
+
+      const mDash = document.getElementById('m-nav-dashboard');
+      const mRepo = document.getElementById('m-nav-repository');
+      const mAdmin = document.getElementById('m-nav-admin');
+
+      if (mDash) mDash.className = viewName === 'dashboard' ? 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl theme-primary-light theme-primary-text font-bold' : 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-slate-600';
+      if (mRepo) mRepo.className = viewName === 'repository' ? 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl theme-primary-light theme-primary-text font-bold' : 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-slate-600';
+      if (mAdmin) mAdmin.className = viewName === 'admin' ? 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-amber-800 bg-amber-100 font-bold' : 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-slate-600';
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -1427,26 +1690,26 @@
       const popular = [...documents].sort((a, b) => b.downloads - a.downloads).slice(0, 4);
       const popContainer = document.getElementById('popular-docs-list');
       popContainer.innerHTML = popular.map((doc, idx) => `
-        <div class="p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50/60 border border-slate-200/80 flex items-center justify-between gap-3 transition">
-          <div class="flex items-center gap-3 overflow-hidden">
-            <span class="w-7 h-7 rounded-xl ${idx === 0 ? 'bg-amber-500 text-white' : 'bg-slate-200 text-slate-700'} text-xs font-bold flex items-center justify-center shrink-0">
+        <div class="p-4 rounded-2xl bg-slate-50/80 hover:bg-indigo-50/40 border border-slate-200/80 flex items-center justify-between gap-3.5 transition-all duration-200 group">
+          <div class="flex items-center gap-3.5 overflow-hidden">
+            <span class="w-8 h-8 rounded-xl ${idx === 0 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md shadow-amber-500/20' : 'bg-slate-200 text-slate-700'} text-xs font-extrabold flex items-center justify-center shrink-0">
               ${idx + 1}
             </span>
             <div class="overflow-hidden">
-              <h4 onclick="openPreviewModal('${doc.id}')" class="text-xs sm:text-sm font-bold text-slate-800 hover:text-blue-600 cursor-pointer truncate">
+              <h4 onclick="openPreviewModal('${doc.id}')" class="text-xs sm:text-sm font-bold text-slate-800 hover:opacity-80 cursor-pointer truncate">
                 ${doc.title}
               </h4>
-              <div class="flex items-center gap-2 text-[11px] text-slate-500 mt-0.5">
-                <span class="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600 font-medium">${getCategoryName(doc.category)}</span>
+              <div class="flex items-center gap-2 text-[11px] text-slate-500 mt-1">
+                <span class="px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-600 font-semibold">${getCategoryName(doc.category)}</span>
                 <span><i class="fa-solid fa-download text-slate-400 mr-0.5"></i> ${doc.downloads} ครั้ง</span>
               </div>
             </div>
           </div>
-          <div class="flex items-center gap-1 shrink-0">
-            <button onclick="openPreviewModal('${doc.id}')" class="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs transition" title="ดูตัวอย่าง">
-              <i class="fa-solid fa-eye"></i>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="openPreviewModal('${doc.id}')" class="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs transition shadow-xs" title="ดูตัวอย่าง">
+              <i class="fa-solid fa-eye theme-primary-text"></i>
             </button>
-            <button onclick="handleDownloadDoc('${doc.id}')" class="p-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs transition shadow-xs" title="ดาวน์โหลด">
+            <button onclick="handleDownloadDoc('${doc.id}')" class="p-2 rounded-xl theme-primary-bg theme-primary-bg-hover text-white text-xs transition shadow-sm" title="ดาวน์โหลด">
               <i class="fa-solid fa-download"></i>
             </button>
           </div>
@@ -1456,30 +1719,30 @@
       const latest = [...documents].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
       const latContainer = document.getElementById('latest-docs-list');
       latContainer.innerHTML = latest.map(doc => `
-        <div class="p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50/60 border border-slate-200/80 flex items-center justify-between gap-3 transition">
-          <div class="flex items-center gap-3 overflow-hidden">
-            <div class="w-9 h-9 rounded-xl ${getFileTypeBadgeColor(doc.type)} text-white flex items-center justify-center text-xs font-bold shrink-0">
+        <div class="p-4 rounded-2xl bg-slate-50/80 hover:bg-indigo-50/40 border border-slate-200/80 flex items-center justify-between gap-3.5 transition-all duration-200 group">
+          <div class="flex items-center gap-3.5 overflow-hidden">
+            <div class="w-10 h-10 rounded-2xl ${getFileTypeBadgeColor(doc.type)} text-white flex items-center justify-center text-xs font-extrabold shrink-0 shadow-xs">
               ${doc.type}
             </div>
             <div class="overflow-hidden">
               <div class="flex items-center gap-2">
-                <h4 onclick="openPreviewModal('${doc.id}')" class="text-xs sm:text-sm font-bold text-slate-800 hover:text-blue-600 cursor-pointer truncate">
+                <h4 onclick="openPreviewModal('${doc.id}')" class="text-xs sm:text-sm font-bold text-slate-800 hover:opacity-80 cursor-pointer truncate">
                   ${doc.title}
                 </h4>
-                <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold">ใหม่</span>
+                <span class="text-[10px] px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold">ใหม่</span>
               </div>
-              <div class="flex items-center gap-2 text-[11px] text-slate-500 mt-0.5">
+              <div class="flex items-center gap-2 text-[11px] text-slate-500 mt-1">
                 <span><i class="fa-regular fa-calendar text-slate-400 mr-1"></i>${formatThaiDate(doc.date)}</span>
                 <span>•</span>
                 <span>${doc.size}</span>
               </div>
             </div>
           </div>
-          <div class="flex items-center gap-1 shrink-0">
-            <button onclick="openPreviewModal('${doc.id}')" class="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs transition" title="ดูตัวอย่าง">
-              <i class="fa-solid fa-eye"></i>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="openPreviewModal('${doc.id}')" class="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs transition shadow-xs" title="ดูตัวอย่าง">
+              <i class="fa-solid fa-eye theme-primary-text"></i>
             </button>
-            <button onclick="handleDownloadDoc('${doc.id}')" class="p-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs transition shadow-xs" title="ดาวน์โหลด">
+            <button onclick="handleDownloadDoc('${doc.id}')" class="p-2 rounded-xl theme-primary-bg theme-primary-bg-hover text-white text-xs transition shadow-sm" title="ดาวน์โหลด">
               <i class="fa-solid fa-download"></i>
             </button>
           </div>
@@ -1520,9 +1783,9 @@
       currentCategoryFilter = cat;
       document.querySelectorAll('.cat-filter-btn').forEach(btn => {
         if (btn.dataset.cat === cat) {
-          btn.className = 'cat-filter-btn active whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-blue-600 text-white shadow-xs';
+          btn.className = 'cat-filter-btn active whitespace-nowrap px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all theme-primary-bg text-white shadow-md';
         } else {
-          btn.className = 'cat-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200';
+          btn.className = 'cat-filter-btn whitespace-nowrap px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200';
         }
       });
       populateSubcategoryDropdown(cat);
@@ -1564,7 +1827,7 @@
       container.innerHTML = sortedTags.map(tag => {
         const isSelected = currentSelectedTag === tag;
         return `
-          <button onclick="toggleTagFilter('${tag}')" class="px-2.5 py-1 rounded-lg text-xs font-medium transition ${isSelected ? 'bg-blue-600 text-white shadow-xs' : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200/80'}">
+          <button onclick="toggleTagFilter('${tag}')" class="px-3 py-1 rounded-xl text-xs font-semibold transition ${isSelected ? 'theme-primary-bg text-white shadow-md' : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200/80'}">
             #${tag} <span class="text-[10px] opacity-70">(${tagCounts[tag]})</span>
           </button>
         `;
@@ -1670,11 +1933,11 @@
       const listBtn = document.getElementById('layout-btn-list');
 
       if (layout === 'grid') {
-        gridBtn.className = 'p-1.5 rounded-lg bg-white shadow-xs text-blue-700 font-semibold';
-        listBtn.className = 'p-1.5 rounded-lg text-slate-500 hover:text-slate-900';
+        gridBtn.className = 'px-2.5 py-1.5 rounded-lg bg-white shadow-xs theme-primary-text font-bold transition';
+        listBtn.className = 'px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 font-medium transition';
       } else {
-        listBtn.className = 'p-1.5 rounded-lg bg-white shadow-xs text-blue-700 font-semibold';
-        gridBtn.className = 'p-1.5 rounded-lg text-slate-500 hover:text-slate-900';
+        listBtn.className = 'px-2.5 py-1.5 rounded-lg bg-white shadow-xs theme-primary-text font-bold transition';
+        gridBtn.className = 'px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 font-medium transition';
       }
       handleSearchChange();
     }
@@ -1697,10 +1960,10 @@
       container.classList.remove('hidden');
 
       if (currentLayout === 'grid') {
-        container.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5';
+        container.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
         container.innerHTML = list.map(doc => renderDocCardHTML(doc)).join('');
       } else {
-        container.className = 'flex flex-col gap-3';
+        container.className = 'flex flex-col gap-3.5';
         container.innerHTML = list.map(doc => renderDocListItemHTML(doc)).join('');
       }
     }
@@ -1711,60 +1974,60 @@
       const typeBadge = getFileTypeBadgeColor(doc.type);
 
       return `
-        <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group hover:border-blue-300">
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-xs hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group hover:border-slate-300">
           <div>
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <div class="flex items-center gap-1.5">
+            <div class="flex items-center justify-between gap-2 mb-3.5">
+              <div class="flex items-center gap-2">
                 ${catBadge}
-                <span class="w-7 h-7 rounded-lg ${typeBadge} text-white text-[10px] font-bold flex items-center justify-center">
+                <span class="w-8 h-8 rounded-xl ${typeBadge} text-white text-[11px] font-extrabold flex items-center justify-center shadow-xs">
                   ${doc.type}
                 </span>
               </div>
-              <button onclick="toggleFavorite('${doc.id}')" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-amber-500 transition flex items-center justify-center">
+              <button onclick="toggleFavorite('${doc.id}')" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-amber-500 transition flex items-center justify-center active:scale-95">
                 <i class="fa-solid fa-bookmark ${isFav ? 'text-amber-500' : ''}"></i>
               </button>
             </div>
 
-            <h3 onclick="openPreviewModal('${doc.id}')" class="font-bold text-slate-900 text-sm sm:text-base mb-1.5 hover:text-blue-600 cursor-pointer line-clamp-2 leading-snug">
+            <h3 onclick="openPreviewModal('${doc.id}')" class="font-bold text-slate-900 text-base mb-2 hover:opacity-80 cursor-pointer line-clamp-2 leading-snug">
               ${doc.title}
             </h3>
-            <p class="text-[11px] text-slate-400 font-medium mb-2.5 line-clamp-1">
-              <i class="fa-regular fa-folder mr-1"></i>${doc.subcategory}
+            <p class="text-xs text-slate-400 font-medium mb-3 line-clamp-1 flex items-center gap-1.5">
+              <i class="fa-regular fa-folder text-slate-400"></i> ${doc.subcategory}
             </p>
 
-            <p class="text-xs text-slate-600 line-clamp-2 mb-3.5 leading-relaxed">
+            <p class="text-xs text-slate-600 line-clamp-2 mb-4 leading-relaxed font-normal">
               ${doc.description || 'ไม่มีคำอธิบายเพิ่มเติม'}
             </p>
 
-            <div class="flex flex-wrap gap-1 mb-4">
+            <div class="flex flex-wrap gap-1.5 mb-5">
               ${(doc.tags || []).map(t => `
-                <span onclick="filterByTag('${t}')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-600 hover:text-blue-700 text-[10px] font-medium transition cursor-pointer">
+                <span onclick="filterByTag('${t}')" class="px-2.5 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] font-semibold transition cursor-pointer border border-slate-200/60">
                   #${t}
                 </span>
               `).join('')}
             </div>
           </div>
 
-          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <div class="flex items-center gap-2.5 text-slate-400 text-[11px]">
-              <span><i class="fa-solid fa-download text-slate-400 mr-0.5"></i> ${doc.downloads}</span>
-              <span><i class="fa-solid fa-eye text-slate-400 mr-0.5"></i> ${doc.views}</span>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-3 text-slate-400 text-[11px] font-medium">
+              <span><i class="fa-solid fa-download text-slate-400 mr-1"></i>${doc.downloads}</span>
+              <span><i class="fa-solid fa-eye text-slate-400 mr-1"></i>${doc.views}</span>
               <span>•</span>
               <span>${doc.size}</span>
             </div>
 
-            <div class="flex items-center gap-1.5">
-              <button onclick="openPreviewModal('${doc.id}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-xs transition flex items-center gap-1">
-                <i class="fa-solid fa-eye text-blue-600"></i> ดูตัวอย่าง
+            <div class="flex items-center gap-2">
+              <button onclick="openPreviewModal('${doc.id}')" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition flex items-center gap-1.5">
+                <i class="fa-solid fa-eye theme-primary-text"></i> ดูตัวอย่าง
               </button>
-              <button onclick="handleDownloadDoc('${doc.id}')" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl text-xs transition shadow-xs flex items-center gap-1">
+              <button onclick="handleDownloadDoc('${doc.id}')" class="px-3.5 py-1.5 theme-primary-bg theme-primary-bg-hover text-white font-bold rounded-xl text-xs transition shadow-xs flex items-center gap-1.5 active:scale-95">
                 <i class="fa-solid fa-download"></i> โหลด
               </button>
               ${isAdminLoggedIn ? `
-                <button onclick="openEditModal('${doc.id}')" class="p-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-xs" title="แก้ไข">
+                <button onclick="openEditModal('${doc.id}')" class="p-2 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-xl text-xs" title="แก้ไข">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-                <button onclick="confirmDeleteDoc('${doc.id}')" class="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs" title="ลบ">
+                <button onclick="confirmDeleteDoc('${doc.id}')" class="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs" title="ลบ">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               ` : ''}
@@ -1780,38 +2043,38 @@
       const typeBadge = getFileTypeBadgeColor(doc.type);
 
       return `
-        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div class="flex items-start gap-3.5 overflow-hidden">
-            <div class="w-10 h-10 rounded-xl ${typeBadge} text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+        <div class="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex items-start gap-4 overflow-hidden">
+            <div class="w-12 h-12 rounded-2xl ${typeBadge} text-white text-xs font-extrabold flex items-center justify-center shrink-0 shadow-xs">
               ${doc.type}
             </div>
             <div class="overflow-hidden">
-              <div class="flex items-center gap-2 mb-1">
+              <div class="flex items-center gap-2 mb-1.5">
                 ${catBadge}
-                <span class="text-[11px] text-slate-400 font-medium truncate">${doc.subcategory}</span>
+                <span class="text-xs text-slate-400 font-medium truncate">${doc.subcategory}</span>
               </div>
-              <h3 onclick="openPreviewModal('${doc.id}')" class="font-bold text-slate-900 text-sm hover:text-blue-600 cursor-pointer truncate">
+              <h3 onclick="openPreviewModal('${doc.id}')" class="font-bold text-slate-900 text-base hover:opacity-80 cursor-pointer truncate">
                 ${doc.title}
               </h3>
-              <p class="text-xs text-slate-500 line-clamp-1 mt-0.5">${doc.description}</p>
+              <p class="text-xs text-slate-500 line-clamp-1 mt-1">${doc.description}</p>
             </div>
           </div>
 
-          <div class="flex items-center justify-between md:justify-end gap-3 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-slate-100 text-xs">
+          <div class="flex items-center justify-between md:justify-end gap-3.5 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-slate-100 text-xs">
             <div class="text-right text-[11px] text-slate-400 hidden sm:block">
               <div>${formatThaiDate(doc.date)} • ${doc.size}</div>
               <div>ดาวน์โหลด ${doc.downloads} ครั้ง</div>
             </div>
 
-            <div class="flex items-center gap-1.5">
+            <div class="flex items-center gap-2">
               <button onclick="toggleFavorite('${doc.id}')" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-amber-500 transition">
                 <i class="fa-solid fa-bookmark ${isFav ? 'text-amber-500' : ''}"></i>
               </button>
-              <button onclick="openPreviewModal('${doc.id}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-xs transition">
-                <i class="fa-solid fa-eye text-blue-600 mr-1"></i> ดูตัวอย่าง
+              <button onclick="openPreviewModal('${doc.id}')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition flex items-center gap-1.5">
+                <i class="fa-solid fa-eye theme-primary-text"></i> ดูตัวอย่าง
               </button>
-              <button onclick="handleDownloadDoc('${doc.id}')" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl text-xs transition shadow-xs">
-                <i class="fa-solid fa-download mr-1"></i> โหลด
+              <button onclick="handleDownloadDoc('${doc.id}')" class="px-4 py-2 theme-primary-bg theme-primary-bg-hover text-white font-bold rounded-xl text-xs transition shadow-xs flex items-center gap-1.5 active:scale-95">
+                <i class="fa-solid fa-download"></i> โหลด
               </button>
               ${isAdminLoggedIn ? `
                 <button onclick="openEditModal('${doc.id}')" class="p-2 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-xl text-xs" title="แก้ไข">
@@ -1840,7 +2103,7 @@
       document.getElementById('preview-doc-size').innerText = doc.size;
       document.getElementById('preview-doc-date').innerText = formatThaiDate(doc.date);
       document.getElementById('preview-paper-title').innerText = doc.title;
-      document.getElementById('preview-paper-desc').innerText = doc.description || 'เอกสารราชการโรงเรียนวัดบางปูน';
+      document.getElementById('preview-paper-desc').innerText = doc.description || 'เอกสารทางการศึกษา';
 
       const typeIcon = document.getElementById('preview-type-icon');
       if (doc.type === 'PDF') typeIcon.innerHTML = '<i class="fa-solid fa-file-pdf text-red-400"></i>';
@@ -1858,16 +2121,16 @@
           </div>
         </div>
         <p class="text-indent-8 font-normal leading-relaxed text-slate-800">
-          ${doc.contentSample || doc.description || 'รายละเอียดเนื้อหาของเอกสารฉบับสมบูรณ์ โรงเรียนวัดบางปูน พร้อมสำหรับการนำไปปรับใช้ในการจัดการเรียนรู้หรือการปฏิบัติงานในสถานศึกษา'}
+          ${doc.contentSample || doc.description || 'รายละเอียดเนื้อหาของเอกสารฉบับสมบูรณ์ พร้อมสำหรับการนำไปปรับใช้ในการจัดการเรียนรู้หรือการปฏิบัติงานในสถานศึกษา'}
         </p>
-        <div class="my-6 p-6 rounded-2xl bg-blue-50/50 border border-blue-200/80 space-y-2">
+        <div class="my-6 p-6 rounded-2xl theme-primary-light border border-slate-200 space-y-2">
           <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-            <i class="fa-solid fa-circle-info text-blue-600"></i> สรุปข้อปฏิบัติและคำแนะนำในการนำไปใช้:
+            <i class="fa-solid fa-circle-info theme-primary-text"></i> สรุปข้อปฏิบัติและคำแนะนำในการนำไปใช้:
           </h4>
-          <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+          <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
             <li>ครูผู้สอนสามารถดาวน์โหลดไฟล์ต้นฉบับเพื่อนำไปปรับแก้ไขให้สอดคล้องกับบริบทชั้นเรียน</li>
             <li>การจัดทำแผนบูรณาการรูปแบบ ๔ คิด ให้เน้นการบันทึกผลหลังการสอนตามสภาพจริง</li>
-            <li>หากเป็นแบบฟอร์มขออนุมัติ ให้พิมพ์เอกสารและเสนอผ่านหัวหน้าฝ่ายงานก่อนเสนอผู้อำนวยการ</li>
+            <li>หากเป็นแบบฟอร์มขออนุมัติ ให้พิมพ์เอกสารและเสนอผ่านหัวหน้าฝ่ายงานก่อนเสนอผู้บริหารสถานศึกษา</li>
           </ul>
         </div>
       `;
@@ -1930,7 +2193,7 @@
       renderAdminTable();
 
       const element = document.createElement('a');
-      const fileContent = `=== โรงเรียนวัดบางปูน - ระบบคลังเอกสารและสื่อการเรียนรู้ ===\n\nชื่อเอกสาร: ${doc.title}\nหมวดหมู่: ${getCategoryName(doc.category)}\nหมวดหมู่ย่อย: ${doc.subcategory}\nประเภทไฟล์: ${doc.type}\nวันที่: ${doc.date}\nแท็ก: ${(doc.tags || []).join(', ')}\n\n--- สรุปเนื้อหา ---\n${doc.description}\n\n${doc.contentSample || ''}\n\n(ดาวน์โหลดจากระบบคลังเอกสาร TT001 - โรงเรียนวัดบางปูน)`;
+      const fileContent = `=== ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัลสถานศึกษา ===\n\nชื่อเอกสาร: ${doc.title}\nหมวดหมู่: ${getCategoryName(doc.category)}\nหมวดหมู่ย่อย: ${doc.subcategory}\nประเภทไฟล์: ${doc.type}\nวันที่: ${doc.date}\nแท็ก: ${(doc.tags || []).join(', ')}\n\n--- สรุปเนื้อหา ---\n${doc.description}\n\n${doc.contentSample || ''}\n\n(ดาวน์โหลดจากระบบคลังเอกสารดิจิทัล TT001)`;
       
       const file = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
       element.href = URL.createObjectURL(file);
@@ -1978,7 +2241,7 @@
         container.innerHTML = `
           <div class="text-center py-12 text-slate-400">
             <i class="fa-solid fa-bookmark text-4xl mb-3 opacity-40"></i>
-            <p class="text-xs">ยังไม่มีเอกสารที่บันทึกไว้</p>
+            <p class="text-xs font-semibold">ยังไม่มีเอกสารที่บันทึกไว้</p>
             <p class="text-[11px] text-slate-400 mt-1">กดไอคอนบุ๊กมาร์กที่การ์ดเอกสารเพื่อเก็บไว้อ่านภายหลัง</p>
           </div>
         `;
@@ -1986,18 +2249,18 @@
       }
 
       container.innerHTML = favDocs.map(doc => `
-        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
           <div class="overflow-hidden">
-            <h4 onclick="openPreviewModal('${doc.id}'); toggleFavoritesModal();" class="text-xs font-bold text-slate-800 hover:text-blue-600 cursor-pointer truncate">
+            <h4 onclick="openPreviewModal('${doc.id}'); toggleFavoritesModal();" class="text-xs font-bold text-slate-800 hover:opacity-80 cursor-pointer truncate">
               ${doc.title}
             </h4>
-            <span class="text-[10px] text-slate-500">${getCategoryName(doc.category)} • ${doc.size}</span>
+            <span class="text-[10px] text-slate-500 font-medium">${getCategoryName(doc.category)} • ${doc.size}</span>
           </div>
           <div class="flex items-center gap-1 shrink-0">
-            <button onclick="handleDownloadDoc('${doc.id}')" class="p-1.5 bg-blue-600 text-white rounded-lg text-xs" title="ดาวน์โหลด">
+            <button onclick="handleDownloadDoc('${doc.id}')" class="p-2 theme-primary-bg text-white rounded-xl text-xs" title="ดาวน์โหลด">
               <i class="fa-solid fa-download"></i>
             </button>
-            <button onclick="toggleFavorite('${doc.id}')" class="p-1.5 bg-red-50 text-red-600 rounded-lg text-xs" title="ลบออก">
+            <button onclick="toggleFavorite('${doc.id}')" class="p-2 bg-red-50 text-red-600 rounded-xl text-xs" title="ลบออก">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -2021,38 +2284,38 @@
       });
 
       tbody.innerHTML = filtered.map(doc => `
-        <tr class="hover:bg-slate-50/80 transition">
-          <td class="p-3.5 whitespace-nowrap font-mono text-[11px] text-slate-500">
-            <span class="px-2 py-0.5 rounded bg-slate-100 font-bold text-slate-700">${doc.type}</span>
-            <div class="text-[10px] mt-0.5 text-slate-400">${doc.id}</div>
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-4 whitespace-nowrap font-mono text-[11px] text-slate-500">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 font-bold text-slate-700">${doc.type}</span>
+            <div class="text-[10px] mt-1 text-slate-400">${doc.id}</div>
           </td>
-          <td class="p-3.5 max-w-xs">
-            <div class="font-bold text-slate-800 hover:text-blue-600 cursor-pointer line-clamp-1" onclick="openPreviewModal('${doc.id}')">
+          <td class="p-4 max-w-xs">
+            <div class="font-bold text-slate-800 hover:opacity-80 cursor-pointer line-clamp-1 text-xs sm:text-sm" onclick="openPreviewModal('${doc.id}')">
               ${doc.title}
             </div>
-            <div class="text-[11px] text-slate-400 line-clamp-1">${doc.description || 'ไม่มีคำอธิบาย'}</div>
+            <div class="text-[11px] text-slate-400 line-clamp-1 mt-0.5">${doc.description || 'ไม่มีคำอธิบาย'}</div>
           </td>
-          <td class="p-3.5 whitespace-nowrap">
-            <span class="text-xs font-semibold">${getCategoryName(doc.category)}</span>
-            <div class="text-[10px] text-slate-400 truncate max-w-[160px]">${doc.subcategory}</div>
+          <td class="p-4 whitespace-nowrap">
+            <span class="text-xs font-bold text-slate-800">${getCategoryName(doc.category)}</span>
+            <div class="text-[10px] text-slate-400 truncate max-w-[160px] mt-0.5">${doc.subcategory}</div>
           </td>
-          <td class="p-3.5">
+          <td class="p-4">
             <div class="flex flex-wrap gap-1 max-w-[180px]">
-              ${(doc.tags || []).slice(0, 3).map(t => `<span class="px-1.5 py-0.2 rounded bg-slate-100 text-[10px] text-slate-600">#${t}</span>`).join('')}
+              ${(doc.tags || []).slice(0, 3).map(t => `<span class="px-2 py-0.5 rounded-md bg-slate-100 text-[10px] font-semibold text-slate-600">#${t}</span>`).join('')}
             </div>
           </td>
-          <td class="p-3.5 text-center whitespace-nowrap">
-            <span class="text-slate-700 font-semibold">${doc.views}</span> / <span class="text-blue-600 font-bold">${doc.downloads}</span>
+          <td class="p-4 text-center whitespace-nowrap">
+            <span class="text-slate-700 font-semibold">${doc.views}</span> / <span class="theme-primary-text font-bold">${doc.downloads}</span>
           </td>
-          <td class="p-3.5 text-center whitespace-nowrap">
+          <td class="p-4 text-center whitespace-nowrap">
             <div class="flex items-center justify-center gap-1.5">
-              <button onclick="openPreviewModal('${doc.id}')" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700" title="ดูตัวอย่าง">
+              <button onclick="openPreviewModal('${doc.id}')" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700" title="ดูตัวอย่าง">
                 <i class="fa-solid fa-eye"></i>
               </button>
-              <button onclick="openEditModal('${doc.id}')" class="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700" title="แก้ไข">
+              <button onclick="openEditModal('${doc.id}')" class="p-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-700" title="แก้ไข">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
-              <button onclick="confirmDeleteDoc('${doc.id}')" class="p-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600" title="ลบเอกสาร">
+              <button onclick="confirmDeleteDoc('${doc.id}')" class="p-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600" title="ลบเอกสาร">
                 <i class="fa-solid fa-trash"></i>
               </button>
             </div>
@@ -2064,17 +2327,17 @@
     function handleDragOver(e) {
       e.preventDefault();
       if (!isAdminLoggedIn) return;
-      document.getElementById('dropzone-area').classList.add('border-blue-500', 'bg-blue-50');
+      document.getElementById('dropzone-area').classList.add('border-indigo-500', 'bg-indigo-50');
     }
 
     function handleDragLeave(e) {
       e.preventDefault();
-      document.getElementById('dropzone-area').classList.remove('border-blue-500', 'bg-blue-50');
+      document.getElementById('dropzone-area').classList.remove('border-indigo-500', 'bg-indigo-50');
     }
 
     function handleFileDrop(e) {
       e.preventDefault();
-      document.getElementById('dropzone-area').classList.remove('border-blue-500', 'bg-blue-50');
+      document.getElementById('dropzone-area').classList.remove('border-indigo-500', 'bg-indigo-50');
       
       if (!isAdminLoggedIn) {
         openAdminLoginModal();
@@ -2218,7 +2481,7 @@
           views: 1,
           tags: tags.length > 0 ? tags : ['ทั่วไป'],
           description: desc,
-          contentSample: `เอกสาร ${title} จัดทำขึ้นเพื่อใช้ในการดำเนินงานของโรงเรียนวัดบางปูน ฝ่าย${getCategoryName(category)}`
+          contentSample: `เอกสาร ${title} จัดทำขึ้นเพื่อใช้ในการดำเนินงานของสถานศึกษา ฝ่าย${getCategoryName(category)}`
         };
         documents.unshift(newDoc);
         showToast('เพิ่มเอกสารเข้าสู่คลังสำเร็จ!', 'success');
@@ -2261,7 +2524,7 @@
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(documents, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `watbangpun_docs_backup_${new Date().toISOString().split('T')[0]}.json`);
+      downloadAnchor.setAttribute("download", `school_docs_backup_${new Date().toISOString().split('T')[0]}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
@@ -2280,24 +2543,24 @@
 
     function getCategoryBadgeHTML(catKey) {
       if (catKey === 'academic') {
-        return `<span class="px-2.5 py-0.5 rounded-full bg-academic-50 text-academic-700 border border-academic-100 text-[11px] font-bold">วิชาการ</span>`;
+        return `<span class="px-3 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200/80 text-[11px] font-bold">วิชาการ</span>`;
       } else if (catKey === 'personnel') {
-        return `<span class="px-2.5 py-0.5 rounded-full bg-personnel-50 text-personnel-700 border border-personnel-100 text-[11px] font-bold">บุคลากร</span>`;
+        return `<span class="px-3 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[11px] font-bold">บุคลากร</span>`;
       } else if (catKey === 'student') {
-        return `<span class="px-2.5 py-0.5 rounded-full bg-student-50 text-student-700 border border-student-100 text-[11px] font-bold">กิจการนักเรียน</span>`;
+        return `<span class="px-3 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200/80 text-[11px] font-bold">กิจการนักเรียน</span>`;
       } else if (catKey === 'budget') {
-        return `<span class="px-2.5 py-0.5 rounded-full bg-budget-50 text-budget-700 border border-budget-100 text-[11px] font-bold">งบประมาณ</span>`;
+        return `<span class="px-3 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200/80 text-[11px] font-bold">งบประมาณ</span>`;
       }
-      return `<span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold">${catKey}</span>`;
+      return `<span class="px-3 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold">${catKey}</span>`;
     }
 
     function getFileTypeBadgeColor(type) {
       const map = {
-        PDF: 'bg-red-500',
-        DOCX: 'bg-blue-600',
-        XLSX: 'bg-emerald-600',
-        PPTX: 'bg-orange-500',
-        CANVA: 'bg-pink-600'
+        PDF: 'bg-gradient-to-tr from-rose-600 to-red-500',
+        DOCX: 'bg-gradient-to-tr from-blue-600 to-indigo-500',
+        XLSX: 'bg-gradient-to-tr from-emerald-600 to-teal-500',
+        PPTX: 'bg-gradient-to-tr from-amber-600 to-orange-500',
+        CANVA: 'bg-gradient-to-tr from-purple-600 to-pink-500'
       };
       return map[type] || 'bg-slate-700';
     }
@@ -2319,17 +2582,17 @@
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
       
-      let bg = 'bg-slate-900 text-white border border-slate-700';
-      let icon = 'fa-solid fa-circle-info text-blue-400';
+      let bg = 'bg-slate-900/95 text-white border border-slate-700';
+      let icon = 'fa-solid fa-circle-info theme-primary-text';
       if (type === 'success') {
-        bg = 'bg-slate-900 text-white border border-emerald-500/50';
+        bg = 'bg-slate-900/95 text-white border border-emerald-500/50';
         icon = 'fa-solid fa-circle-check text-emerald-400';
       } else if (type === 'error') {
-        bg = 'bg-slate-900 text-white border border-red-500/50';
+        bg = 'bg-slate-900/95 text-white border border-red-500/50';
         icon = 'fa-solid fa-circle-exclamation text-red-400';
       }
 
-      toast.className = `${bg} px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-xs font-medium pointer-events-auto transition-all transform duration-300 translate-y-2 opacity-0`;
+      toast.className = `${bg} backdrop-blur-xl px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs font-semibold pointer-events-auto transition-all transform duration-300 translate-y-2 opacity-0 border`;
       toast.innerHTML = `<i class="${icon} text-base"></i> <span>${message}</span>`;
       
       container.appendChild(toast);

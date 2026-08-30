@@ -1,7 +1,7 @@
 {
-  "name": "watbangpun-doc-hub",
+  "name": "school-document-hub",
   "version": "1.0.0",
-  "description": "ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัล โรงเรียนวัดบางปูน (TT001)",
+  "description": "ระบบคลังเอกสารและสื่อการเรียนรู้ดิจิทัลสำหรับสถานศึกษา (TT001)",
   "main": "index.html",
   "scripts": {
     "start": "npx serve ."
@@ -9,9 +9,7 @@
   "keywords": [
     "education",
     "school-document-hub",
-    "watbangpun",
     "thailand"
   ],
-  "author": "โรงเรียนวัดบางปูน",
   "license": "MIT"
 }
