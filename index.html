@@ -2412,12 +2412,34 @@
       }
     }
 
+    function cleanFileName(fileName) {
+      if (!fileName || typeof fileName !== 'string') return '';
+      const lastDot = fileName.lastIndexOf('.');
+      return lastDot > 0 ? fileName.substring(0, lastDot) : fileName;
+    }
+
     function syncDocTitleWithAttachedFile() {
       if (lastPickedFileName) {
         document.getElementById('form-doc-title').value = lastPickedFileName;
         showToast(`เปลี่ยนชื่อเรื่องเป็น "${lastPickedFileName}" เรียบร้อยแล้ว`, 'success');
         if (currentAttachedFile) setAttachedFile(currentAttachedFile);
       }
+    }
+
+    async function quickSyncDocTitle(docId, newTitle) {
+      const doc = documents.find(d => d.id === docId);
+      if (!doc) return;
+      doc.title = newTitle;
+      saveDocumentsLocally();
+      updateCategoryCounts();
+      renderDashboardFeatured();
+      renderRepository();
+      renderAdminTable();
+      if (isCloudConnected()) {
+        sendCloudCommand('editDocument', { document: doc });
+      }
+      openPreviewModal(docId);
+      showToast(`เปลี่ยนชื่อเรื่องเป็น "${newTitle}" สำเร็จแล้ว`, 'success');
     }
 
     function clearAttachedFile() {
@@ -2540,20 +2562,35 @@
         interactiveView.classList.remove('hidden');
         interactiveView.classList.add('flex');
 
+        const cleanAttachedName = cleanFileName(fileEntry.fileName || doc.fileName || '');
+        const isMismatched = cleanAttachedName && !doc.title.includes(cleanAttachedName) && !cleanAttachedName.includes(doc.title);
+
         interactiveHeader.innerHTML = `
-          <div class="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between gap-3 text-xs">
+          <div class="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between gap-3 text-xs flex-wrap sm:flex-nowrap">
             <div class="flex items-center gap-2.5 min-w-0">
-              <div class="w-8 h-8 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-sm shrink-0">
+              <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-sm shrink-0">
                 <i class="fa-solid fa-file-pdf"></i>
               </div>
               <div class="min-w-0">
-                <h4 class="font-bold text-slate-900 truncate">${doc.title}</h4>
-                <p class="text-[11px] text-slate-500 truncate">ไฟล์แนบจริง: <b>${fileEntry.fileName || doc.fileName || doc.title}</b></p>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="font-bold text-slate-900 text-xs sm:text-sm truncate">${doc.title}</h4>
+                  ${isAdminLoggedIn ? `<button onclick="closePreviewModal(); openEditModal('${doc.id}');" class="px-2 py-0.5 rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 font-semibold text-[10px] border border-amber-200 transition cursor-pointer shrink-0"><i class="fa-solid fa-pen mr-1"></i> แก้ไขข้อมูล</button>` : ''}
+                </div>
+                <div class="text-[11px] text-slate-500 flex items-center gap-1.5 flex-wrap mt-0.5">
+                  <span>ไฟล์แนบจริง: <b class="text-indigo-700 font-semibold">${fileEntry.fileName || doc.fileName || doc.title}</b></span>
+                  ${(isMismatched && isAdminLoggedIn) ? `
+                    <button onclick="quickSyncDocTitle('${doc.id}', '${cleanAttachedName.replace(/'/g, "\\'")}')" class="px-2.5 py-0.5 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-[10px] border border-indigo-200 transition cursor-pointer active:scale-95">
+                      <i class="fa-solid fa-wand-magic-sparkles mr-1 text-indigo-500"></i> เปลี่ยนชื่อเรื่องเป็น "${cleanAttachedName}"
+                    </button>
+                  ` : ''}
+                </div>
               </div>
             </div>
-            <button onclick="handleDownloadDoc('${doc.id}')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-600/20 shrink-0 cursor-pointer">
-              <i class="fa-solid fa-download"></i> <span>ดาวน์โหลดไฟล์ PDF จริง</span>
-            </button>
+            <div class="flex items-center gap-2 shrink-0 ml-auto sm:ml-0">
+              <button onclick="handleDownloadDoc('${doc.id}')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-600/20 shrink-0 cursor-pointer text-xs">
+                <i class="fa-solid fa-download"></i> <span>ดาวน์โหลดไฟล์จริง</span>
+              </button>
+            </div>
           </div>
         `;
         interactiveFrame.innerHTML = `<iframe src="${blobUrl}" class="w-full h-full border-0 min-h-[550px]" loading="lazy"></iframe>`;
