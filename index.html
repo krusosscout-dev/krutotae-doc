@@ -1233,13 +1233,13 @@
   <!-- ================= JAVASCRIPT LOGIC WITH CLOUD & LOCAL HYBRID SYNC ================= -->
   <script>
     const DEFAULT_MASTER_PASSWORDS = ["admin1234", "2569", "school2569"];
-    const DEFAULT_CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbyrZNJ5bvBhN2LIeA-r7s1EclO_5OjZQtjhyomyvslTD9Iq4zM7jE_qpM999e2pRDG1/exec";
+    const DEFAULT_CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbzjwN_wR_4l2WxKBw8ubMv8efMamjLiZmy36MhNmxhwy_7WkpVb-w7FPv5r0TL9Yopv/exec";
 
     function getCloudApiUrl() {
       try { 
         const stored = localStorage.getItem('school_cloud_api_url');
         // Auto-upgrade to latest working endpoint if empty or pointing to an obsolete deployment
-        if (!stored || stored.includes('AKfycby9SyXZGu') || stored.includes('AKfycbxpoT1Cb3g')) {
+        if (!stored || stored.includes('AKfycby9SyXZGu') || stored.includes('AKfycbxpoT1Cb3g') || stored.includes('AKfycbyrZNJ5bvBhN2LIeA')) {
           localStorage.setItem('school_cloud_api_url', DEFAULT_CLOUD_API_URL);
           return DEFAULT_CLOUD_API_URL;
         }
@@ -2279,6 +2279,31 @@
       if (box) box.classList.add('hidden');
     }
 
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          const base64 = reader.result.split(',')[1];
+          resolve(base64);
+        };
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    function getDirectDownloadUrl(url) {
+      if (!url || typeof url !== 'string') return null;
+      const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if (driveMatch) {
+        return `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+      }
+      const driveIdMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (driveIdMatch && url.includes('drive.google.com')) {
+        return `https://drive.google.com/uc?export=download&id=${driveIdMatch[1]}`;
+      }
+      return url;
+    }
+
     /* =========================================================================
        DOCUMENT PREVIEW & LIVE EMBED ENGINE
        ========================================================================= */
@@ -2435,22 +2460,27 @@
       if (doc.fileUrl && doc.fileUrl.startsWith('http')) {
         fileBadgeHtml = `
           <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-900 mb-3 shadow-xs">
-            <span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-link text-emerald-600"></i> เอกสารมีลิงก์ต้นฉบับออนไลน์</span>
-            <a href="${doc.fileUrl}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition">เปิดดูไฟล์จริง</a>
+            <span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-link text-emerald-600"></i> เอกสารมีไฟล์ต้นฉบับออนไลน์ (Google Drive / Cloud)</span>
+            <a href="${doc.fileUrl}" target="_blank" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition">เปิดดูไฟล์จริง</a>
           </div>
         `;
       } else if (fileEntry && fileEntry.blob) {
         fileBadgeHtml = `
           <div class="p-3 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-between text-xs text-indigo-900 mb-3 shadow-xs">
             <span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-file-circle-check text-indigo-600"></i> แนบไฟล์ต้นฉบับจริง: ${fileEntry.fileName || doc.fileName || doc.title}</span>
-            <button onclick="handleDownloadDoc('${doc.id}')" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition">ดาวน์โหลดไฟล์จริง</button>
+            <button onclick="handleDownloadDoc('${doc.id}')" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition cursor-pointer">ดาวน์โหลดไฟล์จริง</button>
           </div>
         `;
       } else {
         fileBadgeHtml = `
-          <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs text-amber-800 mb-3 shadow-xs">
-            <span class="font-medium flex items-center gap-1.5"><i class="fa-solid fa-file-circle-question text-amber-600"></i> โครงร่างตัวอย่างจำลอง (ยังไม่ได้แนบไฟล์จริงหรือลิงก์ Google Drive)</span>
-            ${isAdminLoggedIn ? `<button onclick="closePreviewModal(); openEditModal('${doc.id}');" class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-[11px] shrink-0 active:scale-95"><i class="fa-solid fa-paperclip mr-1"></i> แนบไฟล์จริง</button>` : ''}
+          <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs text-amber-900 mb-3 shadow-xs flex-wrap gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm shrink-0"></i>
+              <span class="truncate"><b>ยังไม่ได้แนบไฟล์ต้นฉบับ:</b> กรุณาแนบไฟล์ PDF หรือใส่ลิงก์ Google Drive</span>
+            </div>
+            <button onclick="closePreviewModal(); openEditModal('${doc.id}');" class="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-xs shrink-0 active:scale-95 shadow transition cursor-pointer">
+              <i class="fa-solid fa-paperclip mr-1"></i> แนบไฟล์เอกสารจริง
+            </button>
           </div>
         `;
       }
@@ -2463,10 +2493,6 @@
         </div>
         <div class="text-indent-6 sm:text-indent-8 font-normal leading-relaxed text-slate-800 space-y-3">
           ${doc.contentSample ? doc.contentSample.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('') : `<p>${doc.description || 'รายละเอียดเนื้อหาของเอกสารฉบับสมบูรณ์ พร้อมสำหรับการนำไปปรับใช้ในการจัดการเรียนรู้หรือการปฏิบัติงานในสถานศึกษา'}</p>`}
-        </div>
-        <div class="my-3 p-3 sm:p-3.5 rounded-xl bg-indigo-50/60 border border-indigo-200 text-xs space-y-1">
-          <p class="font-bold text-slate-800"><i class="fa-solid fa-circle-info text-indigo-600 mr-1"></i> คำแนะนำการใช้งาน:</p>
-          <p class="text-slate-600">กดปุ่ม <b>ดาวน์โหลด</b> ด้านบน เพื่อบันทึกไฟล์นำไปปรับใช้ พิมพ์ หรือแก้ไขได้ทันที</p>
         </div>
       `;
 
@@ -2503,10 +2529,11 @@
         } catch (e) {}
       }
 
-      // Case 1: If document has online file URL (Google Drive / Canva / Cloud), open it directly
+      // Case 1: If document has online file URL (Google Drive / Cloud), trigger direct download or open
       if (doc.fileUrl && doc.fileUrl.startsWith('http')) {
-        window.open(doc.fileUrl, '_blank');
-        showToast(`กำลังเปิดลิงก์ "${doc.title}"...`, 'success');
+        const directDl = getDirectDownloadUrl(doc.fileUrl);
+        window.open(directDl || doc.fileUrl, '_blank');
+        showToast(`กำลังดาวน์โหลดไฟล์จริง "${doc.title}"...`, 'success');
         return;
       }
 
@@ -2526,8 +2553,11 @@
         return;
       }
 
-      // Case 3: For template/seed documents, generate a clean, well-formatted printable HTML/Document that opens perfectly in any browser
-      generateCleanPrintableDocument(doc);
+      // Case 3: Document has no file attached
+      showToast(`เอกสาร "${doc.title}" ยังไม่ได้แนบไฟล์ต้นฉบับ กรุณาใช้ปุ่มแก้ไขเพื่อแนบไฟล์จริง`, 'warning');
+      if (isAdminLoggedIn) {
+        openEditModal(doc.id);
+      }
     }
 
     function generateCleanPrintableDocument(doc) {
@@ -2842,11 +2872,36 @@
         showToast('เพิ่มเอกสารเข้าสู่ระบบสำเร็จ', 'success');
       }
 
-      // If a real binary file was attached, save it into IndexedDB
+      // If a real binary file was attached, save it into IndexedDB AND auto-upload to Google Drive
       if (currentAttachedFile && savedDoc) {
         await saveFileBlob(savedDoc.id, currentAttachedFile, currentAttachedFile.name, currentAttachedFile.type);
         savedDoc.fileName = currentAttachedFile.name;
         savedDoc.hasRealFile = true;
+
+        if (isCloudConnected()) {
+          try {
+            showToast(`กำลังส่งไฟล์ "${currentAttachedFile.name}" ขึ้น Google Drive กลาง...`, 'info');
+            const base64Data = await fileToBase64(currentAttachedFile);
+            const uploadRes = await fetch(getCloudApiUrl(), {
+              method: 'POST',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({
+                action: 'uploadFile',
+                base64Data: base64Data,
+                fileName: currentAttachedFile.name,
+                mimeType: currentAttachedFile.type || 'application/pdf'
+              })
+            });
+            const uploadJson = await uploadRes.json();
+            if (uploadJson && uploadJson.status === 'success' && uploadJson.fileUrl) {
+              savedDoc.fileUrl = uploadJson.fileUrl;
+              savedDoc.downloadUrl = uploadJson.downloadUrl;
+              showToast('อัปโหลดไฟล์เข้า Google Drive กลางสำเร็จ', 'success');
+            }
+          } catch (upErr) {
+            console.warn('Auto Drive upload skipped/fallback:', upErr);
+          }
+        }
       }
 
       currentAttachedFile = null;
