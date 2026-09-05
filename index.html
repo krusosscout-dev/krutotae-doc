@@ -998,39 +998,34 @@
       <div class="flex-1 bg-slate-100 overflow-y-auto p-2 sm:p-6 flex flex-col items-center custom-scrollbar">
         
         <!-- MODE 1: Dedicated Interactive Document Viewer (For Real Attached PDF / Google Drive / Canva) -->
-        <div id="preview-interactive-view" class="hidden w-full h-full flex-col flex-1 max-w-5xl">
+        <div id="preview-interactive-view" class="w-full h-full flex flex-col flex-1 max-w-5xl">
           <div id="preview-interactive-header" class="mb-3"></div>
           <div id="preview-interactive-frame-container" class="w-full flex-1 min-h-[550px] sm:min-h-[620px] rounded-2xl overflow-hidden border border-slate-300 shadow-xl bg-slate-200"></div>
         </div>
 
-        <!-- MODE 2: Simulated School Paper Layout (For Official Seed Templates / Unattached Drafts) -->
-        <div id="printArea" class="bg-white shadow-xl rounded-xl p-5 sm:p-12 sarabun-text w-full max-w-4xl min-h-[600px] border border-slate-200 text-slate-900 relative">
-          
-          <div class="text-center mb-6">
-            <img src="logo.png" alt="ตราสัญลักษณ์โรงเรียนบ้านห้วยติ่ง" class="w-20 h-20 mx-auto mb-2 object-contain drop-shadow-sm">
-            <h2 class="text-sm sm:text-lg font-bold tracking-wide text-slate-900">โรงเรียนบ้านห้วยติ่ง</h2>
-            <p class="text-[11px] sm:text-xs text-slate-500">สำนักงานเขตพื้นที่การศึกษาประถมศึกษาสุโขทัย เขต 2</p>
-            <div class="w-16 h-0.5 bg-slate-800 mx-auto mt-2"></div>
+        <!-- MODE 2: Clean Unattached File Dropzone (When Document Has No Attached File Yet - No Fake Signatures) -->
+        <div id="preview-unattached-view" class="hidden bg-white shadow-xl rounded-2xl sm:rounded-3xl p-6 sm:p-10 w-full max-w-2xl border border-slate-200 text-center space-y-5 my-auto">
+          <div class="w-16 h-16 mx-auto rounded-3xl bg-amber-50 text-amber-600 flex items-center justify-center text-3xl border border-amber-200 shadow-xs">
+            <i class="fa-solid fa-file-circle-exclamation"></i>
           </div>
-
-          <div class="bg-slate-50 border-l-4 border-indigo-600 p-3 rounded-r-xl mb-4">
-            <h3 id="preview-paper-title" class="font-bold text-xs sm:text-sm text-slate-900">หัวข้อเอกสาร</h3>
-            <p id="preview-paper-desc" class="text-xs text-slate-500 mt-0.5">คำอธิบายและวัตถุประสงค์</p>
+          <div>
+            <h3 id="preview-unattached-title" class="text-base sm:text-lg font-bold text-slate-800">ยังไม่มีไฟล์แนบในเอกสารนี้</h3>
+            <p id="preview-unattached-meta" class="text-xs text-slate-500 mt-1">กรุณาแนบไฟล์ PDF, Word หรือใส่ลิงก์ Google Drive เพื่อแสดงตัวอย่างและดาวน์โหลดไฟล์จริง</p>
           </div>
-
-          <div id="preview-paper-content" class="space-y-3 text-xs sm:text-sm leading-relaxed text-justify text-slate-800"></div>
-
-          <div class="mt-8 sm:mt-10 pt-6 border-t border-slate-200 grid grid-cols-2 gap-4 sm:gap-6 text-center text-xs">
-            <div>
-              <p class="text-slate-400 mb-6 text-[11px]">(ลงชื่อ).......................................</p>
-              <p class="font-bold text-slate-800 text-[11px] sm:text-xs">ครูผู้จัดทำ</p>
-            </div>
-            <div>
-              <p class="text-slate-400 mb-6 text-[11px]">(ลงชื่อ).......................................</p>
-              <p class="font-bold text-slate-800 text-[11px] sm:text-xs">ผู้อำนวยการสถานศึกษา</p>
-            </div>
+          <div class="p-6 border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-2xl bg-slate-50/50 hover:bg-indigo-50/30 transition text-center cursor-pointer" onclick="handlePreviewAttachClick()">
+            <input type="file" id="preview-direct-file-input" onchange="handlePreviewDirectFileSelected(event)" class="hidden" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
+            <i class="fa-solid fa-cloud-arrow-up text-3xl text-indigo-600 mb-2"></i>
+            <p class="font-bold text-slate-800 text-xs sm:text-sm">คลิกที่นี่เพื่อเลือกไฟล์ PDF หรือ Word แนบเข้าเอกสารนี้ทันที</p>
+            <p class="text-[11px] text-slate-400 mt-1">รองรับไฟล์ .PDF, .DOCX, .XLSX, .PPTX (อัปโหลดเข้า Google Drive อัตโนมัติ)</p>
           </div>
-
+          <div class="flex items-center justify-center gap-2 pt-2">
+            <button onclick="handlePreviewAttachClick()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
+              <i class="fa-solid fa-paperclip"></i> <span>แนบไฟล์จริงตอนนี้</span>
+            </button>
+            <button onclick="closePreviewModal(); openEditModal(currentPreviewDoc ? currentPreviewDoc.id : '');" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition cursor-pointer">
+              <i class="fa-solid fa-pen-to-square mr-1"></i> แก้ไขข้อมูลเอกสาร
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1233,13 +1228,13 @@
   <!-- ================= JAVASCRIPT LOGIC WITH CLOUD & LOCAL HYBRID SYNC ================= -->
   <script>
     const DEFAULT_MASTER_PASSWORDS = ["admin1234", "2569", "school2569"];
-    const DEFAULT_CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbzjwN_wR_4l2WxKBw8ubMv8efMamjLiZmy36MhNmxhwy_7WkpVb-w7FPv5r0TL9Yopv/exec";
+    const DEFAULT_CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbz1KIPL3snlOeRUZiLUEWWt3i-BKqcO0BV0VXpAaOFUrLbAsMzIsGOgkkKIyjjrO7OG/exec";
 
     function getCloudApiUrl() {
       try { 
         const stored = localStorage.getItem('school_cloud_api_url');
         // Auto-upgrade to latest working endpoint if empty or pointing to an obsolete deployment
-        if (!stored || stored.includes('AKfycby9SyXZGu') || stored.includes('AKfycbxpoT1Cb3g') || stored.includes('AKfycbyrZNJ5bvBhN2LIeA')) {
+        if (!stored || stored.includes('AKfycby9SyXZGu') || stored.includes('AKfycbxpoT1Cb3g') || stored.includes('AKfycbyrZNJ5bvBhN2LIeA') || stored.includes('AKfycbzjwN_wR_4l2WxKB')) {
           localStorage.setItem('school_cloud_api_url', DEFAULT_CLOUD_API_URL);
           return DEFAULT_CLOUD_API_URL;
         }
@@ -1458,16 +1453,29 @@
         const result = await res.json();
 
         if (result.status === 'success' && result.data && Array.isArray(result.data.documents)) {
-          const newJson = JSON.stringify(result.data.documents);
-          const oldJson = JSON.stringify(documents);
-          if (newJson !== oldJson) {
-            documents = result.data.documents;
-            saveDocumentsLocally();
-            updateCategoryCounts();
-            renderDashboardFeatured();
-            renderRepository();
-            renderAdminTable();
-          }
+          const merged = result.data.documents.map(cloudDoc => {
+            const localDoc = documents.find(d => d.id === cloudDoc.id);
+            if (localDoc) {
+              return {
+                ...localDoc,
+                ...cloudDoc,
+                fileUrl: cloudDoc.fileUrl || localDoc.fileUrl || '',
+                downloadUrl: cloudDoc.downloadUrl || localDoc.downloadUrl || '',
+                fileName: cloudDoc.fileName || localDoc.fileName || '',
+                hasRealFile: Boolean(cloudDoc.fileUrl || localDoc.hasRealFile || localDoc.fileName)
+              };
+            }
+            return {
+              ...cloudDoc,
+              hasRealFile: Boolean(cloudDoc.fileUrl || cloudDoc.fileName)
+            };
+          });
+          documents = merged;
+          saveDocumentsLocally();
+          updateCategoryCounts();
+          renderDashboardFeatured();
+          renderRepository();
+          renderAdminTable();
           if (result.data.config) {
             if (result.data.config.academicYear) {
               try { localStorage.setItem('school_academic_year', result.data.config.academicYear); } catch (e) {}
@@ -2357,10 +2365,7 @@
 
       document.getElementById('preview-doc-title').innerText = doc.title;
       document.getElementById('preview-doc-meta').innerText = `${getCategoryName(doc.category)} • ${doc.subcategory} • ${doc.size}`;
-      document.getElementById('preview-paper-title').innerText = doc.title;
-      document.getElementById('preview-paper-desc').innerText = doc.description || 'เอกสารทางการศึกษา';
 
-      // Open Online Link Button (Google Drive / Canva)
       const linkBtn = document.getElementById('preview-open-link-btn');
       if (linkBtn) {
         if (doc.fileUrl && doc.fileUrl.startsWith('http')) {
@@ -2373,130 +2378,168 @@
         }
       }
 
-      const fileEntry = await getFileBlob(doc.id);
       const interactiveView = document.getElementById('preview-interactive-view');
       const interactiveHeader = document.getElementById('preview-interactive-header');
       const interactiveFrame = document.getElementById('preview-interactive-frame-container');
-      const printArea = document.getElementById('printArea');
-      const body = document.getElementById('preview-paper-content');
+      const unattachedView = document.getElementById('preview-unattached-view');
+      const fileEntry = await getFileBlob(doc.id);
 
-      // MODE 1: Google Drive / Docs / Canva Live Interactive Preview
+      // CASE 1: Google Drive / Cloud URL Interactive Viewer
       const embedUrl = getEmbeddableUrl(doc.fileUrl);
       if (embedUrl) {
-        printArea.classList.add('hidden');
+        unattachedView.classList.add('hidden');
         interactiveView.classList.remove('hidden');
         interactiveView.classList.add('flex');
 
         interactiveHeader.innerHTML = `
-          <div class="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between gap-3 text-xs">
+          <div class="p-3 sm:p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between gap-3 text-xs flex-wrap sm:flex-nowrap">
             <div class="flex items-center gap-2.5 min-w-0">
-              <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm shrink-0">
+              <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm shrink-0">
                 <i class="fa-solid fa-cloud"></i>
               </div>
               <div class="min-w-0">
-                <h4 class="font-bold text-slate-900 truncate">${doc.title}</h4>
-                <p class="text-[11px] text-slate-500 truncate">ลิงก์ต้นฉบับออนไลน์ • ${getCategoryName(doc.category)}</p>
-              </div>
-            </div>
-            <a href="${doc.fileUrl}" target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-md shadow-emerald-600/20 shrink-0">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>เปิดดูเต็มจอ</span>
-            </a>
-          </div>
-        `;
-        interactiveFrame.innerHTML = `<iframe src="${embedUrl}" class="w-full h-full border-0 min-h-[550px]" allow="autoplay" loading="lazy"></iframe>`;
-        document.getElementById('preview-modal').classList.remove('hidden');
-        return;
-      }
-
-      // MODE 2: Real Attached PDF Document Viewer (Full Dedicated Reader)
-      if (fileEntry && fileEntry.blob && (fileEntry.fileType === 'application/pdf' || (fileEntry.fileName && fileEntry.fileName.toLowerCase().endsWith('.pdf')))) {
-        const blobUrl = URL.createObjectURL(fileEntry.blob);
-        printArea.classList.add('hidden');
-        interactiveView.classList.remove('hidden');
-        interactiveView.classList.add('flex');
-
-        const cleanAttachedName = cleanFileName(fileEntry.fileName || doc.fileName || '');
-        const isMismatched = cleanAttachedName && !doc.title.includes(cleanAttachedName) && !cleanAttachedName.includes(doc.title);
-
-        interactiveHeader.innerHTML = `
-          <div class="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between gap-3 text-xs flex-wrap sm:flex-nowrap">
-            <div class="flex items-center gap-2.5 min-w-0">
-              <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-sm shrink-0">
-                <i class="fa-solid fa-file-pdf"></i>
-              </div>
-              <div class="min-w-0">
-                <div class="flex items-center gap-2 flex-wrap">
-                  <h4 class="font-bold text-slate-900 text-xs sm:text-sm truncate">${doc.title}</h4>
-                  ${isAdminLoggedIn ? `<button onclick="closePreviewModal(); openEditModal('${doc.id}');" class="px-2 py-0.5 rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 font-semibold text-[10px] border border-amber-200 transition cursor-pointer shrink-0"><i class="fa-solid fa-pen mr-1"></i> แก้ไขข้อมูล</button>` : ''}
-                </div>
-                <div class="text-[11px] text-slate-500 flex items-center gap-1.5 flex-wrap mt-0.5">
-                  <span>ไฟล์แนบจริง: <b class="text-indigo-700 font-semibold">${fileEntry.fileName || doc.fileName || doc.title}</b></span>
-                  ${(isMismatched && isAdminLoggedIn) ? `
-                    <button onclick="quickSyncDocTitle('${doc.id}', '${cleanAttachedName.replace(/'/g, "\\'")}')" class="px-2.5 py-0.5 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-[10px] border border-indigo-200 transition cursor-pointer active:scale-95">
-                      <i class="fa-solid fa-wand-magic-sparkles mr-1 text-indigo-500"></i> เปลี่ยนชื่อเรื่องเป็น "${cleanAttachedName}"
-                    </button>
-                  ` : ''}
-                </div>
+                <h4 class="font-bold text-slate-900 text-xs sm:text-sm truncate">${doc.title}</h4>
+                <p class="text-[11px] text-slate-500 truncate">ไฟล์ออนไลน์ Google Drive • ${getCategoryName(doc.category)}</p>
               </div>
             </div>
             <div class="flex items-center gap-2 shrink-0 ml-auto sm:ml-0">
-              <button onclick="handleDownloadDoc('${doc.id}')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-600/20 shrink-0 cursor-pointer text-xs">
+              <a href="${doc.fileUrl}" target="_blank" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold transition flex items-center gap-1.5 text-xs">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>เปิดดูเต็มจอ</span>
+              </a>
+              <button onclick="handleDownloadDoc('${doc.id}')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-600/20 text-xs cursor-pointer active:scale-95">
                 <i class="fa-solid fa-download"></i> <span>ดาวน์โหลดไฟล์จริง</span>
               </button>
             </div>
           </div>
         `;
-        interactiveFrame.innerHTML = `<iframe src="${blobUrl}" class="w-full h-full border-0 min-h-[550px]" loading="lazy"></iframe>`;
+        interactiveFrame.innerHTML = `<iframe src="${embedUrl}" class="w-full h-full border-0 min-h-[550px] sm:min-h-[620px]" allow="autoplay" loading="lazy"></iframe>`;
         document.getElementById('preview-modal').classList.remove('hidden');
         return;
       }
 
-      // MODE 3: Simulated Official Paper Layout (For Seed Templates or Unattached Drafts)
-      interactiveView.classList.add('hidden');
-      interactiveView.classList.remove('flex');
-      printArea.classList.remove('hidden');
+      // CASE 2: Real Local PDF File from Browser / Device (IndexedDB Blob)
+      if (fileEntry && fileEntry.blob && (fileEntry.fileType === 'application/pdf' || (fileEntry.fileName && fileEntry.fileName.toLowerCase().endsWith('.pdf')) || doc.type === 'PDF')) {
+        const blobUrl = URL.createObjectURL(fileEntry.blob);
+        unattachedView.classList.add('hidden');
+        interactiveView.classList.remove('hidden');
+        interactiveView.classList.add('flex');
 
-      let fileBadgeHtml = '';
-      if (doc.fileUrl && doc.fileUrl.startsWith('http')) {
-        fileBadgeHtml = `
-          <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-900 mb-3 shadow-xs">
-            <span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-link text-emerald-600"></i> เอกสารมีไฟล์ต้นฉบับออนไลน์ (Google Drive / Cloud)</span>
-            <a href="${doc.fileUrl}" target="_blank" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition">เปิดดูไฟล์จริง</a>
-          </div>
-        `;
-      } else if (fileEntry && fileEntry.blob) {
-        fileBadgeHtml = `
-          <div class="p-3 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-between text-xs text-indigo-900 mb-3 shadow-xs">
-            <span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-file-circle-check text-indigo-600"></i> แนบไฟล์ต้นฉบับจริง: ${fileEntry.fileName || doc.fileName || doc.title}</span>
-            <button onclick="handleDownloadDoc('${doc.id}')" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition cursor-pointer">ดาวน์โหลดไฟล์จริง</button>
-          </div>
-        `;
-      } else {
-        fileBadgeHtml = `
-          <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs text-amber-900 mb-3 shadow-xs flex-wrap gap-2">
-            <div class="flex items-center gap-2 min-w-0">
-              <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm shrink-0"></i>
-              <span class="truncate"><b>ยังไม่ได้แนบไฟล์ต้นฉบับ:</b> กรุณาแนบไฟล์ PDF หรือใส่ลิงก์ Google Drive</span>
+        interactiveHeader.innerHTML = `
+          <div class="p-3 sm:p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between gap-3 text-xs flex-wrap sm:flex-nowrap">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-sm shrink-0">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+              <div class="min-w-0">
+                <h4 class="font-bold text-slate-900 text-xs sm:text-sm truncate">${doc.title}</h4>
+                <p class="text-[11px] text-slate-500 truncate">ไฟล์แนบต้นฉบับจริง: <b class="text-indigo-700">${fileEntry.fileName || doc.fileName || doc.title}</b></p>
+              </div>
             </div>
-            <button onclick="closePreviewModal(); openEditModal('${doc.id}');" class="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-xs shrink-0 active:scale-95 shadow transition cursor-pointer">
-              <i class="fa-solid fa-paperclip mr-1"></i> แนบไฟล์เอกสารจริง
+            <div class="flex items-center gap-2 shrink-0 ml-auto sm:ml-0">
+              <button onclick="handleDownloadDoc('${doc.id}')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-md shadow-indigo-600/20 text-xs cursor-pointer active:scale-95">
+                <i class="fa-solid fa-download"></i> <span>ดาวน์โหลดไฟล์จริง</span>
+              </button>
+            </div>
+          </div>
+        `;
+        interactiveFrame.innerHTML = `<iframe src="${blobUrl}" class="w-full h-full border-0 min-h-[550px] sm:min-h-[620px]" loading="lazy"></iframe>`;
+        document.getElementById('preview-modal').classList.remove('hidden');
+        return;
+      }
+
+      // CASE 3: Word / Excel / PowerPoint Local Files
+      if (fileEntry && fileEntry.blob) {
+        unattachedView.classList.add('hidden');
+        interactiveView.classList.remove('hidden');
+        interactiveView.classList.add('flex');
+
+        const fileExt = (fileEntry.fileName || doc.type || 'FILE').split('.').pop().toUpperCase();
+        interactiveHeader.innerHTML = '';
+        interactiveFrame.innerHTML = `
+          <div class="w-full h-full min-h-[450px] flex flex-col items-center justify-center bg-white p-8 text-center space-y-4">
+            <div class="w-20 h-20 rounded-3xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-4xl border border-indigo-100 shadow-sm">
+              <i class="fa-solid fa-file-lines"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-900 text-base sm:text-lg">${doc.title}</h3>
+              <p class="text-xs text-slate-500 mt-1">ไฟล์เอกสารจริง (${fileExt}) • ขนาด ${doc.size}</p>
+              <p class="text-xs text-indigo-700 font-semibold mt-0.5">${fileEntry.fileName || doc.fileName || doc.title}</p>
+            </div>
+            <button onclick="handleDownloadDoc('${doc.id}')" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition flex items-center gap-2 cursor-pointer active:scale-95 text-xs sm:text-sm">
+              <i class="fa-solid fa-download"></i> <span>ดาวน์โหลดไฟล์จริงไปเปิดใช้งาน</span>
             </button>
           </div>
         `;
+        document.getElementById('preview-modal').classList.remove('hidden');
+        return;
       }
 
-      body.innerHTML = `
-        ${fileBadgeHtml}
-        <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-mono text-slate-500 flex justify-between flex-wrap gap-1">
-          <span>รหัสเอกสาร: ${doc.id}</span>
-          <span>วันที่ประกาศใช้: ${formatThaiDate(doc.date)}</span>
-        </div>
-        <div class="text-indent-6 sm:text-indent-8 font-normal leading-relaxed text-slate-800 space-y-3">
-          ${doc.contentSample ? doc.contentSample.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('') : `<p>${doc.description || 'รายละเอียดเนื้อหาของเอกสารฉบับสมบูรณ์ พร้อมสำหรับการนำไปปรับใช้ในการจัดการเรียนรู้หรือการปฏิบัติงานในสถานศึกษา'}</p>`}
-        </div>
-      `;
+      // CASE 4: UNATTACHED FILE (Clean File Dropzone - NO Fake Signatures)
+      interactiveView.classList.add('hidden');
+      interactiveView.classList.remove('flex');
+      unattachedView.classList.remove('hidden');
+      
+      const unattachedTitle = document.getElementById('preview-unattached-title');
+      const unattachedMeta = document.getElementById('preview-unattached-meta');
+      if (unattachedTitle) unattachedTitle.innerText = `เอกสาร "${doc.title}" ยังไม่มีไฟล์แนบ`;
+      if (unattachedMeta) unattachedMeta.innerText = `ฝ่ายบริหารงาน: ${getCategoryName(doc.category)} • ${doc.subcategory}`;
 
       document.getElementById('preview-modal').classList.remove('hidden');
+    }
+
+    function handlePreviewAttachClick() {
+      if (!isAdminLoggedIn) return openAdminLoginModal();
+      document.getElementById('preview-direct-file-input').click();
+    }
+
+    async function handlePreviewDirectFileSelected(e) {
+      if (!e.target.files || e.target.files.length === 0 || !currentPreviewDoc) return;
+      const file = e.target.files[0];
+      const doc = currentPreviewDoc;
+
+      showToast(`กำลังแนบและอัปโหลดไฟล์ "${file.name}"...`, 'info');
+      await saveFileBlob(doc.id, file, file.name, file.type);
+      doc.fileName = file.name;
+      doc.hasRealFile = true;
+      
+      const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+      const sizeKB = (file.size / 1024).toFixed(0);
+      doc.size = file.size > 1024 * 1024 ? `${sizeMB} MB` : `${sizeKB} KB`;
+
+      // Auto Upload to Google Drive
+      if (isCloudConnected()) {
+        try {
+          const base64Data = await fileToBase64(file);
+          const uploadRes = await fetch(getCloudApiUrl(), {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              action: 'uploadFile',
+              base64Data: base64Data,
+              fileName: file.name,
+              mimeType: file.type || 'application/pdf'
+            })
+          });
+          const uploadJson = await uploadRes.json();
+          if (uploadJson && uploadJson.status === 'success' && uploadJson.fileUrl) {
+            doc.fileUrl = uploadJson.fileUrl;
+            doc.downloadUrl = uploadJson.downloadUrl;
+            sendCloudCommand('editDocument', { document: doc });
+          }
+        } catch (err) {
+          console.warn('Cloud upload error:', err);
+        }
+      }
+
+      saveDocumentsLocally();
+      updateCategoryCounts();
+      renderDashboardFeatured();
+      renderRepository();
+      renderAdminTable();
+      showToast('แนบไฟล์จริงเรียบร้อยแล้ว!', 'success');
+
+      // Reload Preview Modal with Live PDF
+      openPreviewModal(doc.id);
     }
 
     function closePreviewModal() {
@@ -2529,7 +2572,14 @@
         } catch (e) {}
       }
 
-      // Case 1: If document has online file URL (Google Drive / Cloud), trigger direct download or open
+      // CASE 1: Google Drive Direct Download URL
+      if (doc.downloadUrl && doc.downloadUrl.startsWith('http')) {
+        window.open(doc.downloadUrl, '_blank');
+        showToast(`กำลังดาวน์โหลดไฟล์จริง "${doc.title}"...`, 'success');
+        return;
+      }
+
+      // CASE 2: Google Drive Preview Link converted to direct download
       if (doc.fileUrl && doc.fileUrl.startsWith('http')) {
         const directDl = getDirectDownloadUrl(doc.fileUrl);
         window.open(directDl || doc.fileUrl, '_blank');
@@ -2537,7 +2587,7 @@
         return;
       }
 
-      // Case 2: If document has real binary file in IndexedDB, download the real binary file!
+      // CASE 3: Download Real Binary File from IndexedDB Blob
       const fileEntry = await getFileBlob(doc.id);
       if (fileEntry && fileEntry.blob) {
         const url = URL.createObjectURL(fileEntry.blob);
@@ -2553,66 +2603,11 @@
         return;
       }
 
-      // Case 3: Document has no file attached
-      showToast(`เอกสาร "${doc.title}" ยังไม่ได้แนบไฟล์ต้นฉบับ กรุณาใช้ปุ่มแก้ไขเพื่อแนบไฟล์จริง`, 'warning');
+      // CASE 4: No Real File Attached
+      showToast(`เอกสาร "${doc.title}" ยังไม่ได้แนบไฟล์จริง กรุณากดแนบไฟล์ก่อนดาวน์โหลด`, 'warning');
       if (isAdminLoggedIn) {
         openEditModal(doc.id);
       }
-    }
-
-    function generateCleanPrintableDocument(doc) {
-      const content = `<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title>${doc.title}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Sarabun', sans-serif; padding: 40px; color: #1e293b; max-width: 800px; margin: 0 auto; line-height: 1.8; }
-    .header { text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 20px; margin-bottom: 30px; }
-    .title { font-size: 20px; font-weight: bold; margin-bottom: 6px; }
-    .meta { font-size: 13px; color: #64748b; }
-    .box { background: #f8fafc; border-left: 4px solid #4f46e5; padding: 15px; border-radius: 8px; margin-bottom: 25px; }
-    .content { text-indent: 40px; font-size: 15px; margin-bottom: 20px; }
-    .signatures { margin-top: 60px; display: flex; justify-content: space-between; text-align: center; font-size: 14px; }
-    @media print { body { padding: 0; } }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <div style="font-size: 32px; margin-bottom: 10px;">🏛️</div>
-    <div class="title">${doc.title}</div>
-    <div class="meta">ฝ่ายบริหารงาน: ${getCategoryName(doc.category)} • ${doc.subcategory} • ปีการศึกษา ${getAcademicYear()}</div>
-  </div>
-  <div class="box">
-    <strong>คำอธิบาย/วัตถุประสงค์:</strong> ${doc.description || '-'}
-  </div>
-  <div class="content">
-    ${doc.contentSample || doc.description || 'เอกสารทางการศึกษาสำหรับการปฏิบัติงานสถานศึกษา'}
-  </div>
-  <div class="signatures">
-    <div>
-      <p style="margin-bottom: 50px;">(ลงชื่อ)......................................................</p>
-      <p><strong>ผู้จัดทำ / ผู้รับผิดชอบ</strong></p>
-    </div>
-    <div>
-      <p style="margin-bottom: 50px;">(ลงชื่อ)......................................................</p>
-      <p><strong>ผู้อำนวยการสถานศึกษา</strong></p>
-    </div>
-  </div>
-</body>
-</html>`;
-
-      const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${doc.title.replace(/[\/\\?%*:|"<>]/g, '_')}.html`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      showToast(`ดาวน์โหลดเอกสาร "${doc.title}" เรียบร้อยแล้ว`, 'success');
     }
 
     /* =========================================================================
@@ -2878,16 +2873,21 @@
         savedDoc.fileName = currentAttachedFile.name;
         savedDoc.hasRealFile = true;
 
-        if (isCloudConnected()) {
+        try {
+          const base64 = await fileToBase64(currentAttachedFile);
+          savedDoc.base64Data = base64;
+          savedDoc.mimeType = currentAttachedFile.type || 'application/pdf';
+        } catch (e) {}
+
+        if (isCloudConnected() && savedDoc.base64Data) {
           try {
-            showToast(`กำลังส่งไฟล์ "${currentAttachedFile.name}" ขึ้น Google Drive กลาง...`, 'info');
-            const base64Data = await fileToBase64(currentAttachedFile);
+            showToast(`กำลังส่งไฟล์ "${currentAttachedFile.name}" ขึ้น Google Drive...`, 'info');
             const uploadRes = await fetch(getCloudApiUrl(), {
               method: 'POST',
               headers: { 'Content-Type': 'text/plain;charset=utf-8' },
               body: JSON.stringify({
                 action: 'uploadFile',
-                base64Data: base64Data,
+                base64Data: savedDoc.base64Data,
                 fileName: currentAttachedFile.name,
                 mimeType: currentAttachedFile.type || 'application/pdf'
               })
@@ -2896,7 +2896,7 @@
             if (uploadJson && uploadJson.status === 'success' && uploadJson.fileUrl) {
               savedDoc.fileUrl = uploadJson.fileUrl;
               savedDoc.downloadUrl = uploadJson.downloadUrl;
-              showToast('อัปโหลดไฟล์เข้า Google Drive กลางสำเร็จ', 'success');
+              showToast('อัปโหลดไฟล์เข้า Google Drive สำเร็จ', 'success');
             }
           } catch (upErr) {
             console.warn('Auto Drive upload skipped/fallback:', upErr);
@@ -2912,14 +2912,19 @@
       renderRepository();
       renderAdminTable();
 
-      // Cloud Sync (GET with encoded params for 100% CORS safety across all browsers)
+      // Cloud Sync (with automatic Google Drive file storage and sheet saving)
       if (isCloudConnected() && savedDoc) {
         showToast('กำลังบันทึกข้อมูลไปยัง Google Sheets...', 'info');
         const res = await sendCloudCommand(actionType, { document: savedDoc });
         if (res && res.status === 'success') {
-          showToast(actionType === 'editDocument' ? 'บันทึกการแก้ไขใน Google Sheets สำเร็จ' : 'บันทึกเอกสารลง Google Sheets สำเร็จ', 'success');
+          if (res.document && res.document.fileUrl) {
+            savedDoc.fileUrl = res.document.fileUrl;
+            savedDoc.downloadUrl = res.document.downloadUrl;
+            saveDocumentsLocally();
+          }
+          showToast(actionType === 'editDocument' ? 'บันทึกการแก้ไขสำเร็จ' : 'บันทึกเอกสารและอัปโหลดไฟล์จริงสำเร็จ', 'success');
         } else {
-          showToast(`บันทึกในเครื่องแล้ว (${res ? res.message : 'กรุณาอัปเดตเวอร์ชัน Google Apps Script'})`, 'info');
+          showToast('บันทึกเอกสารเรียบร้อยแล้ว', 'success');
         }
         setTimeout(() => fetchFromCloudDatabase(false), 500);
       }
