@@ -638,38 +638,65 @@
         <!-- ================= VIEW 3: ADMIN CONSOLE ================= -->
         <section id="view-admin" class="space-y-6 hidden animate-fade-in">
           
-          <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-card flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="flex items-center gap-3.5">
-              <img src="logo.png" alt="โลโก้โรงเรียน" class="w-12 h-12 sm:w-14 sm:h-14 object-contain shrink-0 drop-shadow-sm">
-              <div>
-                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold mb-1 border border-amber-200">
-                  <i class="fa-solid fa-screwdriver-wrench"></i> โหมดผู้ดูแลระบบ (Admin Console)
+          <!-- ADMIN CONSOLE HEADER (MODERN EXECUTIVE SUITE) -->
+          <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 shadow-xl border border-slate-800/80 relative overflow-hidden space-y-5">
+            
+            <!-- Subtle Background Glow -->
+            <div class="absolute -right-16 -top-16 w-60 h-60 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-16 -bottom-16 w-60 h-60 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Top Row: Identity & Primary Action -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5 relative z-10">
+              
+              <div class="flex items-center gap-3.5 sm:gap-4">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/10 backdrop-blur-md p-2 flex items-center justify-center shrink-0 border border-white/15 shadow-inner">
+                  <img src="logo.png" alt="โลโก้โรงเรียน" class="w-full h-full object-contain drop-shadow">
                 </div>
-                <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ศูนย์จัดการเอกสารและระบบ</h2>
-                <p class="text-xs text-slate-500 mt-0.5">โรงเรียนบ้านห้วยติ่ง สำนักงานเขตพื้นที่การศึกษาประถมศึกษาสุโขทัย เขต 2</p>
+                <div class="space-y-1">
+                  <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] sm:text-[11px] font-bold border border-amber-400/30">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> โหมดผู้ดูแลระบบ (Admin Console)
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-bold tracking-tight text-white">ศูนย์จัดการเอกสารและระบบ</h2>
+                  <p class="text-xs text-slate-300 font-normal">โรงเรียนบ้านห้วยติ่ง สำนักงานเขตพื้นที่การศึกษาประถมศึกษาสุโขทัย เขต 2</p>
+                </div>
               </div>
+
+              <!-- Primary Action Button -->
+              <div class="flex items-center gap-2 shrink-0">
+                <button onclick="openUploadModal()" class="w-full sm:w-auto px-5 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-400 hover:to-indigo-500 text-white rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2 cursor-pointer active:scale-95">
+                  <i class="fa-solid fa-cloud-arrow-up text-base"></i>
+                  <span>อัปโหลดเอกสารใหม่</span>
+                </button>
+              </div>
+
             </div>
 
-            <div class="flex flex-wrap items-center gap-2">
-              <button onclick="openUploadModal()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
-                <i class="fa-solid fa-cloud-arrow-up"></i> อัปโหลดเอกสารใหม่
-              </button>
-              <button onclick="openCloudDbModal()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95 cursor-pointer" id="btn-cloud-db-action">
-                <i class="fa-solid fa-database text-indigo-600"></i> <span>เชื่อมต่อฐานข้อมูลกลาง</span>
-              </button>
-              <button onclick="purgeAllDummyDocs()" class="px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl text-xs font-semibold border border-rose-200 transition flex items-center gap-1.5 active:scale-95 cursor-pointer" title="ล้างเอกสารจำลองทั้งหมด">
-                <i class="fa-solid fa-broom text-rose-600"></i> ล้างข้อมูลตัวอย่าง
-              </button>
-              <button onclick="openSetAcademicYearModal()" class="px-3.5 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-semibold border border-indigo-200 transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
-                <i class="fa-regular fa-calendar-check"></i> ตั้งค่าปีการศึกษา
-              </button>
-              <button onclick="openChangePasswordModal()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
-                <i class="fa-solid fa-key text-amber-500"></i> เปลี่ยนรหัสผ่าน
-              </button>
-              <button onclick="exportDataJSON()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
-                <i class="fa-solid fa-download"></i> สำรองข้อมูล
-              </button>
+            <!-- Bottom Row: Unified System Utility Bar -->
+            <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-2.5 relative z-10">
+              
+              <div class="flex flex-wrap items-center gap-2">
+                <button onclick="openCloudDbModal()" class="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-slate-200 rounded-xl text-xs font-semibold border border-white/10 transition flex items-center gap-1.5 active:scale-95 cursor-pointer backdrop-blur-sm" id="btn-cloud-db-action">
+                  <i class="fa-solid fa-database text-indigo-400"></i> <span>ตั้งค่าฐานข้อมูลกลาง</span>
+                </button>
+                <button onclick="openSetAcademicYearModal()" class="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-slate-200 rounded-xl text-xs font-semibold border border-white/10 transition flex items-center gap-1.5 active:scale-95 cursor-pointer backdrop-blur-sm">
+                  <i class="fa-regular fa-calendar-check text-indigo-300"></i> <span>ตั้งค่าปีการศึกษา</span>
+                </button>
+                <button onclick="openChangePasswordModal()" class="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-slate-200 rounded-xl text-xs font-semibold border border-white/10 transition flex items-center gap-1.5 active:scale-95 cursor-pointer backdrop-blur-sm">
+                  <i class="fa-solid fa-key text-amber-400"></i> <span>เปลี่ยนรหัสผ่าน</span>
+                </button>
+                <button onclick="exportDataJSON()" class="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-slate-200 rounded-xl text-xs font-semibold border border-white/10 transition flex items-center gap-1.5 active:scale-95 cursor-pointer backdrop-blur-sm">
+                  <i class="fa-solid fa-download text-sky-400"></i> <span>สำรองข้อมูล</span>
+                </button>
+              </div>
+
+              <div class="ml-auto">
+                <button onclick="purgeAllDummyDocs()" class="px-3 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 hover:text-rose-200 rounded-xl text-xs font-semibold border border-rose-500/30 transition flex items-center gap-1.5 active:scale-95 cursor-pointer" title="ล้างเอกสารจำลองทั้งหมด">
+                  <i class="fa-solid fa-broom text-rose-400"></i> <span>ล้างข้อมูลตัวอย่าง</span>
+                </button>
+              </div>
+
             </div>
+
           </div>
 
           <!-- Drag & Drop Zone -->
@@ -1496,11 +1523,11 @@
       const btnAction = document.getElementById('btn-cloud-db-action');
       if (btnAction) {
         if (isCloudConnected()) {
-          btnAction.className = 'px-3.5 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-semibold border border-indigo-200 transition flex items-center gap-1.5 active:scale-95';
-          btnAction.innerHTML = '<i class="fa-solid fa-database text-indigo-600"></i> <span>ตั้งค่าฐานข้อมูลกลาง</span>';
+          btnAction.className = 'px-3.5 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 rounded-xl text-xs font-semibold border border-emerald-400/30 transition flex items-center gap-1.5 active:scale-95 cursor-pointer backdrop-blur-sm';
+          btnAction.innerHTML = '<i class="fa-solid fa-cloud-check text-emerald-400"></i> <span>ฐานข้อมูลกลาง (เชื่อมต่อแล้ว)</span>';
         } else {
-          btnAction.className = 'px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium border border-slate-200 transition flex items-center gap-1.5 active:scale-95';
-          btnAction.innerHTML = '<i class="fa-solid fa-database text-slate-600"></i> <span>เชื่อมต่อฐานข้อมูลกลาง</span>';
+          btnAction.className = 'px-3.5 py-2 bg-white/10 hover:bg-white/20 text-slate-200 rounded-xl text-xs font-semibold border border-white/10 transition flex items-center gap-1.5 active:scale-95 cursor-pointer backdrop-blur-sm';
+          btnAction.innerHTML = '<i class="fa-solid fa-database text-indigo-400"></i> <span>เชื่อมต่อฐานข้อมูลกลาง</span>';
         }
       }
     }
